@@ -15,7 +15,7 @@ const lightColors = {
         borderColor: '#E6E6E6',
         // tab
         tabColor: '#BDBDBD',
-        tabActive: '#3B3DBF',
+        tabActive: '#008DDA',
         tabAdd: '#3B3DBF',
         //auth
         titleColor: '#3B3DBF',
@@ -27,7 +27,7 @@ const lightColors = {
         WHITE: '#FFFFFF',
         BLACK: "#000000",
         CANCEL_BACKGROUNG: "#DC143C",
-        OPTION_ACTIVE: "#3B3DBF",
+        OPTION_ACTIVE: "#008DDA",
         backgroundTheme: '#EFF8FB'
 }
 

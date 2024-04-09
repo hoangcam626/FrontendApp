@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import httpClient from "../../httpClient";
+import httpClient from "../../http_client";
 import { AUTH } from "../../constants/api";
 
 export const registerActions = createAsyncThunk(

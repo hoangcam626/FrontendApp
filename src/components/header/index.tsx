@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { NAVIGATION_TITLE } from '../../constants/navigation'
-import { getInfoUserAction } from '../../services/user/actions'
+// import { getInfoUserAction } from '../../services/user/actions'
 import { useDispatch } from 'react-redux'
 import { BASE_URL } from '../../constants/api'
 import st from './styles'
@@ -22,16 +22,16 @@ const Header = (props: any) => {
         urlImage: "",
         username: ""
     })
-    useEffect(() => {
-        getInfoUser()
-    }, [isFocused])
-    const getInfoUser = () => {
-        dispatch(getInfoUserAction())
-            .then(res => {
-                setInfoUser(res?.payload)
-            })
-            .catch(err => console.log('err', err))
-    }
+    // useEffect(() => {
+    //     getInfoUser()
+    // }, [isFocused])
+    // const getInfoUser = () => {
+    //     dispatch(getInfoUserAction())
+    //         .then(res => {
+    //             setInfoUser(res?.payload)
+    //         })
+    //         .catch(err => console.log('err', err))
+    // }
     return (
         <View style={styles.container}>
             {isBack ?
