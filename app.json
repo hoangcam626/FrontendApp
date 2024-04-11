@@ -7,7 +7,7 @@
     "icon": "./assets/images/tabs/vietnam.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/vn.png",
+      "image": "./assets/VN.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/vn.png",
+        "foregroundImage": "./assets/VN.jpg",
         "backgroundColor": "#ffffff"
       }
     },

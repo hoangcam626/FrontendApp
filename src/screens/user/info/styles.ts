@@ -17,12 +17,33 @@ const styles = () => {
       padding: 30,
       borderBottomColor: theme.borderBottomColor,
     },
+    avatarContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    dot: {
+      marginLeft: 5,
+    },
     avatar: {
-      padding: 20,
-      width: 50,
-      height: 50,
-      borderRadius: 25,
+      // padding: 100,
+      marginTop:30,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
       marginRight: 10,
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderRadius: 10,
+    },
+    modalOption: {
+      paddingVertical: 10,
+      // borderBottomWidth: 1,
+      borderBottomColor: 'lightgray',
+    },
+    modalOptionText: {
+      fontSize: 18,
     },
     userName: {
       padding: 10,
