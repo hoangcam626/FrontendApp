@@ -23,6 +23,7 @@ const lightColors = {
         // chart
         gradientFrom: "#0083b0",
         gradientTo: "#00b4db",
+        
         // other
         WHITE: '#FFFFFF',
         BLACK: "#000000",
