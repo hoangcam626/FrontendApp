@@ -10,4 +10,5 @@ export const NAVIGATION_TITLE = {
     HISTORY: 'history',
     DETAIL: 'detail',
     ACCOUNT: 'account',
+    POST_DETAIL: 'post',
   };

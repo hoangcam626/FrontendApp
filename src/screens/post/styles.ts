@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native'
+import useTheme from '../../hooks/useTheme'
+
 const styles = () => {
-    const st = StyleSheet.create({
+  const theme = useTheme();
+
+  const st = StyleSheet.create({
 
     container: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
+      // paddingHorizontal: 40,
+      backgroundColor: theme.backgroundColor,
     },
   });
   return st

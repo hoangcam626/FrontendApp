@@ -57,7 +57,7 @@ const Login = () => {
                 style={styles.logo}
                 source={require('../../../../assets/images/tabs/vietnam.png')}
             />
-            <Text style={styles.slogan}>Đừng để tiền rơi</Text>
+            <Text style={styles.slogan}>Đất nước mình còn đẹp, cần chi đâu nước ngoài</Text>
             <Text style={styles.inputLabel}>E-mail: </Text>
             <View style={styles.formItem}>
                 <TextInput

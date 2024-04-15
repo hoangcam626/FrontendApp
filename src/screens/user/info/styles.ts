@@ -18,7 +18,7 @@ const styles = () => {
       borderBottomColor: theme.borderBottomColor,
     },
     avatarContainer: {
-      flexDirection: 'row',
+      // flexDirection: 'row',
       alignItems: 'center',
     },
     dot: {
@@ -34,16 +34,35 @@ const styles = () => {
     },
     modalContent: {
       backgroundColor: 'white',
-      padding: 20,
       borderRadius: 10,
+      width:275,
+      alignSelf:'center'
     },
     modalOption: {
-      paddingVertical: 10,
-      // borderBottomWidth: 1,
+      flexDirection: 'row',
+
       borderBottomColor: 'lightgray',
+    
     },
     modalOptionText: {
+      // flexDirection: 'row',
+      textAlignVertical:'center',
+      padding: 10,
       fontSize: 18,
+      // fontWeight:'bold',
+      color: theme.tabActive
+    },
+    modalCancel:{
+      padding:5,
+      fontSize: 18,
+      color: '#fff',
+      textAlign : 'center',
+      backgroundColor: theme.tabActive,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomColor: 'lightgray',
+
+
     },
     userName: {
       padding: 10,

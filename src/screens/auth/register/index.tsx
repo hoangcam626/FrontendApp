@@ -9,7 +9,7 @@ import { registerActions } from '../../../services/auth/actions';
 
 const Register = () => {
   const [account, setAccount] = useState({
-    name: '',
+    username: '',
     phone: '',
     email: '',
     password: '',
@@ -32,7 +32,7 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    if (!account.name || !account.email || !account.password) {
+    if (!account.username || !account.email || !account.password) {
       ToastAndroid.show('Vui lòng điền đủ thông tin!', ToastAndroid.SHORT)
     }
     // else if (validateEmail(account.email)) {
@@ -46,7 +46,7 @@ const Register = () => {
     // }
     else {
       dispatch(registerActions({
-        username: account.name,
+        username: account.username,
         email: account.email,
         password: account.password,
         phoneNumber: account.phone
@@ -54,7 +54,7 @@ const Register = () => {
         showToast()
         navigation.navigate(NAVIGATION_TITLE.LOGIN);
         setAccount({
-          name: "",
+          username: "",
           phone: "",
           email: "",
           password: "",
@@ -75,7 +75,7 @@ const Register = () => {
       <View style={styles.formItem}>
         <TextInput
           style={styles.input}
-          value={account.name}
+          value={account.username}
           onChangeText={handleChangeAccount('name')}
           placeholder='Nhập tên'
         />

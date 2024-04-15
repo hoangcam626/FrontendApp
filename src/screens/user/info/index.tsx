@@ -17,6 +17,7 @@ const User = () => {
     const theme = useTheme();
     const navigation = useNavigation<any>()
     const dispatch = useDispatch<any>()
+
     const [loading, setLoading] = useState<boolean>(false)
     const [avatar, setAvatar] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -41,7 +42,7 @@ const User = () => {
     };
 
     const viewAvatar = () => {
-       
+
         toggleModal();
 
     };
@@ -106,27 +107,30 @@ const User = () => {
     );
 
     return (
-        
+
         <View style={styles.container}>
-            
+
             <View style={styles.userInfo}>
                 <TouchableOpacity onPress={toggleModal} style={styles.avatarContainer}>
                     <Image
                         source={require('../../../../assets/VN.jpg')}
-                        
+
                         style={styles.avatar}
                     />
                 </TouchableOpacity>
                 <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
                     <View style={styles.modalContent}>
                         <TouchableOpacity onPress={viewAvatar} style={styles.modalOption}>
+                            <Icon name='eye' style={styles.modalOptionText} />
                             <Text style={styles.modalOptionText}>Xem ảnh đại diện</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={pickImage} style={styles.modalOption}>
+                            <Icon name='camera' style={styles.modalOptionText} />
+
                             <Text style={styles.modalOptionText}>Thay đổi ảnh đại diện</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={toggleModal} style={styles.modalOption}>
-                            <Text style={[styles.modalOptionText, { color: 'red' }]}>Hủy</Text>
+                        <TouchableOpacity onPress={toggleModal} style={[styles.modalCancel]}>
+                            <Text style={[styles.modalCancel]}>Hủy</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>

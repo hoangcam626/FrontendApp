@@ -11,6 +11,7 @@ import AddPost from "../../screens/post";
 import User from "../../screens/user/info";
 import ScheduleTrip from "../../screens/schedule-trip";
 import Location from "../../screens/location";
+import PostDetail from "../../screens/location/place";
 
 const MyBottomTabs = () => {
 
@@ -101,6 +102,7 @@ const MyBottomTabs = () => {
                 component={User}
                 options={getOptions}
             />
+            
         </Tab.Navigator>
     )
 }

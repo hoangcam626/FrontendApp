@@ -10,6 +10,7 @@ import ScheduleTrip from '../screens/schedule-trip';
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
 import Location from '../screens/location';
+import PostDetail from '../screens/location/place';
 
 
 const Stack = () => {
@@ -24,6 +25,9 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.ADD} component={AddPost} />
             <Stack.Screen name={NAVIGATION_TITLE.TRIP} component={ScheduleTrip} />
             <Stack.Screen name={NAVIGATION_TITLE.INFO_USER} component={User} />
+            <Stack.Screen name={NAVIGATION_TITLE.POST_DETAIL} component={PostDetail} />
+
+
         </Stack.Navigator>
     );
 }

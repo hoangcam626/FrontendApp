@@ -1,0 +1,67 @@
+import { StyleSheet,Dimensions } from 'react-native'
+import useTheme from '../../../hooks/useTheme'
+
+const styles = () => {
+    const theme = useTheme();
+    const windowWidth = Dimensions.get('window').width;
+    const imageWidth = (windowWidth) - 20 ;
+  const imageHeight = (imageWidth / 9) * 16; 
+
+    const st = StyleSheet.create({
+
+        container: {
+            // flexGrow: 1, 
+            justifyContent: 'center',
+            // paddingHorizontal: 40,
+            paddingTop: 40,
+            // alignItems: 'center',
+            backgroundColor: theme.backgroundColor,
+        },
+        imageContainer:{
+            // alignItems: 'center',
+            // width: '90%',
+        },
+        image: {
+            width: imageWidth,
+            height: imageHeight,
+            // aspectRatio: 1, 
+            alignSelf: 'center',
+            // aspectRatio: 'auto',
+            borderRadius: 10,
+        },
+       
+        postInfo: {
+            paddingLeft:20,
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 10,
+            backgroundColor: theme.backgroundColor,
+        },
+        profileImage: {
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            marginRight: 10,
+        },
+        authorDetails: {
+            flex: 1,
+        },
+        username: {
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        stats: {
+            fontSize: 14,
+            color: 'gray',
+        },
+        description: {
+            paddingLeft:20,
+            marginHorizontal: 20,
+            // textAlign: 'center',
+            marginTop: 10,
+        },
+        
+    });
+    return st
+}
+export default styles
