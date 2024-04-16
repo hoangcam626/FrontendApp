@@ -4,8 +4,6 @@ import st from './styles'
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import AvatarWithUsername from '../../user/component';
-import MyBottomTabs from "../../../components/bottom/BottomTab";
-
 
 const PostDetail = ({route}) => {
     const navigation = useNavigation();

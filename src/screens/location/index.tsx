@@ -19,10 +19,8 @@ const Location = () => {
         { id: 2, location: 'London', image: require('../../../assets/hue.jpg') },
         { id: 3, location: 'London', image: require('../../../assets/Wandering.jpg') },
         { id: 4, location: 'London', image: require('../../../assets/WondersofVietnam.jpg') },
-        // Add more user posts as needed
     ];
 
-    // Render item for FlatList
     const renderItem = ({ item }) => (
         <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.POST_DETAIL, { item: item.image })} >
             <View style={styles.postContainer}>
