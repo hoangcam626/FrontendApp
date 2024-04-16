@@ -26,9 +26,13 @@ const Login = () => {
         }
     }
 
-    const handleLogin = () => {
+    const handleLogin = async() => {
+        const req = new FormData()
+        req.append('email', account?.email)
+        req.append('password', account?.password)
+        console.log(req)
         setLoading(true)
-        dispatch(loginActions(account))
+        await dispatch(loginActions(req))
             .then(res => {
                 setLoading(false)
                 if (res.payload) {
@@ -57,7 +61,7 @@ const Login = () => {
                 style={styles.logo}
                 source={require('../../../../assets/images/tabs/vietnam.png')}
             />
-            <Text style={styles.slogan}>Đất nước mình còn đẹp, cần chi đâu nước ngoài</Text>
+            <Text style={styles.slogan}>VIỆT NAM</Text>
             <Text style={styles.inputLabel}>E-mail: </Text>
             <View style={styles.formItem}>
                 <TextInput
@@ -86,10 +90,10 @@ const Login = () => {
                     <Text style={[styles.registerText, styles.registerLink]}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
-            <Image
+            {/* <Image
                 style={styles.bg}
                 source={require('../../../../assets/images/tabs/vietnam.png')}
-            />
+            /> */}
             <Loading visiable={loading} />
         </KeyboardAvoidingView>
 

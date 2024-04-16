@@ -18,8 +18,8 @@ const Stack = () => {
     return (
         <Stack.Navigator initialRouteName={NAVIGATION_TITLE.LOGIN} screenOptions={{headerShown: false}}>
             <Stack.Screen name={NAVIGATION_TITLE.TAB} component={MyBottomTabs} />
-            {/* <Stack.Screen name={NAVIGATION_TITLE.LOGIN} component={Login} />
-            <Stack.Screen name={NAVIGATION_TITLE.REGISTER} component={Register} /> */}
+            <Stack.Screen name={NAVIGATION_TITLE.LOGIN} component={Login} />
+            <Stack.Screen name={NAVIGATION_TITLE.REGISTER} component={Register} />
             <Stack.Screen name={NAVIGATION_TITLE.HOME} component={Home} />
             <Stack.Screen name={NAVIGATION_TITLE.LOCATION} component={Location} />
             <Stack.Screen name={NAVIGATION_TITLE.ADD} component={AddPost} />

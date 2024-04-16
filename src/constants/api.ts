@@ -1,69 +1,69 @@
-export const BASE_URL = "http://192.168.10.106:3000"
+export const BASE_URL = "http://192.168.10.108:3000/api/v1"
 
 export const AUTH = {
-    REGISTER: "/api/v1/auth/register",
-    LOGIN: "/api/v1/auth/login",
+    REGISTER: "/auth/register",
+    LOGIN: "/auth/login",
 }
 
 export const USER = {
-    GET: "/api/v1/user",
-    UPDATE: "/api/v1/user/update",
-    UPDATE_AVATAR: "/api/v1/user/update-avatar",
-    SELF: "/api/v1/user/self",
-    RESET_PASSWORD: '/api/v1/user/reset-password'
+    GET: "/user",
+    UPDATE: "/user/update",
+    UPDATE_AVATAR: "/user/update-avatar",
+    SELF: "/user/self",
+    RESET_PASSWORD: '/user/reset-password'
 }
 
 export const PLACE = {
-    CREATE: "/create",
-    UPDATE: "/api/v1/place/update",
-    DELETE: "/api/v1/place/delete",
-    SELF: "/api/v1/place/self",
-    LIKE: "/api/vi/place/like",
-    UNLIKE: "/api/vi/place/unlike",
-    FAVOURITES: "/api/v1/place/favourites",
+    CREATE: "/place/create",
+    UPDATE: "/place/update",
+    DELETE: "/place/delete",
+    SELF: "/place/self",
+    LIKE: "/place/like",
+    UNLIKE: "/place/unlike",
+    FAVOURITES: "/place/favourites",
 }
 
 export const REVIEW = {
-    CREATE: "/api/v1/review/create",
-    UPDATE: "/api/v1/review/update",
-    DELETE: "/api/v1/review/delete",
-    SELF: "/api/v1/review/self",
-    LIKE: "/api/vi/review/like",
-    UNLIKE: "/api/vi/review/unlike",
-    FAVOURITES: "/api/v1/review/favourites",
+    CREATE: "/review/create",
+    UPDATE: "/review/update",
+    DELETE: "/review/delete",
+    SELF: "/review/self",
+    LIKE: "/review/like",
+    UNLIKE: "/review/unlike",
+    FAVOURITES: "/review/favourites",
     GET_ALL: "api/v1/review/reviews",
     CET_ALL_CREATE_BY: "api/v1/review/reviews/cteate-by",
     GET_All_FOR_PLACE: "api/v1/review/reviews/for-place",
 }
 
 export const POST = {
-    CREATE: "/api/v1/post/create",
-    UPDATE: "/api/v1/post/update",
-    DELETE: "/api/v1/post/delete",
-    SELF: "/api/v1/post/self",
-    LIKE: "/api/vi/post/like",
-    UNLIKE: "/api/vi/post/unlike",
-    FAVOURITES: "/api/v1/post/favourites",
+    CREATE: "/post/create",
+    UPDATE: "/post/update",
+    DELETE: "/post/delete",
+    SELF: "/post/self",
+    LIKE: "/post/like",
+    UNLIKE: "/post/unlike",
+    FAVOURITES: "/post/favourites",
     GET_ALL: "api/v1/post/posts",
     CET_ALL_CREATE_BY: "api/v1/post/posts/cteate-by",
     GET_All_IN_PLACE: "api/v1/post/posts/in-place",
 }
 
 export const COMMENT = {
-    CREATE: "/api/v1/comment/create",
-    UPDATE: "/api/v1/comment/update",
-    DELETE: "/api/v1/comment/delete",
-    SELF: "/api/v1/comment/self",
-    LIKE: "/api/vi/comment/like",
-    UNLIKE: "/api/vi/comment/unlike",
-    FAVOURITES: "/api/v1/comment/favourites",
+    CREATE: "/comment/create",
+    UPDATE: "/comment/update",
+    DELETE: "/comment/delete",
+    SELF: "/comment/self",
+    LIKE: "/comment/like",
+    UNLIKE: "/comment/unlike",
+    FAVOURITES: "/comment/favourites",
     CET_ALL_CREATE_BY: "api/v1/comment/comments/cteate-by",
     GET_All_IN_POST: "api/v1/comment/comments/in-post",
 
 }
 
 export const IMAGE = {
-    RESOURCE: '/api/v1/image/resource'
+    RESOURCE: '/image/resource'
 }
 
 export const WARNING = {

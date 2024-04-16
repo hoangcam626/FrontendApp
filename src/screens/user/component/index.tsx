@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import st from './styles'
 import { useNavigation } from '@react-navigation/native';
-import { NAVIGATION_TITLE } from '../../constants/navigation';
+import { NAVIGATION_TITLE } from '../../../constants/navigation';
 
 
 

@@ -5,18 +5,23 @@ import { useNavigation } from '@react-navigation/native';
 import { NAVIGATION_TITLE } from '../../../constants/navigation';
 import { useDispatch } from 'react-redux';
 import { registerActions } from '../../../services/auth/actions';
+import Loading from '../../../../utils/loading/Loading';
+
 // import { validateEmail, validatePassword, validatePhone } from '../../../../utils/validate';
 
 const Register = () => {
   const [account, setAccount] = useState({
     username: '',
-    phone: '',
+    // phone: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
   const navigation = useNavigation<any>()
   const dispatch = useDispatch<any>()
   const styles = st();
+  const [loading, setLoading] = useState<boolean>(false)
+
 
   const handleChangeAccount = (textInputName) => {
     return (value: any) => {
@@ -32,12 +37,12 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    if (!account.username || !account.email || !account.password) {
+    if (!account.username || !account.email || !account.password || !account.confirmPassword) {
       ToastAndroid.show('Vui lòng điền đủ thông tin!', ToastAndroid.SHORT)
     }
-    // else if (validateEmail(account.email)) {
-    //   ToastAndroid.show('Kiểm tra lại email!', ToastAndroid.SHORT)
-    // }
+    else if (account.password !== account.confirmPassword) {
+      ToastAndroid.show('Nhập khẩu nhập lại sai!', ToastAndroid.SHORT)
+    }
     // else if (validatePhone(account.phone)) {
     //   ToastAndroid.show('Xem lại số điện thoại!', ToastAndroid.SHORT)
     // }
@@ -45,22 +50,30 @@ const Register = () => {
     //   ToastAndroid.show('Mật khẩu dài tối thiểu 8 ký tự!', ToastAndroid.SHORT)
     // }
     else {
-      dispatch(registerActions({
-        username: account.username,
-        email: account.email,
-        password: account.password,
-        phoneNumber: account.phone
-      })).then(res =>{
-        showToast()
-        navigation.navigate(NAVIGATION_TITLE.LOGIN);
-        setAccount({
-          username: "",
-          phone: "",
-          email: "",
-          password: "",
-        });
+      setLoading(true)
+
+      var req = new FormData()
+      req.append('username', account?.username)
+      req.append('email', account?.email)
+      req.append('password', account?.password)
+
+      dispatch(registerActions(req)).then(res => {
+        setLoading(false)
+        if (res.payload) {
+          showToast()
+          navigation.navigate(NAVIGATION_TITLE.LOGIN);
+          setAccount({
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: ""
+          });
+        }
+        else {
+          ToastAndroid.show('Đăng ký không thành công!', ToastAndroid.SHORT)
+        }
       })
-      .catch(err => ToastAndroid.show('Có lỗi!', ToastAndroid.SHORT) )
+        .catch(err => ToastAndroid.show('Đăng ký không thành công!', ToastAndroid.SHORT))
     }
   };
 
@@ -70,24 +83,14 @@ const Register = () => {
         style={styles.logo}
         source={require('../../../../assets/images/tabs/vietnam.png')}
       />
-      <Text style={styles.slogan}>Đừng để tiền rơi</Text>
-      <Text style={styles.inputLabel}>Tên: </Text>
+      <Text style={styles.slogan}>VIỆT NAM</Text>
+      <Text style={styles.inputLabel}>Username: </Text>
       <View style={styles.formItem}>
         <TextInput
           style={styles.input}
           value={account.username}
-          onChangeText={handleChangeAccount('name')}
+          onChangeText={handleChangeAccount('username')}
           placeholder='Nhập tên'
-        />
-      </View>
-      <Text style={styles.inputLabel}>Số điện thoại: </Text>
-      <View style={styles.formItem}>
-        <TextInput
-          style={styles.input}
-          value={account.phone}
-          onChangeText={handleChangeAccount('phone')}
-          placeholder='Nhập số điện thoại'
-          keyboardType='phone-pad'
         />
       </View>
       <Text style={styles.inputLabel}>Email: </Text>
@@ -110,6 +113,16 @@ const Register = () => {
           secureTextEntry
         />
       </View>
+      <Text style={styles.inputLabel}>Nhập lại mật khẩu:</Text>
+      <View style={styles.formItem}>
+        <TextInput
+          style={styles.input}
+          value={account.confirmPassword}
+          onChangeText={handleChangeAccount('confirmPassword')}
+          placeholder="Nhập lại mật khẩu"
+          secureTextEntry
+        />
+      </View>
       <TouchableOpacity onPress={handleRegister} style={[styles.formItem, styles.formBtn]}>
         <Text style={styles.textBtn}>Đăng ký</Text>
       </TouchableOpacity>
@@ -119,10 +132,11 @@ const Register = () => {
           <Text style={[styles.registerText, styles.registerLink]}>Đăng nhập</Text>
         </TouchableOpacity>
       </View>
-      <Image
+      {/* <Image
         style={styles.bg}
         source={require('../../../../assets/images/tabs/vietnam.png')}
-      />
+      /> */}
+      <Loading visiable={loading} />
     </KeyboardAvoidingView>
   );
 };
