@@ -1,5 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native'
-import useTheme from '../../hooks/useTheme'
+import useTheme from '../../../hooks/useTheme'
 
 const styles = () => {
     const theme = useTheme();
@@ -15,7 +15,7 @@ const styles = () => {
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-            backgroundColor: theme.backgroundColor,
+            // backgroundColor: theme.backgroundColor,
         },
         profileImage: {
             width: 50,

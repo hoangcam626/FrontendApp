@@ -14,7 +14,7 @@ const styles = () => {
       flex: 1,
       justifyContent: 'center',
       paddingTop: 40,
-      // backgroundColor: theme.backgroundColor,
+      backgroundColor: theme.backgroundColor,
     },
     flatListContainer: {
       paddingVertical: 20,
@@ -26,17 +26,12 @@ const styles = () => {
       
       flexWrap: 'wrap',
       margin: 5,
-      borderRadius: 10, // Bo góc 3px cho ảnh
-      overflow: 'hidden', // Ảnh sẽ bị cắt ngang nếu vượt quá giới hạn của container
-      // width: "50%",
-      
+      borderRadius: 10,
+      overflow: 'hidden',
     },
     postImage: {
       width:imageWidth,
-      // width: "50%",
-// height:imageHeight,
-      // Đảm bảo ảnh chiếm hết không gian trong container
-      aspectRatio: 1, // Giữ tỉ lệ khung hình
+      aspectRatio: 1,
     },
     locationText: {
       position: 'absolute',

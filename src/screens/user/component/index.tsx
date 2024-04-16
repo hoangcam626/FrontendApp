@@ -13,7 +13,7 @@ const AvatarWithUsername = ({id, profileImage, username }) => {
     <TouchableOpacity onPress={() =>navigation.navigate(NAVIGATION_TITLE.INFO_USER, id)}>
 
      <View style={styles.postInfo}>
-                <Image source={require(profileImage)} style={styles.profileImage} />
+                <Image source={require('../../../../assets/VN.jpg')} style={styles.profileImage} />
                 <View style={styles.authorDetails}>
                     <Text style={styles.username}>{username}</Text>
                 </View>
