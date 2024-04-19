@@ -21,7 +21,7 @@ const styles = () => {
         imageContainer: {
             // alignItems: 'center',
             // width: '90%',
-            backgroundColor: "#9195F6",
+            backgroundColor: "#FFF6F6",
 
         },
         image: {
@@ -32,7 +32,7 @@ const styles = () => {
             alignSelf: 'center',
             // aspectRatio: 'auto',
             borderRadius: 10,
-            margin:20,
+            margin: 20,
             // backgroundColor: theme.backgroundType,
 
         },
@@ -58,23 +58,40 @@ const styles = () => {
         //     fontWeight: 'bold',
         // },
         stats: {
-            textAlign:'right',
-            borderTopColor:'gray',
-            borderTopWidth:1,
+            textAlign: 'right',
+            borderTopColor: 'gray',
+            borderTopWidth: 1,
             padding: 10,
             fontSize: 14,
             color: 'gray',
             marginVertical: 10,
             marginHorizontal: 20,
-            // backgroundColor: theme.backgroundColor,
-
-
         },
+        detailsContainer: {
+            flexDirection: 'row',
+            backgroundColor: theme.backgroundColor,
+            alignItems: 'center',
+            width: windowWidth,
+            borderRadius:10,
+        },
+        details: {
+            fontSize: 14,
+            color: 'gray',
+            marginVertical: 10,
+            marginHorizontal: 20,
+            textAlign:'left',
+            flex: 1
+        },
+        heart: {
+            marginVertical: 10,
+            marginHorizontal: 20,
+        },
+
         description: {
             paddingLeft: 20,
             marginHorizontal: 20,
-            borderTopColor:'gray',
-            borderTopWidth:1,
+            borderTopColor: 'gray',
+            borderTopWidth: 1,
             // textAlign: 'center',
             marginTop: 10,
         },

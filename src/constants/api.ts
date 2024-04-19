@@ -31,9 +31,9 @@ export const REVIEW = {
     LIKE: "/review/like",
     UNLIKE: "/review/unlike",
     FAVOURITES: "/review/favourites",
-    GET_ALL: "api/v1/review/reviews",
-    CET_ALL_CREATE_BY: "api/v1/review/reviews/cteate-by",
-    GET_All_FOR_PLACE: "api/v1/review/reviews/for-place",
+    GET_ALL: "/review/reviews",
+    GET_ALL_CREATE_BY: "/review/reviews/create-by",
+    GET_All_FOR_PLACE: "/review/reviews/for-place",
 }
 
 export const POST = {
@@ -44,9 +44,9 @@ export const POST = {
     LIKE: "/post/like",
     UNLIKE: "/post/unlike",
     FAVOURITES: "/post/favourites",
-    GET_ALL: "api/v1/post/posts",
-    CET_ALL_CREATE_BY: "api/v1/post/posts/cteate-by",
-    GET_All_IN_PLACE: "api/v1/post/posts/in-place",
+    GET_ALL: "/post/posts",
+    GET_ALL_CREATE_BY: "/post/posts/create-by",
+    GET_All_IN_PLACE: "/post/posts/in-place",
 }
 
 export const COMMENT = {
@@ -57,13 +57,26 @@ export const COMMENT = {
     LIKE: "/comment/like",
     UNLIKE: "/comment/unlike",
     FAVOURITES: "/comment/favourites",
-    CET_ALL_CREATE_BY: "api/v1/comment/comments/cteate-by",
-    GET_All_IN_POST: "api/v1/comment/comments/in-post",
-
+    GET_ALL_CREATE_BY: "/comment/comments/create-by",
+    GET_All_IN_POST: "/comment/comments/in-post",
+    GET_SUB_COMMENTS: "/comment/comments/sub-comment",
+}
+export const SCHEDULE={
+    CREATE: "/schedule/create",
+    UPDATE: "/schedule/update",
+    DELETE: "/schedule/delete",
+    SELF: "/schedule/self",
+    GET_All_MY_SCHEDULE: "/my-schedules",
+    // GET_ALL_CREATE_BY: "/schedule/schedules/create-by",
+    // GET_SUB_COMMENTS: "/schedule/schedules/sub-comment",
+    CREATE_PLACE: "/schedule/place-of-schedule/create",
+    UPDATE_PLACE: "/schedule/place-of-schedule/update",
+    DELETE_PLACE: "/schedule/place-of-schedule/delete",
+    SELF_PLACE: "/schedule/place-of-schedule/self",
 }
 
 export const IMAGE = {
-    RESOURCE: '/image/resource'
+    RESOURCE: '/image/resource?imageId='
 }
 
 export const WARNING = {

@@ -4,18 +4,21 @@ import st from './styles'
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import AvatarWithUsername from '../../user/component';
+import LikeComment from "../../like/likeComment";
+import useTheme from "../../../hooks/useTheme";
 
 const PostDetail = ({route}) => {
     const navigation = useNavigation();
     const {item} = route.params;
     const styles = st();
     console.log(item);
-
+    const theme = useTheme();
     const [user, setUser] = useState({
         "id": '',
         "username": '',
         "avatar": ''
     });
+
     return (
         <ScrollView contentContainerStyle={styles.container}
                     showsVerticalScrollIndicator={false}>
@@ -23,16 +26,17 @@ const PostDetail = ({route}) => {
                 <Image source={item}
                        style={[styles.image]}/>
             </View>
-            <AvatarWithUsername id={1} profileImage={""} username={"Username"}></AvatarWithUsername>
+            <AvatarWithUsername user={user}></AvatarWithUsername>
 
             <Text style={[styles.stats, {fontWeight: 'bold'}]}>MÔ TẢ</Text>
-            <Text style={styles.stats}>Likes: 10| Comments:11</Text>
-            {/* <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity> */}
-            {/*<MyBottomTabs></MyBottomTabs>*/}
+
+            <View style={styles.detailsContainer}>
+                <Text style={styles.details}>Likes: 10| Comments:11</Text>
+                <LikeComment style={styles.heart} commentId={1} isLike={true}></LikeComment>
+            </View>
         </ScrollView>
-    );
+    )
+        ;
 };
 
 

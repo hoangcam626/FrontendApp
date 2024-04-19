@@ -3,7 +3,7 @@ import { BASE_URL } from "../constants/api";
 import { getItemObjectAsyncStorage } from "../../utils/asyncStorage";
 import { KEY_STORAGE } from "../constants/storage";
 
-const formdata = axios.create({
+const formData = axios.create({
     baseURL: BASE_URL,
     headers: {
         'Content-Type': 'multipart/form-data',
@@ -11,20 +11,23 @@ const formdata = axios.create({
     }
 })
 
-let token
 const getToken = async () => {
-    token = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
+    const token = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
+    return token ? `Bearer ${token.accessToken}` : '';
 }
-formdata.interceptors.request.use(function (config) {
-    getToken()
-    config.headers.Authorization = token ? `Bearer ${token.accessToken}` : '';
+formData.interceptors.request.use(async function (config) {
+
+    config.headers.Authorization = await getToken();
     return config;
 });
 
-formdata.interceptors.response.use(
+formData.interceptors.response.use(
     function (response) {
         return response;
     },
+    function (error) {
+        return Promise.reject(error);
+    }
 );
 
-export default formdata
+export default formData
