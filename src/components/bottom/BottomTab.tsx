@@ -11,7 +11,7 @@ import AddPost from "../../screens/post/add";
 import User from "../../screens/user/info";
 import ScheduleTrip from "../../screens/scheduletrip";
 import Location from "../../screens/location";
-import PostDetail from "../../screens/post/detailPost";
+import PostDetail from "../../screens/post/detail";
 import {getItemObjectAsyncStorage} from "../../../utils/asyncStorage";
 import {KEY_STORAGE} from "../../constants/storage";
 import VisitCalendar from "../../screens/calendar";

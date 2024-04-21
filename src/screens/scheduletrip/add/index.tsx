@@ -19,8 +19,10 @@ import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
 import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
+import { createScheduleActions } from '../../../services/schedule/actions';
+import { NAVIGATION_TITLE } from '../../../constants/navigation';
 
-const AddPost = () => {
+const AddSchedule = () => {
     const navigation = useNavigation<any>()
     const isFocused = useIsFocused()
     const dispatch = useDispatch<any>()
@@ -66,11 +68,11 @@ const AddPost = () => {
         });
         req.append('content', content)
 
-        await dispatch(createPostActions(req))
+        await dispatch(createScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {
                     setLoading(false)
-                    ToastAndroid.show('Đăng tải thành công!', ToastAndroid.SHORT)
+                    ToastAndroid.show('Tạo thành công!', ToastAndroid.SHORT)
                     navigation.goBack()
                     console.log(res, 'create post')
                 } else {
@@ -122,4 +124,4 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default AddSchedule;

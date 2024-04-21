@@ -10,7 +10,7 @@ import ScheduleTrip from '../screens/scheduletrip';
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
 import Location from '../screens/location';
-import PostDetail from '../screens/post/detailPost';
+import PostDetail from '../screens/post/detail';
 import VisitCalendar from '../screens/calendar';
 
 

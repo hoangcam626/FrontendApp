@@ -37,6 +37,13 @@ const User = () => {
         userId: '',
         username: ""
     }]);
+    const [index, setIndex] = useState(0);
+
+    const [routes] = useState([
+        {key: 'posts', icon: 'file-text-o'},
+        {key: 'places', icon: 'map-marker'},
+        {key: 'heart', icon: 'heart'},
+    ]);
     // const [loginId, setLoginId] = useState();
     const [heartPlaces, setHeartPlaces] = useState<any>([]);
     const [personalPosts, setPersonalPosts] = useState<any>([]);
@@ -159,13 +166,7 @@ const User = () => {
     )
 
 
-    const [index, setIndex] = useState(0);
-
-    const [routes] = useState([
-        {key: 'posts', icon: 'file-text-o'},
-        {key: 'places', icon: 'map-marker'},
-        {key: 'heart', icon: 'heart'},
-    ]);
+    
 
     const renderFavoritePlacesScene = () => (
         <View style={styles.scene}>

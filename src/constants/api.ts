@@ -61,7 +61,7 @@ export const COMMENT = {
     GET_All_IN_POST: "/comment/comments/in-post",
     GET_SUB_COMMENTS: "/comment/comments/sub-comment",
 }
-export const SCHEDULE={
+export const SCHEDULE = {
     CREATE: "/schedule/create",
     UPDATE: "/schedule/update",
     DELETE: "/schedule/delete",
@@ -69,18 +69,18 @@ export const SCHEDULE={
     GET_All_MY_SCHEDULE: "/my-schedules",
     // GET_ALL_CREATE_BY: "/schedule/schedules/create-by",
     // GET_SUB_COMMENTS: "/schedule/schedules/sub-comment",
-   
+
 }
-export const PLACE_SCHEDULE={
+export const PLACE_SCHEDULE = {
     CREATE: "/on-schedule/create",
     UPDATE: "/on-schedule/update",
     DELETE: "/on-schedule/delete",
     SELF: "/on-schedule/self",
     IS_COMPLETE: "/on-schedule/is-complete",
     ON_DATE: "/on-schedule/on-date"
-} 
+}
 
-export const VISIT={
+export const VISIT = {
     CREATE: "/visit/create",
     DELETE: "/visit/delete",
     MY_VIST: "/visit/my_visit"

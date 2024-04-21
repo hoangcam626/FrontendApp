@@ -3,7 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import st from './styles'
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import AvatarWithUsername from '../../user/component';
+import AvatarWithUsername from '../../user/shortinfo';
 import LikeComment from "../../like/likeComment";
 import useTheme from "../../../hooks/useTheme";
 
