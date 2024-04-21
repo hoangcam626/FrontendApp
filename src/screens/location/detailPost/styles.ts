@@ -15,13 +15,13 @@ const styles = () => {
             // paddingHorizontal: 40,
             paddingTop: 40,
             // alignItems: 'center',
-            backgroundColor: "#FFF6F6",
+            backgroundColor: theme.backgroundColor,
 
         },
         imageContainer: {
             // alignItems: 'center',
             // width: '90%',
-            backgroundColor: "#FFF6F6",
+            // backgroundColor: "#FFF6F6",
 
         },
         image: {
