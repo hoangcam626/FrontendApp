@@ -4,13 +4,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MyBottomTabs from '../components/bottom/BottomTab';
 import { NAVIGATION_TITLE } from '../constants/navigation';
 import Home from '../screens/home';
-import AddPost from '../screens/post';
+import AddPost from '../screens/post/add';
 import User from '../screens/user/info';
-import ScheduleTrip from '../screens/schedule-trip';
+import ScheduleTrip from '../screens/scheduletrip';
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
 import Location from '../screens/location';
-import PostDetail from '../screens/location/place';
+import PostDetail from '../screens/post/detailPost';
+import VisitCalendar from '../screens/calendar';
 
 
 const Stack = () => {
@@ -26,6 +27,8 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.TRIP} component={ScheduleTrip} />
             <Stack.Screen name={NAVIGATION_TITLE.INFO_USER} component={User} />
             <Stack.Screen name={NAVIGATION_TITLE.POST_DETAIL} component={PostDetail} />
+            <Stack.Screen name={NAVIGATION_TITLE.CALENDAR} component={VisitCalendar} />
+
 
 
         </Stack.Navigator>

@@ -59,7 +59,7 @@ const styles = () => {
         // },
         stats: {
             textAlign: 'right',
-            borderTopColor: 'gray',
+            borderTopColor: '#ccc',
             borderTopWidth: 1,
             padding: 10,
             fontSize: 14,

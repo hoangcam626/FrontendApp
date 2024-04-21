@@ -26,7 +26,7 @@ const PostDetail = ({route}) => {
                 <Image source={item}
                        style={[styles.image]}/>
             </View>
-            <AvatarWithUsername user={user}></AvatarWithUsername>
+            <AvatarWithUsername user={item?.user} time={item?.creatdAt}></AvatarWithUsername>
 
             <Text style={[styles.stats, {fontWeight: 'bold'}]}>MÔ TẢ</Text>
 

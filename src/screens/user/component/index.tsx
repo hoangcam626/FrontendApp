@@ -6,7 +6,7 @@ import { NAVIGATION_TITLE } from '../../../constants/navigation';
 
 
 
-const AvatarWithUsername = ({user }) => {
+const AvatarWithUsername = ({user, time }) => {
     const navigation = useNavigation<any>();
     const styles = st();
 
@@ -17,6 +17,7 @@ const AvatarWithUsername = ({user }) => {
                 <Image source={require('../../../../assets/VN.jpg')} style={styles.profileImage} />
                 <View style={styles.authorDetails}>
                     <Text style={styles.username}>{user?.username}</Text>
+                    <Text>{time}</Text>
                 </View>
             </View>
     </TouchableOpacity>

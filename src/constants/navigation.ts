@@ -11,4 +11,5 @@ export const NAVIGATION_TITLE = {
     DETAIL: 'detail',
     ACCOUNT: 'account',
     POST_DETAIL: 'post',
+    CALENDAR:'calendar'
   };
