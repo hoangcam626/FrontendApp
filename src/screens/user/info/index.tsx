@@ -37,29 +37,36 @@ const User = () => {
         userId: '',
         username: ""
     }]);
-    const [loginId, setLoginId] = useState();
+    const [index, setIndex] = useState(0);
+
+    const [routes] = useState([
+        {key: 'posts', icon: 'file-text-o'},
+        {key: 'places', icon: 'map-marker'},
+        {key: 'heart', icon: 'heart'},
+    ]);
+    // const [loginId, setLoginId] = useState();
     const [heartPlaces, setHeartPlaces] = useState<any>([]);
     const [personalPosts, setPersonalPosts] = useState<any>([]);
     const [heartPosts, setHeartPosts] = useState<any>([]);
 
-    useEffect( () => {
+    useEffect(() => {
         getInfoUser()
     }, [isFocused]);
     const getInfoUser = async () => {
         const login = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
-        setLoginId(login.id)
-        console.log(loginId)
+
+        console.log(login.id)
         const req = new FormData()
-        req.append("userId", loginId)
+        req.append("userId", login.id)
         console.log(req)
         setLoading(true)
         await dispatch(selfActions(req))
             .then(res => {
                 setUserInfo(res?.payload)
                 console.log(userInfo)
-                // getPersonalPosts(req)
-                // getHeartPosts(req)
-                // getHeartPlaces(req)
+                getPersonalPosts(req)
+                getHeartPosts(req)
+                getHeartPlaces(req)
                 setLoading(false)
             })
             .catch(err => setLoading(false))
@@ -159,34 +166,41 @@ const User = () => {
     )
 
 
-    const [index, setIndex] = useState(0);
-
-    const [routes] = useState([
-        {key: 'posts', icon: 'file-text-o'},
-        {key: 'places', icon: 'map-marker'},
-        {key: 'heart', icon: 'heart'},
-    ]);
+    
 
     const renderFavoritePlacesScene = () => (
         <View style={styles.scene}>
-            {heartPlaces.map(place => (
-                <Text key={place.id}></Text>
-            ))}
+            {heartPlaces ? (
+                heartPlaces.map(place => (
+                    <Text key={place.id}></Text>
+                ))
+            ) : (
+                <Text>Bạn chưa yêu thích địa điểm nào</Text>
+            )}
+
         </View>
     );
 
     const renderPersonalPostsScene = () => (
         <View style={styles.scene}>
-            {personalPosts.map(post => (
-                <Text key={post.id}></Text>
-            ))}
+            {personalPosts ? (
+                personalPosts?.map(post => (
+                    <Text key={post.id}> post.creatdAt</Text>
+                ))
+            ) : (
+                <Text>Bạn chưa đăng bài chia sẻ nào</Text>
+            )}
         </View>
     );
     const renderHeartPostsScene = () => (
         <View style={styles.scene}>
-            {heartPosts.map(post => (
-                <Text key={post.id}></Text>
-            ))}
+            {heartPosts ? (
+                heartPosts.map(post => (
+                    <Text key={post.id}></Text>
+                ))
+            ) : (
+                <Text>Bạn chưa yêu thích bài chia sẻ nào</Text>
+            )}
         </View>
     );
 
@@ -209,7 +223,7 @@ const User = () => {
 
             <View style={styles.userInfo}>
                 <TouchableOpacity onPress={toggleModal} style={styles.avatarContainer}>
-                    {(userInfo.avatarId) ?
+                    {(userInfo) ?
                         <Image
                             style={styles.avatar}
                             source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${userInfo?.avatarId}`}}
@@ -245,19 +259,18 @@ const User = () => {
             </View>
 
             {/* Tab view */}
-            {/*<TabView*/}
-            {/*    navigationState={{index, routes}}*/}
-            {/*    renderScene={SceneMap({*/}
-            {/*        places: renderFavoritePlacesScene,*/}
-            {/*        posts: renderPersonalPostsScene,*/}
-            {/*        heart: renderHeartPostsScene*/}
-            {/*    })}*/}
-            {/*    onIndexChange={setIndex}*/}
-            {/*    renderTabBar={renderTabBar}*/}
-            {/*/>*/}
+            <TabView
+                navigationState={{index, routes}}
+                renderScene={SceneMap({
+                    places: renderFavoritePlacesScene,
+                    posts: renderPersonalPostsScene,
+                    heart: renderHeartPostsScene
+                })}
+                onIndexChange={setIndex}
+                renderTabBar={renderTabBar}
+            />
             <Loading visiable={loading}></Loading>
         </View>
     );
-
 }
 export default User

@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme'
 const styles = () => {
   const windowWidth = Dimensions.get('window').width;
   const imageWidth = (windowWidth / 2) - 15;
-  const imageHeight = (imageWidth / 3) * 4; 
+  const imageHeight = (imageWidth / 9) * 16;
   const theme = useTheme();
 
   const st = StyleSheet.create({
@@ -23,7 +23,6 @@ const styles = () => {
     postContainer: {
       // flex: 1,
       flexDirection: 'row',
-      
       flexWrap: 'wrap',
       margin: 5,
       borderRadius: 10,
@@ -31,6 +30,7 @@ const styles = () => {
     },
     postImage: {
       width:imageWidth,
+      height:imageHeight,
       aspectRatio: 1,
     },
     locationText: {

@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native'
-import useTheme from '../../hooks/useTheme'
+import useTheme from '../../../hooks/useTheme'
 
 const styles = () => {
   const theme = useTheme();
@@ -8,21 +8,14 @@ const styles = () => {
   const st = StyleSheet.create({
 
     modalContainer: {
-      // backgroundColor: 'gray',
-      // height: '80%',
-      paddingTop:35,
       paddingHorizontal: 20,
       marginVertical:10,
-      flex: 1,
-
     },
     container: {
       flex: 1,
-      paddingHorizontal: 20,
+      // paddingHorizontal: 20,
       paddingTop:35,
-      marginVertical:10,
-      // justifyContent: 'center',
-      // alignItems: 'center',
+      // marginVertical:10,
       backgroundColor: theme.backgroundColor
     },
     icon:{
@@ -33,22 +26,24 @@ const styles = () => {
       fontWeight: 'bold',
       fontSize: 20,
       flex:1,
-      textAlign:'center'
+      textAlign:'center',
+      marginRight: 20
     },
     topModal:{
       flexDirection: "row",
       width: windowWidth,
-      // borderRadius:10,
+      borderColor:"#ccc",
+      borderBottomWidth:1,
       alignItems: 'center',
-
+      height: 40,
     },
     imagePicker: {
       width:'100%',
       height: windowWidth/9*16*0.5,
-      // backgroundColor: '#f0f0f0',
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 20,
+      paddingBottom:10,
+
     },
     imageAdd:{
       flexDirection: "column",
@@ -60,9 +55,14 @@ const styles = () => {
       height: '100%',
       resizeMode: 'cover',
     },
+    titleInput:{
+      fontSize: 16,
+      fontWeight:'bold',
+      paddingBottom:10,
+    },
     descriptionInput: {
       width: '100%',
-      height: 100,
+      // height: 100,
       borderWidth: 1,
       borderColor: '#ccc',
       borderRadius: 5,

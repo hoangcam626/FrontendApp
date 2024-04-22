@@ -14,13 +14,15 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import Icon from "react-native-vector-icons/FontAwesome";
 import st from './styles'
-import navigation from "../../navigation";
+import navigation from "../../../navigation";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
-import {createPostActions} from "../../services/post/actions";
+import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
+import { createScheduleActions } from '../../../services/schedule/actions';
+import { NAVIGATION_TITLE } from '../../../constants/navigation';
 
-const AddPost = () => {
+const AddSchedule = () => {
     const navigation = useNavigation<any>()
     const isFocused = useIsFocused()
     const dispatch = useDispatch<any>()
@@ -66,31 +68,32 @@ const AddPost = () => {
         });
         req.append('content', content)
 
-        await dispatch(createPostActions(req))
+        await dispatch(createScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {
                     setLoading(false)
-                    ToastAndroid.show('Đăng tải thành công!', ToastAndroid.SHORT)
-                    console.log(res, 'update avatar')
+                    ToastAndroid.show('Tạo thành công!', ToastAndroid.SHORT)
+                    navigation.goBack()
+                    console.log(res, 'create post')
                 } else {
                     ToastAndroid.show('Có lỗi!', ToastAndroid.SHORT)
                     setLoading(false)
                 }
-                console.log(res, 'update avatar')
+                console.log(res, 'create post')
             })
             .catch(err => setLoading(false));
     };
 
     return (
         <View style={styles.container}>
-                <View style={styles.topModal}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.topModal}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
 
-                        <Icon name='angle-left' size={24} style={styles.icon}></Icon>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Bắt đầu chia sẻ</Text>
-                </View>
-            <ScrollView >
+                    <Icon name='angle-left' size={24} style={styles.icon}></Icon>
+                </TouchableOpacity>
+                <Text style={styles.title}>Bắt đầu chia sẻ</Text>
+            </View>
+            <ScrollView style={styles.modalContainer}>
                 <TouchableOpacity onPress={pickImage}>
                     <View style={styles.imagePicker}>
                         {image ? (
@@ -100,19 +103,25 @@ const AddPost = () => {
                         )}
                     </View>
                 </TouchableOpacity>
-
+                
+                <Text style={styles.titleInput}>Mô tả cho nội dung bạn chia sẻ</Text>
                 <TextInput
                     style={styles.descriptionInput}
                     placeholder="Mô tả"
                     onChangeText={text => setContent(text)}
                     value={content}
-                    // multiline
+                    multiline
                 />
-                <Button title="Đăng" onPress={handlePost}/>
+                {/* <Button title="Đăng" onPress={handlePost}/>
+                 */}
+                 <TouchableOpacity onPress={handlePost}>
+                    <Text>Đăng</Text>
+                 </TouchableOpacity>
+
             </ScrollView>
         </View>
 
     );
 };
 
-export default AddPost;
+export default AddSchedule;

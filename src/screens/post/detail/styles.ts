@@ -15,13 +15,13 @@ const styles = () => {
             // paddingHorizontal: 40,
             paddingTop: 40,
             // alignItems: 'center',
-            backgroundColor: "#FFF6F6",
+            backgroundColor: theme.backgroundColor,
 
         },
         imageContainer: {
             // alignItems: 'center',
             // width: '90%',
-            backgroundColor: "#FFF6F6",
+            // backgroundColor: "#FFF6F6",
 
         },
         image: {
@@ -59,7 +59,7 @@ const styles = () => {
         // },
         stats: {
             textAlign: 'right',
-            borderTopColor: 'gray',
+            borderTopColor: '#ccc',
             borderTopWidth: 1,
             padding: 10,
             fontSize: 14,

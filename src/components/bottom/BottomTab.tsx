@@ -7,13 +7,14 @@ import {NAVIGATION_TITLE} from "../../constants/navigation";
 // import ClassifyTopTab from "./TopTab";
 import useTheme from "../../hooks/useTheme";
 import Home from "../../screens/home";
-import AddPost from "../../screens/post";
+import AddPost from "../../screens/post/add";
 import User from "../../screens/user/info";
-import ScheduleTrip from "../../screens/schedule-trip";
+import ScheduleTrip from "../../screens/scheduletrip";
 import Location from "../../screens/location";
-import PostDetail from "../../screens/location/place";
+import PostDetail from "../../screens/post/detail";
 import {getItemObjectAsyncStorage} from "../../../utils/asyncStorage";
 import {KEY_STORAGE} from "../../constants/storage";
+import VisitCalendar from "../../screens/calendar";
 
 const MyBottomTabs = () => {
 
@@ -95,8 +96,8 @@ const MyBottomTabs = () => {
                     options={getOptions}
                 />
                 <Tab.Screen
-                    name={NAVIGATION_TITLE.TRIP}
-                    component={ScheduleTrip}
+                    name={NAVIGATION_TITLE.CALENDAR}
+                    component={VisitCalendar}
                     options={getOptions}
                 />
                 <Tab.Screen

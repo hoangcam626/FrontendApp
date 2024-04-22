@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import AvatarWithUsername from "../user/component";
+import AvatarWithUsername from "../user/shortinfo";
 import LikeComment from "../like/likeComment";
 import CommentList from "./commentList";
 import {getSubCommentsActions} from "../../services/comment/actions";
