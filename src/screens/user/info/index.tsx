@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity, Alert, ToastAndroid} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused, useNavigation} from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -17,6 +17,7 @@ import {KEY_STORAGE} from "../../../constants/storage";
 import {BASE_URL, IMAGE} from "../../../constants/api";
 import {getPostCreateByActions, getPostFavouritesActions} from "../../../services/post/actions";
 import {getPlaceFavouritesActions} from "../../../services/place/actions";
+import moment from "moment";
 
 const User = () => {
     const isFocused = useIsFocused()
@@ -44,20 +45,22 @@ const User = () => {
         {key: 'places', icon: 'map-marker'},
         {key: 'heart', icon: 'heart'},
     ]);
-    // const [loginId, setLoginId] = useState();
     const [heartPlaces, setHeartPlaces] = useState<any>([]);
     const [personalPosts, setPersonalPosts] = useState<any>([]);
     const [heartPosts, setHeartPosts] = useState<any>([]);
 
+    useFocusEffect(
+        useCallback(() => {
+            getInfoUser();
+        }, [])
+    );
     useEffect(() => {
-        if (isFocused) {
-            setImage(null)
+        if (image) {
+            handleEditAvatarUser();
         }
-        getInfoUser()
-    }, [isFocused]);
+    }, [image]);
     const getInfoUser = async () => {
         const login = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
-
         console.log(login.id)
         const req = new FormData()
         req.append("userId", login.id)
@@ -122,6 +125,7 @@ const User = () => {
         dispatch(updateAvatarActions(req))
             .then((res) => {
                 if (res?.payload) {
+                    setImage(null)
                     getInfoUser()
                     setLoading(false)
                     ToastAndroid.show('Cập nhật thành công!', ToastAndroid.SHORT)
@@ -145,9 +149,8 @@ const User = () => {
         if (!result.canceled) {
             setImage(result.assets[0].uri);
         }
-        await handleEditAvatarUser()
-        toggleModal();
 
+        toggleModal();
     };
 
     const toggleModal = () => {
@@ -156,7 +159,6 @@ const User = () => {
 
     const viewAvatar = () => {
         toggleModal();
-
     };
 
     const renderFavoritePlacesScene = () => (
@@ -245,8 +247,10 @@ const User = () => {
                 </Modal>
 
                 <Text style={styles.userName}>{userInfo?.username}</Text>
-                <Text>asdf</Text>
-                <Text>asdf</Text>
+                <Text>Tham gia từ {moment(userInfo?.startDate).format("DD - MM - YYYY")}</Text>
+                <Text style={{fontSize: 16, fontWeight: 'bold'}}>{userInfo?.totalPost} post
+                    | {userInfo?.totalReview} reviews | {userInfo?.totalVisit} visit</Text>
+                {/*<Text>{userInfo?.decription}</Text>*/}
 
             </View>
 

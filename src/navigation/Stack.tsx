@@ -15,6 +15,7 @@ import VisitCalendar from '../screens/calendar';
 import AddSchedule from "../screens/scheduletrip/add";
 import DetailSchedule from "../screens/scheduletrip/detail";
 import UpdateSchedule from "../screens/scheduletrip/update";
+import DetailPlace from "../screens/place/detail";
 
 
 const Stack = () => {
@@ -34,6 +35,7 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.ADD_SCHEDULE} component={AddSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.DETAIL_SCHEDULE} component={DetailSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.UPDATE_SCHEDULE} component={UpdateSchedule} />
+            <Stack.Screen name={NAVIGATION_TITLE.DETAIL_PLACE} component={DetailPlace} />
 
         </Stack.Navigator>
     );

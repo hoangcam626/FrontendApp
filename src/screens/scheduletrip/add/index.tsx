@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TextInput, Image, TouchableOpacity, Text, ToastAndroid,} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Icon from "react-native-vector-icons/FontAwesome";
 import st from './styles'
 import navigation from "../../../navigation";
-import {useIsFocused, useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
 import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
@@ -16,9 +16,8 @@ import Loading from "../../../../utils/loading/Loading";
 
 const AddSchedule = () => {
     const navigation = useNavigation<any>()
-    const isFocused = useIsFocused()
     const dispatch = useDispatch<any>()
-    const [loading, setLoading] = useState<boolean>()
+    const [loading, setLoading] = useState<boolean>(false)
     const [image, setImage] = useState(null);
     const [content, setContent] = useState('');
     const [name, setName] = useState('')
@@ -27,13 +26,12 @@ const AddSchedule = () => {
     const [showPicker1, setShowPicker1] = useState(false);
     const [showPicker2, setShowPicker2] = useState(false);
 
-    useEffect(() => {
-        if (isFocused) {
+    useFocusEffect(
+        useCallback(() => {
             setImage(null)
             setContent('')
-
-        }
-    }, [isFocused]);
+        }, [])
+    );
     const styles = st()
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -78,6 +76,7 @@ const AddSchedule = () => {
         req.append("endDate", moment(endDate).format('YYYY-MM-DD'))
         req.append('description', content)
         console.log(req)
+        setLoading(true)
         await dispatch(createScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {

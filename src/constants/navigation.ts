@@ -14,5 +14,6 @@ export const NAVIGATION_TITLE = {
     CALENDAR:'calendar',
     ADD_SCHEDULE: 'add-schedule',
     UPDATE_SCHEDULE: 'update-schedule',
-    DETAIL_SCHEDULE: 'detail_schedule'
+    DETAIL_SCHEDULE: 'detail_schedule',
+    DETAIL_PLACE:'detail_place'
   };

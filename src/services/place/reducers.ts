@@ -7,6 +7,7 @@ import {
     likePlaceActions,
     unlikePlaceActions,
     getPlaceFavouritesActions,
+    getPlacesActions
 } from "./actions"
 
 interface IPlace {
@@ -147,6 +148,24 @@ export const placeSlice = createSlice({
             };
         })
         builder.addCase(getPlaceFavouritesActions.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getPlacesActions.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getPlacesActions.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(getPlacesActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,

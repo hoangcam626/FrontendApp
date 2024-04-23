@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, StatusBar, TouchableOpacity, Image} from 'react-native';
 import st from './styles'
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import useTheme from '../../hooks/useTheme'
 import VisitCalendar from "../calendar";
@@ -16,10 +16,10 @@ import {getMyScheduleActions} from "../../services/schedule/actions";
 import {BASE_URL, IMAGE} from "../../constants/api";
 import {ScrollView} from "react-native-gesture-handler";
 import Loading from "../../../utils/loading/Loading";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 
 const ScheduleTrip = () => {
-    const isFocused = useIsFocused()
     const styles = st();
     const theme = useTheme();
     const navigation = useNavigation<any>()
@@ -37,7 +37,7 @@ const ScheduleTrip = () => {
     ]);
     const getMySchedule = async () => {
         setLoading(true)
-        dispatch(getMyScheduleActions())
+        await dispatch(getMyScheduleActions())
             .then(res => {
                 setListSchedule(res?.payload)
                 setLoading(false)
@@ -45,9 +45,11 @@ const ScheduleTrip = () => {
             .catch(err => setLoading(false))
     }
 
-    useEffect(() => {
-        getMySchedule();
-    }, [isFocused]);
+    useFocusEffect(
+        useCallback(() => {
+            getMySchedule();
+        }, [])
+    );
 
     const renderSchedule = () => (
         <ScrollView style={styles.schedule}>
@@ -56,8 +58,9 @@ const ScheduleTrip = () => {
             </TouchableOpacity>
             {listSchedule ? (
                 listSchedule?.map(schedule => (
-                    <View style={styles.scheduleItem} key = {schedule?.id}>
-                        <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, schedule)}>
+                    <View style={styles.scheduleItem} key={schedule?.id}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, schedule?.id)}>
                             <View style={styles.imageContainer}>
                                 <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${schedule?.imageLabelId}`}}
                                        style={styles.image}/>
@@ -69,6 +72,7 @@ const ScheduleTrip = () => {
                             )}
                             <Text key={schedule.id} style={styles.nameSchedule}>{schedule?.nameSchedule}</Text>
                         </TouchableOpacity>
+
                     </View>
                 ))
             ) : (

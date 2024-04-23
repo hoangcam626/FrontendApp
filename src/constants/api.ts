@@ -21,6 +21,10 @@ export const PLACE = {
     LIKE: "/place/like",
     UNLIKE: "/place/unlike",
     FAVOURITES: "/place/favourites",
+    PLACES: "/place/places",
+    SEARCH: "/search",
+    RATING:"/rating",
+    PLACES_CODE:"/places/code"
 }
 
 export const REVIEW = {

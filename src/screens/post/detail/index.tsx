@@ -13,11 +13,7 @@ const PostDetail = ({route}) => {
     const styles = st();
     console.log(item);
     const theme = useTheme();
-    const [user, setUser] = useState({
-        "id": '',
-        "username": '',
-        "avatar": ''
-    });
+    const [user, setUser] = useState<any>();
 
     return (
         <ScrollView contentContainerStyle={styles.container}

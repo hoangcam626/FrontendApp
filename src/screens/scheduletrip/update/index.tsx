@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TextInput, Image, TouchableOpacity, Text, ToastAndroid,} from 'react-native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import st from './styles'
 import navigation from "../../../navigation";
-import {useIsFocused, useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
 import {ScrollView} from "react-native-gesture-handler";
 import {updateScheduleActions} from '../../../services/schedule/actions';
@@ -13,24 +13,25 @@ import moment from "moment";
 import Loading from "../../../../utils/loading/Loading";
 
 const UpdateSchedule = ({route}) => {
-    const navigation = useNavigation<any>()
-    const schedule = route.params
-    const isFocused = useIsFocused()
-    const dispatch = useDispatch<any>()
-    const [loading, setLoading] = useState<boolean>()
+    const navigation = useNavigation<any>();
+    const schedule = route.params;
+    const dispatch = useDispatch<any>();
+    const [loading, setLoading] = useState<boolean>(false);
     const [content, setContent] = useState('');
-    const [name, setName] = useState('')
+    const [name, setName] = useState('');
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date>(new Date());
     const [showPicker1, setShowPicker1] = useState(false);
     const [showPicker2, setShowPicker2] = useState(false);
 
-    useEffect(() => {
-        setName(schedule?.nameSchedule)
-        setContent(schedule?.description)
-        setStartDate(new Date(schedule.startDate))
-        setEndDate(new Date(schedule.endDate))
-    }, [isFocused]);
+    useFocusEffect(
+        useCallback(() => {
+            setName(schedule?.nameSchedule)
+            setContent(schedule?.description)
+            setStartDate(new Date(schedule?.startDate))
+            setEndDate(new Date(schedule?.endDate))
+        }, [])
+    );
     const styles = st()
     const handleStartDateChange = (event, selectedDate) => {
         setShowPicker1(false);
@@ -45,9 +46,10 @@ const UpdateSchedule = ({route}) => {
         }
     };
 
-    const handleCreateSchedule = async () => {
+    const handleUpdateSchedule = async () => {
 
         const req = new FormData()
+        req.append("id", schedule?.id)
         req.append("nameSchedule", name)
         req.append("startDate", moment(startDate).format('YYYY-MM-DD'))
         req.append("endDate", moment(endDate).format('YYYY-MM-DD'))
@@ -110,7 +112,6 @@ const UpdateSchedule = ({route}) => {
                     multiline
                 />
 
-                <Text style={styles.titleInput}>Chọn ảnh nền cho hành trình mới</Text>
                 {showPicker2 && (
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -130,7 +131,7 @@ const UpdateSchedule = ({route}) => {
                         onChange={handleStartDateChange}
                     />)}
 
-                <TouchableOpacity style={styles.button} onPress={handleCreateSchedule}>
+                <TouchableOpacity style={styles.button} onPress={handleUpdateSchedule}>
                     <Text style={styles.buttonText}>Cập nhật</Text>
                 </TouchableOpacity>
 
