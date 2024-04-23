@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { REVIEW } from "../../constants/api";
 import formData from "../../http_client/multipartData";
+import http_client from "../../http_client";
+import httpClient from "../../http_client";
 
 export const createReviewActions = createAsyncThunk(
     'review/createReviewActions',
@@ -63,7 +65,7 @@ export const getReviewFavouritesActions = createAsyncThunk(
 export const getReviewsActions = createAsyncThunk(
     'review/getReviewsActions',
     async () => {
-        const res = await formData.post(REVIEW.GET_ALL)
+        const res = await httpClient.get(REVIEW.GET_ALL)
         console.log("payload", res)
         return res.data
     }

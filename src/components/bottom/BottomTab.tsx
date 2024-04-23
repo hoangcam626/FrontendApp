@@ -96,8 +96,8 @@ const MyBottomTabs = () => {
                     options={getOptions}
                 />
                 <Tab.Screen
-                    name={NAVIGATION_TITLE.CALENDAR}
-                    component={VisitCalendar}
+                    name={NAVIGATION_TITLE.TRIP}
+                    component={ScheduleTrip}
                     options={getOptions}
                 />
                 <Tab.Screen

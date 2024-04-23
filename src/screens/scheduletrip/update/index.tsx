@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {View, TextInput, Image, TouchableOpacity, Text, ToastAndroid,} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
 import Icon from "react-native-vector-icons/FontAwesome";
 import st from './styles'
 import navigation from "../../../navigation";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
-import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
-import {createScheduleActions} from '../../../services/schedule/actions';
+import {updateScheduleActions} from '../../../services/schedule/actions';
 import {NAVIGATION_TITLE} from '../../../constants/navigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import Loading from "../../../../utils/loading/Loading";
 
-const AddSchedule = () => {
+const UpdateSchedule = ({route}) => {
     const navigation = useNavigation<any>()
+    const schedule = route.params
     const isFocused = useIsFocused()
     const dispatch = useDispatch<any>()
     const [loading, setLoading] = useState<boolean>()
-    const [image, setImage] = useState(null);
     const [content, setContent] = useState('');
     const [name, setName] = useState('')
     const [startDate, setStartDate] = useState<Date>(new Date());
@@ -28,25 +26,12 @@ const AddSchedule = () => {
     const [showPicker2, setShowPicker2] = useState(false);
 
     useEffect(() => {
-        if (isFocused) {
-            setImage(null)
-            setContent('')
-
-        }
+        setName(schedule?.nameSchedule)
+        setContent(schedule?.description)
+        setStartDate(new Date(schedule.startDate))
+        setEndDate(new Date(schedule.endDate))
     }, [isFocused]);
     const styles = st()
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [16, 9],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
-    };
     const handleStartDateChange = (event, selectedDate) => {
         setShowPicker1(false);
         if (selectedDate) {
@@ -63,33 +48,24 @@ const AddSchedule = () => {
     const handleCreateSchedule = async () => {
 
         const req = new FormData()
-        const imageToUpload = image
-        const imageName = imageToUpload?.split('/').pop()
-        const imageType = imageToUpload?.split('.').pop()
-        console.log(`image/${imageType}`)
-        // @ts-ignore
-        image && req.append('imageLabel', {
-            uri: imageToUpload,
-            type: `image/${imageType}`,
-            name: imageName
-        });
         req.append("nameSchedule", name)
         req.append("startDate", moment(startDate).format('YYYY-MM-DD'))
         req.append("endDate", moment(endDate).format('YYYY-MM-DD'))
         req.append('description', content)
         console.log(req)
-        await dispatch(createScheduleActions(req))
+
+        await dispatch(updateScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {
                     setLoading(false)
-                    ToastAndroid.show('Tạo thành công!', ToastAndroid.SHORT)
+                    ToastAndroid.show('Cập nhật thành công!', ToastAndroid.SHORT)
                     navigation.goBack()
-                    console.log(res, 'create schedule')
+                    console.log(res, 'update schedule')
                 } else {
                     ToastAndroid.show('Có lỗi!', ToastAndroid.SHORT)
                     setLoading(false)
                 }
-                console.log(res, 'create post')
+                console.log(res, 'update schedule')
             })
             .catch(err => setLoading(false));
     };
@@ -101,7 +77,7 @@ const AddSchedule = () => {
 
                     <Icon name='angle-left' size={24} style={styles.iconBack}></Icon>
                 </TouchableOpacity>
-                <Text style={styles.title}>Hành trình mới</Text>
+                <Text style={styles.title}>Chỉnh sửa</Text>
             </View>
 
             <ScrollView style={styles.modalContainer}>
@@ -114,13 +90,17 @@ const AddSchedule = () => {
                     value={name}
                 />
                 <Text style={styles.titleInput}>Ngày bắt đầu:</Text>
+
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker1(true)}>
                     <Text>{moment(startDate).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
+
                 <Text style={styles.titleInput}>Ngày kết thúc:</Text>
+
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker2(true)}>
                     <Text>{moment(endDate).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
+
                 <Text style={styles.titleInput}>Một chút chú thích cho hành trình này</Text>
                 <TextInput
                     style={styles.descriptionInput}
@@ -129,20 +109,8 @@ const AddSchedule = () => {
                     value={content}
                     multiline
                 />
+
                 <Text style={styles.titleInput}>Chọn ảnh nền cho hành trình mới</Text>
-                <TouchableOpacity onPress={pickImage}>
-
-                    {image ? (
-                        <View style={styles.imagePicker}>
-                            <Image source={{uri: image}} style={styles.image}/>
-                        </View>
-                    ) : (
-                        <View style={styles.descriptionInput}>
-
-                            <Icon name='camera' size={50}></Icon>
-                        </View>
-                    )}
-                </TouchableOpacity>
                 {showPicker2 && (
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -163,8 +131,9 @@ const AddSchedule = () => {
                     />)}
 
                 <TouchableOpacity style={styles.button} onPress={handleCreateSchedule}>
-                    <Text style={styles.buttonText}>Tạo </Text>
+                    <Text style={styles.buttonText}>Cập nhật</Text>
                 </TouchableOpacity>
+
             </ScrollView>
             <Loading visiable={loading}></Loading>
         </View>
@@ -172,4 +141,4 @@ const AddSchedule = () => {
     );
 };
 
-export default AddSchedule;
+export default UpdateSchedule;

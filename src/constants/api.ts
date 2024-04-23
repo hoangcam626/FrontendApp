@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.10.108:3000/api/v1"
+export const BASE_URL = "http://192.168.10.100:3000/api/v1"
 
 export const AUTH = {
     REGISTER: "/auth/register",
@@ -62,14 +62,21 @@ export const COMMENT = {
     GET_SUB_COMMENTS: "/comment/comments/sub-comment",
 }
 export const SCHEDULE = {
-    CREATE: "/schedule/create",
-    UPDATE: "/schedule/update",
-    DELETE: "/schedule/delete",
-    SELF: "/schedule/self",
-    GET_All_MY_SCHEDULE: "/my-schedules",
+    CREATE: "/schedule-trip/create",
+    UPDATE: "/schedule-trip/update",
+    DELETE: "/schedule-trip/delete",
+    SELF: "/schedule-trip/self",
+    GET_All_MY_SCHEDULE: "/schedule-trip/my-schedules",
     // GET_ALL_CREATE_BY: "/schedule/schedules/create-by",
     // GET_SUB_COMMENTS: "/schedule/schedules/sub-comment",
-
+}
+export const PLACESCHEDULE = {
+    CREATE: "/on-schedule/create",
+    UPDATE: "/on-schedule/update",
+    DELETE: "/on-schedule/delete",
+    SELF: "/on-schedule/self",
+    GET_ON_DATE: "/on-schedule/on-date",
+    IS_COMPLETE: "on-schedule/is-complete",
 }
 export const PLACE_SCHEDULE = {
     CREATE: "/on-schedule/create",

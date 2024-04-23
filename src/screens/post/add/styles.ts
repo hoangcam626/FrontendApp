@@ -14,7 +14,7 @@ const styles = () => {
     container: {
       flex: 1,
       // paddingHorizontal: 20,
-      paddingTop:35,
+      // paddingTop:35,
       // marginVertical:10,
       backgroundColor: theme.backgroundColor
     },

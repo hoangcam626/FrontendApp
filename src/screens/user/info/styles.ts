@@ -14,7 +14,7 @@ const styles = () => {
     userInfo: {
       // flexDirection: 'row',
       alignItems: 'center',
-      padding: 30,
+      // padding: 30,
       borderBottomColor: theme.borderBottomColor,
     },
     avatarContainer: {

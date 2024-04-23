@@ -12,6 +12,9 @@ import Register from '../screens/auth/register';
 import Location from '../screens/location';
 import PostDetail from '../screens/post/detail';
 import VisitCalendar from '../screens/calendar';
+import AddSchedule from "../screens/scheduletrip/add";
+import DetailSchedule from "../screens/scheduletrip/detail";
+import UpdateSchedule from "../screens/scheduletrip/update";
 
 
 const Stack = () => {
@@ -28,8 +31,9 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.INFO_USER} component={User} />
             <Stack.Screen name={NAVIGATION_TITLE.POST_DETAIL} component={PostDetail} />
             <Stack.Screen name={NAVIGATION_TITLE.CALENDAR} component={VisitCalendar} />
-
-
+            <Stack.Screen name={NAVIGATION_TITLE.ADD_SCHEDULE} component={AddSchedule} />
+            <Stack.Screen name={NAVIGATION_TITLE.DETAIL_SCHEDULE} component={DetailSchedule} />
+            <Stack.Screen name={NAVIGATION_TITLE.UPDATE_SCHEDULE} component={UpdateSchedule} />
 
         </Stack.Navigator>
     );

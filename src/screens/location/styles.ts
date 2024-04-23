@@ -13,7 +13,7 @@ const styles = () => {
     container: {
       flex: 1,
       justifyContent: 'center',
-      paddingTop: 40,
+      // paddingTop: 40,
       backgroundColor: theme.backgroundColor,
     },
     flatListContainer: {

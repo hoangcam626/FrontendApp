@@ -11,5 +11,8 @@ export const NAVIGATION_TITLE = {
     DETAIL: 'detail',
     ACCOUNT: 'account',
     POST_DETAIL: 'post',
-    CALENDAR:'calendar'
+    CALENDAR:'calendar',
+    ADD_SCHEDULE: 'add-schedule',
+    UPDATE_SCHEDULE: 'update-schedule',
+    DETAIL_SCHEDULE: 'detail_schedule'
   };

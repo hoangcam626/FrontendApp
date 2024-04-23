@@ -10,9 +10,6 @@ const Location = () => {
     const navigation = useNavigation<any>();
     const [searchText, setSearchText] = useState('');
 
-
-    
-
     const userPostsByLocation = [
         // { id: 1, location: 'New York', image: require('../../../assets/VN.jpg') },
         { id: 1, location: 'Paris', image: require('../../../assets/TempleofliteratureVietnam.jpg') },

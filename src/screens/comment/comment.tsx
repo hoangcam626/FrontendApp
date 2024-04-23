@@ -31,7 +31,7 @@ const CommentView = ({comment}) => {
     return (
         <View style={[{margin:20}]}>
             <Text>{comment?.content}</Text>
-            <AvatarWithUsername user={comment?.createBy}></AvatarWithUsername>
+            <AvatarWithUsername user={comment?.createBy} time={111}></AvatarWithUsername>
             <Text>Likes: {comment?.likeCount}</Text>
             <LikeComment style={[{}]} commentId={comment?.id} isLike={comment?.isLike}></LikeComment>
             <Text>Subcomments: {comment?.subCommentCount}</Text>

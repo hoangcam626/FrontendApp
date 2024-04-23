@@ -50,6 +50,9 @@ const User = () => {
     const [heartPosts, setHeartPosts] = useState<any>([]);
 
     useEffect(() => {
+        if (isFocused) {
+            setImage(null)
+        }
         getInfoUser()
     }, [isFocused]);
     const getInfoUser = async () => {
@@ -119,6 +122,7 @@ const User = () => {
         dispatch(updateAvatarActions(req))
             .then((res) => {
                 if (res?.payload) {
+                    getInfoUser()
                     setLoading(false)
                     ToastAndroid.show('Cập nhật thành công!', ToastAndroid.SHORT)
                     console.log(res, 'update avatar')
@@ -151,22 +155,9 @@ const User = () => {
     };
 
     const viewAvatar = () => {
-        avatar();
         toggleModal();
 
     };
-    const avatar = () => (
-
-        <View>
-            <Image
-                source={{uri: image ?? `${BASE_URL}${IMAGE.RESOURCE}${userInfo?.avatarId}`}}
-                // style={styles.avatar}
-            />
-        </View>
-    )
-
-
-    
 
     const renderFavoritePlacesScene = () => (
         <View style={styles.scene}>
@@ -185,7 +176,7 @@ const User = () => {
         <View style={styles.scene}>
             {personalPosts ? (
                 personalPosts?.map(post => (
-                    <Text key={post.id}> post.creatdAt</Text>
+                    <Text key={post.id}> {post?.creatdAt}</Text>
                 ))
             ) : (
                 <Text>Bạn chưa đăng bài chia sẻ nào</Text>
@@ -252,6 +243,7 @@ const User = () => {
                         </TouchableOpacity>
                     </View>
                 </Modal>
+
                 <Text style={styles.userName}>{userInfo?.username}</Text>
                 <Text>asdf</Text>
                 <Text>asdf</Text>

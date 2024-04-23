@@ -2,12 +2,19 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, Image, FlatList, TextInput, Dimensions} from 'react-native';
 import st from './styles'
 import Carousel from 'react-native-snap-carousel';
+import {getMyScheduleActions} from "../../services/schedule/actions";
+import {getReviewsActions} from "../../services/review/actions";
+import {useDispatch} from "react-redux";
+import {useIsFocused} from "@react-navigation/native";
 
 
 const Home = () => {
     const WIDTH = Dimensions.get('window').width;
     const HEIGHT = WIDTH * 9 / 16
     const styles = st();
+    const isFocused = useIsFocused()
+    const dispatch = useDispatch<any>()
+    const [loading, setLoading] = useState<boolean>(false)
     const carouselRef = useRef(null);
     const images = [
         // { id: 1, location: 'New York', image: require('../../../assets/VN.jpg') },
@@ -17,6 +24,26 @@ const Home = () => {
         {id: '4', image: require('../../../assets/WondersofVietnam.jpg')},
     ];
 
+    const [places, setPlaces] = useState<any>()
+    const [reviews, setReviews] = useState<any>()
+    const getMySchedule = async () => {
+        setLoading(true)
+        dispatch(getReviewsActions())
+            .then(res => {
+                setReviews(res?.payload)
+                setLoading(false)
+            })
+            .catch(err => setLoading(false))
+    }
+    const getPlaces = async () => {
+        setLoading(true)
+        dispatch(getPlaces())
+            .then(res => {
+                setReviews(res?.payload)
+                setLoading(false)
+            })
+            .catch(err => setLoading(false))
+    }
     useEffect(() => {
         const interval = setInterval(() => {
             carouselRef.current.snapToNext();
