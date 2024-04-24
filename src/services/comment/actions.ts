@@ -21,7 +21,7 @@ export const updateActions = createAsyncThunk(
 export const deleteActions = createAsyncThunk(
     'comment/deleteActions',
     async (payload: {}) => {
-        const res = await formData.delete(COMMENT.DELETE, payload)
+        const res = await formData.post(COMMENT.DELETE, payload)
         console.log("payload", res)
         return res.data
     }
@@ -46,7 +46,7 @@ export const likeCommentActions = createAsyncThunk(
 export const unlikeCommentActions = createAsyncThunk(
     'comment/unlikeCommentActions',
     async (payload: {}) => {
-        const res = await formData.delete(COMMENT.UNLIKE, payload)
+        const res = await formData.post(COMMENT.UNLIKE, payload)
         console.log("payload", res)
         return res.data
     }

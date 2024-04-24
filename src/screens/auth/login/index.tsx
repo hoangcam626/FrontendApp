@@ -90,10 +90,6 @@ const Login = () => {
                     <Text style={[styles.registerText, styles.registerLink]}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
-            {/* <Image
-                style={styles.bg}
-                source={require('../../../../assets/images/tabs/vietnam.png')}
-            /> */}
             <Loading visiable={loading} />
         </KeyboardAvoidingView>
 

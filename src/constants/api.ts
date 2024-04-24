@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.10.100:3000/api/v1"
+export const BASE_URL = "http://192.168.10.101:3000/api/v1"
 
 export const AUTH = {
     REGISTER: "/auth/register",
@@ -24,7 +24,8 @@ export const PLACE = {
     PLACES: "/place/places",
     SEARCH: "/search",
     RATING:"/rating",
-    PLACES_CODE:"/places/code"
+    PLACES_CODE:"/places/code",
+    IMAGES: "/place-image/images"
 }
 
 export const REVIEW = {
@@ -74,7 +75,7 @@ export const SCHEDULE = {
     // GET_ALL_CREATE_BY: "/schedule/schedules/create-by",
     // GET_SUB_COMMENTS: "/schedule/schedules/sub-comment",
 }
-export const PLACESCHEDULE = {
+export const PLACE_SCHEDULE = {
     CREATE: "/on-schedule/create",
     UPDATE: "/on-schedule/update",
     DELETE: "/on-schedule/delete",
@@ -82,19 +83,19 @@ export const PLACESCHEDULE = {
     GET_ON_DATE: "/on-schedule/on-date",
     IS_COMPLETE: "on-schedule/is-complete",
 }
-export const PLACE_SCHEDULE = {
-    CREATE: "/on-schedule/create",
-    UPDATE: "/on-schedule/update",
-    DELETE: "/on-schedule/delete",
-    SELF: "/on-schedule/self",
-    IS_COMPLETE: "/on-schedule/is-complete",
-    ON_DATE: "/on-schedule/on-date"
-}
+// export const PLACE_SCHEDULE = {
+//     CREATE: "/on-schedule/create",
+//     UPDATE: "/on-schedule/update",
+//     DELETE: "/on-schedule/delete",
+//     SELF: "/on-schedule/self",
+//     IS_COMPLETE: "/on-schedule/is-complete",
+//     ON_DATE: "/on-schedule/on-date"
+// }
 
 export const VISIT = {
     CREATE: "/visit/create",
     DELETE: "/visit/delete",
-    MY_VIST: "/visit/my_visit"
+    MY_VISIT: "/visit/my_visit"
 }
 
 

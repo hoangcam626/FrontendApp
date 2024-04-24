@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useDispatch} from "react-redux";
 import {likePlaceActions, unlikePlaceActions} from "../../services/place/actions";
@@ -8,14 +8,16 @@ import {likePlaceActions, unlikePlaceActions} from "../../services/place/actions
 const LikePlace = ({style, isLike, placeId}) => {
     const navigation = useNavigation();
     const dispatch = useDispatch<any>()
+    const [like, setLike] = useState<boolean>(isLike)
+
     const handleLikeComment = async () => {
 
         const req = new FormData()
         req.append('placeId', placeId)
-        if (isLike) {
+        if (like) {
             await dispatch (unlikePlaceActions(req))
                 .then(res=>{
-                    isLike = !isLike
+                    setLike(false)
                 })
                 .catch(err => {
                     console.error('Unlike place failed:', err);
@@ -23,7 +25,7 @@ const LikePlace = ({style, isLike, placeId}) => {
         } else {
             await dispatch (likePlaceActions(req))
                 .then(res=>{
-                    isLike = !isLike
+                    setLike(true)
                 })
                 .catch(err => {
                     console.error('Unlike place failed:', err);
@@ -31,10 +33,11 @@ const LikePlace = ({style, isLike, placeId}) => {
         }
     }
 
-
     return (
         <TouchableOpacity onPress={handleLikeComment} style={style}>
-            <Icon name={isLike ? 'heart' : 'heart-o'} size={25} color={isLike ? 'red' : 'black'}/>
+            <Icon name={'heart'}
+                  size={25} color={like ? 'red' : '#ccc'}
+            />
         </TouchableOpacity>
     );
 };

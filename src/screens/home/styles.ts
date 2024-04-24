@@ -5,9 +5,10 @@ const styles = () => {
     const theme = useTheme();
     const st = StyleSheet.create({
         container: {
-            // flex: 1,
+            flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: theme.backgroundColor
         },
 
         image: {
@@ -36,7 +37,20 @@ const styles = () => {
             marginBottom: 10,
         },
         placeItem: {
-            marginRight: 10,
+            borderRadius:10,
+            alignItems:'center',
+            margin: 10,
+            padding: 10,
+            width:120,
+            shadowColor: theme.shadowColor,
+            shadowOffset: {
+                width: 2,
+                height: 5,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4.65,
+            elevation: 3,
+            backgroundColor: theme.backgroundColor
         },
         placeImage: {
             width: 100,
@@ -45,9 +59,12 @@ const styles = () => {
         },
         placeName: {
             fontWeight: 'bold',
+            flex:1
+            // color: "#fff"
         },
-        placeAddress: {
-            color: 'gray',
+        placeStart: {
+            flexDirection: 'row',
+            alignItems:'center',
         },
         flatListContent: {
             paddingHorizontal: 10,

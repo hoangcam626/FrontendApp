@@ -16,6 +16,7 @@ import AddSchedule from "../screens/scheduletrip/add";
 import DetailSchedule from "../screens/scheduletrip/detail";
 import UpdateSchedule from "../screens/scheduletrip/update";
 import DetailPlace from "../screens/place/detail";
+import {AddReview} from "../screens/review/add";
 
 
 const Stack = () => {
@@ -27,16 +28,16 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.REGISTER} component={Register} />
             <Stack.Screen name={NAVIGATION_TITLE.HOME} component={Home} />
             <Stack.Screen name={NAVIGATION_TITLE.LOCATION} component={Location} />
-            <Stack.Screen name={NAVIGATION_TITLE.ADD} component={AddPost} />
             <Stack.Screen name={NAVIGATION_TITLE.TRIP} component={ScheduleTrip} />
             <Stack.Screen name={NAVIGATION_TITLE.INFO_USER} component={User} />
-            <Stack.Screen name={NAVIGATION_TITLE.POST_DETAIL} component={PostDetail} />
+            <Stack.Screen name={NAVIGATION_TITLE.ADD_POST} component={AddPost} />
+            <Stack.Screen name={NAVIGATION_TITLE.DETAIL_POST} component={PostDetail} />
             <Stack.Screen name={NAVIGATION_TITLE.CALENDAR} component={VisitCalendar} />
             <Stack.Screen name={NAVIGATION_TITLE.ADD_SCHEDULE} component={AddSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.DETAIL_SCHEDULE} component={DetailSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.UPDATE_SCHEDULE} component={UpdateSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.DETAIL_PLACE} component={DetailPlace} />
-
+            <Stack.Screen name={NAVIGATION_TITLE.ADD_REVIEW} component={AddReview} />
         </Stack.Navigator>
     );
 }

@@ -3,7 +3,7 @@ import { POST } from "../../constants/api";
 import formData from "../../http_client/multipartData";
 
 export const createPostActions = createAsyncThunk(
-    'post/createActions',
+    'post/createPostActions',
     async (payload: {}) => {
         const res = await formData.post(POST.CREATE, payload)
         return res.data
@@ -11,7 +11,7 @@ export const createPostActions = createAsyncThunk(
 )
 
 export const updatePostActions = createAsyncThunk(
-    'post/updateActions',
+    'post/updatePostActions',
     async (payload: {}) => {
         const res = await formData.put(POST.UPDATE, payload)
         console.log("payload", res)
@@ -19,15 +19,15 @@ export const updatePostActions = createAsyncThunk(
     }
 )
 export const deletePostActions = createAsyncThunk(
-    'post/deleteActions',
+    'post/deletePostActions',
     async (payload: {}) => {
-        const res = await formData.delete(POST.DELETE, payload)
+        const res = await formData.post(POST.DELETE, payload)
         console.log("payload", res)
         return res.data
     }
 )
 export const selfPostActions = createAsyncThunk(
-    'post/selfActions',
+    'post/selfPostActions',
     async (payload: {}) => {
         const res = await formData.post(POST.SELF, payload)
         console.log("payload", res)
@@ -35,7 +35,7 @@ export const selfPostActions = createAsyncThunk(
     }
 )
 export const likePostActions = createAsyncThunk(
-    'post/likeActions',
+    'post/likePostActions',
     async (payload: {}) => {
         const res = await formData.post(POST.LIKE, payload)
         console.log("payload", res)
@@ -44,9 +44,9 @@ export const likePostActions = createAsyncThunk(
 )
 
 export const unlikePostActions = createAsyncThunk(
-    'post/unlikeActions',
+    'post/unlikePostActions',
     async (payload: {}) => {
-        const res = await formData.delete(POST.UNLIKE, payload)
+        const res = await formData.post(POST.UNLIKE, payload)
         console.log("payload", res)
         return res.data
     }

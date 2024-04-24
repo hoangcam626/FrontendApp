@@ -22,7 +22,7 @@ export const updatePlaceActions = createAsyncThunk(
 export const deletePlaceActions = createAsyncThunk(
     'place/deletePlaceActions',
     async (payload: {}) => {
-        const res = await formData.delete(PLACE.DELETE, payload)
+        const res = await formData.post(PLACE.DELETE, payload)
         console.log("payload", res)
         return res.data
     }
@@ -47,7 +47,7 @@ export const likePlaceActions = createAsyncThunk(
 export const unlikePlaceActions = createAsyncThunk(
     'place/unlikePlaceActions',
     async (payload: {}) => {
-        const res = await formData.delete(PLACE.UNLIKE, payload)
+        const res = await formData.post(PLACE.UNLIKE, payload)
         console.log("payload", res)
         return res.data
     }
@@ -86,12 +86,12 @@ export const getPlacesCodeActions = createAsyncThunk(
         return res.data
     }
 )
-//
-// export const getSubCommentsActions = createAsyncThunk(
-//     'place/getSubCommentsActions',
-//     async (payload: {}) => {
-//         const res = await formdata.get(PLACE.GET_All_IN_POST, payload)
-//         console.log("payload", res)
-//         return res.data
-//     }
-// )
+
+export const getImagePlace = createAsyncThunk(
+    'place/getImagePlace',
+    async (payload:{}) => {
+        const res = await formData.post(PLACE.IMAGES, payload)
+        console.log("payload", res)
+        return res.data
+    }
+)

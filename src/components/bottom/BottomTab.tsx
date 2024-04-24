@@ -91,7 +91,7 @@ const MyBottomTabs = () => {
                     options={getOptions}
                 />
                 <Tab.Screen
-                    name={NAVIGATION_TITLE.ADD}
+                    name={NAVIGATION_TITLE.ADD_POST}
                     component={AddPost}
                     options={getOptions}
                 />

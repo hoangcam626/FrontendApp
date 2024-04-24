@@ -19,7 +19,7 @@ const Location = () => {
     ];
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.POST_DETAIL, { item: item.image })} >
+        <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, { item: item.image })} >
             <View style={styles.postContainer}>
                 <Image style={styles.postImage}  source={item.image} />
                 <Text style={styles.locationText}>{item.location}</Text>

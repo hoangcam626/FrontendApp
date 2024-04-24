@@ -7,7 +7,10 @@ import {
     likePlaceActions,
     unlikePlaceActions,
     getPlaceFavouritesActions,
-    getPlacesActions
+    getPlacesActions,
+    getRatingActions,
+    getImagePlace,
+    getPlacesCodeActions
 } from "./actions"
 
 interface IPlace {
@@ -166,6 +169,60 @@ export const placeSlice = createSlice({
             };
         })
         builder.addCase(getPlacesActions.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getRatingActions.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getRatingActions.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(getRatingActions.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getPlacesCodeActions.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getPlacesCodeActions.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(getPlacesCodeActions.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getImagePlace.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getImagePlace.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(getImagePlace.rejected, (state) => {
             return {
                 ...state,
                 loading: true,

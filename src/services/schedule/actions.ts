@@ -23,7 +23,7 @@ export const updateScheduleActions = createAsyncThunk(
 export const deleteScheduleActions = createAsyncThunk(
     'schedule/deleteScheduleActions',
     async (payload: {}) => {
-        const res = await formData.delete(SCHEDULE.DELETE, payload)
+        const res = await formData.post(SCHEDULE.DELETE, payload)
         console.log("payload", res)
         return res.data
     }

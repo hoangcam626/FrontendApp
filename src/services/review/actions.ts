@@ -23,7 +23,7 @@ export const updateReviewActions = createAsyncThunk(
 export const deleteReviewActions = createAsyncThunk(
     'review/deleteReviewActions',
     async (payload: {}) => {
-        const res = await formData.delete(REVIEW.DELETE, payload)
+        const res = await formData.post(REVIEW.DELETE, payload)
         console.log("payload", res)
         return res.data
     }
@@ -48,7 +48,7 @@ export const likeReviewActions = createAsyncThunk(
 export const unlikeReviewActions = createAsyncThunk(
     'review/unlikeReviewActions',
     async (payload: {}) => {
-        const res = await formData.delete(REVIEW.UNLIKE, payload)
+        const res = await formData.post(REVIEW.UNLIKE, payload)
         console.log("payload", res)
         return res.data
     }

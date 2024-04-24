@@ -14,67 +14,49 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import Loading from "../../../../utils/loading/Loading";
 
-const AddSchedule = () => {
-    const navigation = useNavigation<any>()
-    const dispatch = useDispatch<any>()
+const AddPlaceSchedule = ({schedule, scheduleDate, placeId}) => {
+    const navigation = useNavigation<any>();
+    const dispatch = useDispatch<any>();
+
     const [loading, setLoading] = useState<boolean>(false)
-    const [image, setImage] = useState(null);
-    const [content, setContent] = useState('');
-    const [name, setName] = useState('')
-    const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [description, setDescription] = useState('');
+    const [startTime, setStartTime] = useState<Date>(new Date());
+    const [endTime, setEndTime] = useState<Date>(new Date());
     const [showPicker1, setShowPicker1] = useState(false);
     const [showPicker2, setShowPicker2] = useState(false);
-
-    useFocusEffect(
-        useCallback(() => {
-            setImage(null)
-            setContent('')
-        }, [])
-    );
+    const [transport, setTransport] = useState('');
+    // const [placeId, setPlaceId] = useState<number>()
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         setImage(null)
+    //         setContent('')
+    //     }, [])
+    // );
     const styles = st()
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [16, 9],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
-    };
-    const handleStartDateChange = (event, selectedDate) => {
+    const handleStartDateChange = (event, selectedTime) => {
         setShowPicker1(false);
-        if (selectedDate) {
-            setStartDate(selectedDate);
+        if (selectedTime) {
+            setStartTime(selectedTime);
         }
     };
-    const handleEndDateChange = (event, selectedDate) => {
+    const handleEndDateChange = (event, selectedTime) => {
         setShowPicker2(false);
-        if (selectedDate) {
-            setEndDate(selectedDate);
+        if (selectedTime) {
+            setEndTime(selectedTime);
         }
     };
 
     const handleCreateSchedule = async () => {
 
         const req = new FormData()
-        const imageToUpload = image
-        const imageName = imageToUpload?.split('/').pop()
-        const imageType = imageToUpload?.split('.').pop()
-        console.log(`image/${imageType}`)
-        // @ts-ignore
-        image && req.append('imageLabel', {
-            uri: imageToUpload,
-            type: `image/${imageType}`,
-            name: imageName
-        });
-        req.append("nameSchedule", name)
-        req.append("startDate", moment(startDate).format('YYYY-MM-DD'))
-        req.append("endDate", moment(endDate).format('YYYY-MM-DD'))
-        req.append('description', content)
+
+
+        req.append("scheduleId", schedule?.id)
+        req.append("scheduleDate", scheduleDate)
+        req.append("placeId", placeId)
+        req.append("startTime", moment(startTime).format('YYYY-MM-DD'))
+        req.append("endTime", moment(endTime).format('YYYY-MM-DD'))
+        req.append('description', description)
         console.log(req)
         setLoading(true)
         await dispatch(createScheduleActions(req))
@@ -100,52 +82,40 @@ const AddSchedule = () => {
 
                     <Icon name='angle-left' size={24} style={styles.iconBack}></Icon>
                 </TouchableOpacity>
-                <Text style={styles.title}>Hành trình mới</Text>
+                <Text style={styles.title}>{schedule?.nameSchedule}</Text>
             </View>
 
             <ScrollView style={styles.modalContainer}>
 
-                <Text style={styles.titleInput}>Đặt tên cho hành trình</Text>
-                <TextInput
-                    style={styles.descriptionInput}
-                    placeholder="Tên hành trình"
-                    onChangeText={text => setName(text)}
-                    value={name}
-                />
-                <Text style={styles.titleInput}>Ngày bắt đầu:</Text>
+                <Text style={styles.titleInput}>Ngay {scheduleDate}</Text>
+                {/*<TextInput*/}
+                {/*    style={styles.descriptionInput}*/}
+                {/*    placeholder="Tên hành trình"*/}
+                {/*    onChangeText={text => setName(text)}*/}
+                {/*    value={name}*/}
+                {/*/>*/}
+                <Text style={styles.titleInput}>Bắt đầu:</Text>
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker1(true)}>
-                    <Text>{moment(startDate).format('DD/MM/YYYY')}</Text>
+                    <Text>{moment(startTime).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.titleInput}>Ngày kết thúc:</Text>
+                <Text style={styles.titleInput}>Đến</Text>
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker2(true)}>
-                    <Text>{moment(endDate).format('DD/MM/YYYY')}</Text>
+                    <Text>{moment(endTime).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.titleInput}>Một chút chú thích cho hành trình này</Text>
+                <Text style={styles.titleInput}>Thuyết minh chi tiết cho khung giờ này</Text>
                 <TextInput
                     style={styles.descriptionInput}
                     placeholder="Mô tả"
-                    onChangeText={text => setContent(text)}
-                    value={content}
+                    onChangeText={text => setDescription(text)}
+                    value={description}
                     multiline
                 />
-                <Text style={styles.titleInput}>Chọn ảnh nền cho hành trình mới</Text>
-                <TouchableOpacity onPress={pickImage}>
 
-                    {image ? (
-                        <View style={styles.imagePicker}>
-                            <Image source={{uri: image}} style={styles.image}/>
-                        </View>
-                    ) : (
-                        <View style={styles.descriptionInput}>
-                            <Icon name='camera' size={50}></Icon>
-                        </View>
-                    )}
-                </TouchableOpacity>
                 {showPicker2 && (
                     <DateTimePicker
                         testID="dateTimePicker"
-                        value={endDate}
-                        mode="date"
+                        value={endTime}
+                        mode="time"
                         is24Hour={true}
                         display="default"
                         onChange={handleEndDateChange}
@@ -153,8 +123,8 @@ const AddSchedule = () => {
                 {showPicker1 && (
                     <DateTimePicker
                         testID="dateTimePicker"
-                        value={startDate}
-                        mode="date"
+                        value={startTime}
+                        mode="time"
                         is24Hour={true}
                         display="default"
                         onChange={handleStartDateChange}
@@ -170,4 +140,4 @@ const AddSchedule = () => {
     );
 };
 
-export default AddSchedule;
+export default AddPlaceSchedule;
