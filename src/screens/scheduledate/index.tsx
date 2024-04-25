@@ -17,9 +17,11 @@ import {BASE_URL, IMAGE} from "../../constants/api";
 import {ScrollView} from "react-native-gesture-handler";
 import Loading from "../../../utils/loading/Loading";
 import Icon from "react-native-vector-icons/FontAwesome";
+import PlaceShortSelf from "../place/shortself";
+import {getScheduleOnDateActions} from "../../services/placeschedule/actions";
 
 
-const ScheduleTrip = () => {
+const ScheduleDate = ({date, schedule}) => {
     const styles = st();
     const theme = useTheme();
     const navigation = useNavigation<any>()
@@ -30,16 +32,15 @@ const ScheduleTrip = () => {
 
     const [listSchedule, setListSchedule] = useState<any>()
     const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        {key: 'schedule', title: 'Lên Lịch'},
-        {key: 'calendar', title: 'Lịch'},
-        {key: 'heart', title: 'Yêu thích'},
-    ]);
-    const getMySchedule = async () => {
+    const [scheduleTime, setScheduleTime] = useState<any>([])
+    const getScheduleOnDate = async () => {
         setLoading(true)
-        await dispatch(getMyScheduleActions())
+        const req = new FormData()
+        req.append('scheduleId', schedule?.id)
+        req.append('date', date)
+        await dispatch(getScheduleOnDateActions(req))
             .then(res => {
-                setListSchedule(res?.payload)
+                setScheduleTime(res?.payload)
                 setLoading(false)
             })
             .catch(err => setLoading(false))
@@ -47,7 +48,7 @@ const ScheduleTrip = () => {
 
     useFocusEffect(
         useCallback(() => {
-            getMySchedule();
+            getScheduleOnDate();
         }, [])
     );
 
@@ -56,23 +57,21 @@ const ScheduleTrip = () => {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(NAVIGATION_TITLE.ADD_SCHEDULE)}>
                 <Text style={styles.buttonText}>Tạo hành trình</Text>
             </TouchableOpacity>
-            {listSchedule ? (
-                listSchedule?.map(schedule => (
-                    <View style={styles.scheduleItem} key={schedule?.id}>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, schedule?.id)}>
-                            <View style={styles.imageContainer}>
-                                <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${schedule?.imageLabelId}`}}
-                                       style={styles.image}/>
-                            </View>
-                            {!(schedule.startDate == schedule.endDate) ? (
-                                <Text>{moment(schedule?.startDate).format("DD/MM/YYYY")} - {moment(schedule?.endDate).format("DD/MM/YYYY")} </Text>
-                            ) : (
-                                <Text>{moment(schedule?.startDate).format("DD/MM/YYYY")} </Text>
-                            )}
-                            <Text key={schedule.id} style={styles.nameSchedule}>{schedule?.nameSchedule}</Text>
-                        </TouchableOpacity>
+            {scheduleTime ? (
+                scheduleTime?.map(time => (
+                    <View style={styles.scheduleItem} key={scheduleTime?.id}>
+                        <Text>{time?.scheduleBeginTime}</Text>
+                        <View>
 
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, time?.id)}>
+                                <PlaceShortSelf place={time?.place}></PlaceShortSelf>
+                            </TouchableOpacity>
+                            <Text>{time?.transport}</Text>
+                            <Text>{time?.description}</Text>
+                            <Text>{moment(time?.scheduleFinishTime).format("HH:mm")} </Text>
+
+                        </View>
                     </View>
                 ))
             ) : (
@@ -81,48 +80,41 @@ const ScheduleTrip = () => {
         </ScrollView>
     );
 
-    const renderCalendar = () => (
-        <View>
-            <VisitCalendar></VisitCalendar>
-        </View>
-    );
-    const renderHeartPlace = () => (
-        <View>
-            <Text>3</Text>
 
-        </View>
-    );
-
-    const renderTabBar = props => (
-        <TabBar
-            {...props}
-            indicatorStyle={{backgroundColor: theme.tabActive}}
-            style={{backgroundColor: theme.backgroundColor}}
-            activeColor={theme.tabActive}
-            inactiveColor={theme.tabColor}
-            labelStyle={{
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: 'white',
-            }}
-        />
-    );
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={"#fff"}></StatusBar>
-            <Text style={styles.label}>LET'S GO</Text>
-            <TabView
-                navigationState={{index, routes}}
-                renderScene={SceneMap({
-                    schedule: renderSchedule,
-                    calendar: renderCalendar,
-                    heart: renderHeartPlace
-                })}
-                onIndexChange={setIndex}
-                renderTabBar={renderTabBar}
-            />
+            <ScrollView style={styles.schedule}>
+
+
+                {scheduleTime ? (
+                    scheduleTime?.map(time => (
+                        <View style={styles.scheduleItem} key={scheduleTime?.id}>
+                            <Text>{time?.scheduleBeginTime} </Text>
+                            <View style={{padding:10,margin:10,borderStyle:'dashed', borderLeftWidth:1, borderColor:'gray'}}>
+
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, time?.id)}>
+                                    <PlaceShortSelf place={time?.place}></PlaceShortSelf>
+                                </TouchableOpacity>
+                                <Text>Di chuyen: {time?.transport}</Text>
+                                <Text>Note: {time?.description}</Text>
+                                <Text>{time?.scheduleFinishTime} </Text>
+
+                            </View>
+                        </View>
+                    ))
+                ) : (
+                    <Text style={{color: "#ccc", textAlign: 'center'}}>Bạn chưa có hành trình nao</Text>
+                )}
+                <TouchableOpacity style={styles.button}
+                                  onPress={() => navigation.navigate(NAVIGATION_TITLE.ADD_DATE_SCHEDULE, {schedule: schedule, scheduleDate: date})}>
+
+                    <Text style={styles.buttonText}>LET'S GO</Text>
+                </TouchableOpacity>
+            </ScrollView>
             <Loading visiable={loading}></Loading>
         </SafeAreaView>
     );
 }
-export default ScheduleTrip
+export default ScheduleDate

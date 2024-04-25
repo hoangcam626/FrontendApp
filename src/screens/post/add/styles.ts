@@ -51,9 +51,10 @@ const styles = () => {
       alignItems: 'center',
     },
     image: {
-      width: '50%',
-      height: '100%',
-      resizeMode: 'cover',
+      width: '100%',
+      height: undefined,
+      resizeMode: 'contain',
+      flex:1
     },
     titleInput:{
       fontSize: 16,
@@ -68,6 +69,19 @@ const styles = () => {
       borderRadius: 5,
       padding: 10,
       marginBottom: 20,
+    },
+    button: {
+      backgroundColor: theme.tabActive,
+      margin: 10,
+      padding: 10,
+      borderRadius: 5
+    },
+    buttonText: {
+      textAlign: 'center',
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: 'bold'
+
     },
   });
   return st

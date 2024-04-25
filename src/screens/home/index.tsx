@@ -12,6 +12,8 @@ import {getPlacesActions} from "../../services/place/actions";
 import {BASE_URL, IMAGE} from "../../constants/api";
 import {NAVIGATION_TITLE} from "../../constants/navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
+import ReviewItem from "../review/detail";
+import Reviews from "../review";
 
 const Home = () => {
     const theme = useTheme();
@@ -89,7 +91,7 @@ const Home = () => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={{alignItems:'center', justifyContent:'flex-end'}}>
+                <View style={{alignItems: 'center', justifyContent: 'flex-end'}}>
                     <Carousel
                         ref={carouselRef}
                         data={images}
@@ -106,13 +108,17 @@ const Home = () => {
                         placeholderTextColor={theme.colorBlue1}
                     />
                 </View>
-                <FlatList
-                    data={places}
-                    renderItem={({item}) => <PlaceItem place={item}/>}
-                    keyExtractor={(item) => item.id.toString()}
-                    horizontal
-                    contentContainerStyle={styles.flatListContent}
-                />
+
+                    <FlatList
+                        data={places}
+                        renderItem={({item}) => <PlaceItem place={item}/>}
+                        keyExtractor={(item) => item.id.toString()}
+                        horizontal
+                        contentContainerStyle={styles.flatListContent}
+                        style={styles.placesContainer}
+                    />
+                <Text style={{fontSize: 25, fontWeight:'bold', padding: 10}}>Review mới nhất</Text>
+                <Reviews placeId={''}></Reviews>
                 <Loading visiable={loading}></Loading>
             </ScrollView>
         </View>

@@ -37,11 +37,11 @@ const styles = () => {
             marginBottom: 10,
         },
         placeItem: {
-            borderRadius:10,
-            alignItems:'center',
+            borderRadius: 10,
+            alignItems: 'center',
             margin: 10,
             padding: 10,
-            width:120,
+            width: 120,
             shadowColor: theme.shadowColor,
             shadowOffset: {
                 width: 2,
@@ -59,17 +59,21 @@ const styles = () => {
         },
         placeName: {
             fontWeight: 'bold',
-            flex:1
+            flex: 1
             // color: "#fff"
         },
         placeStart: {
             flexDirection: 'row',
-            alignItems:'center',
+            alignItems: 'center',
         },
         flatListContent: {
             paddingHorizontal: 10,
-            paddingVertical: 20,
+            paddingVertical: 10,
         },
+        placesContainer: {
+            // marginTop:10,
+            // elevation:3
+        }
 
     });
     return st

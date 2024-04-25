@@ -22,9 +22,9 @@ export const PLACE = {
     UNLIKE: "/place/unlike",
     FAVOURITES: "/place/favourites",
     PLACES: "/place/places",
-    SEARCH: "/search",
-    RATING:"/rating",
-    PLACES_CODE:"/places/code",
+    SEARCH: "/place/search",
+    RATING:"/place/rating",
+    PLACES_CODE:"/place/places/code",
     IMAGES: "/place-image/images"
 }
 
@@ -81,7 +81,7 @@ export const PLACE_SCHEDULE = {
     DELETE: "/on-schedule/delete",
     SELF: "/on-schedule/self",
     GET_ON_DATE: "/on-schedule/on-date",
-    IS_COMPLETE: "on-schedule/is-complete",
+    IS_COMPLETE: "/on-schedule/is-complete",
 }
 // export const PLACE_SCHEDULE = {
 //     CREATE: "/on-schedule/create",

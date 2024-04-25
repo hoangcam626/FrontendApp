@@ -10,7 +10,8 @@ import {
     getPlacesActions,
     getRatingActions,
     getImagePlace,
-    getPlacesCodeActions
+    getPlacesCodeActions,
+    searchPlaceActions
 } from "./actions"
 
 interface IPlace {
@@ -223,6 +224,24 @@ export const placeSlice = createSlice({
             };
         })
         builder.addCase(getImagePlace.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(searchPlaceActions.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(searchPlaceActions.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(searchPlaceActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,

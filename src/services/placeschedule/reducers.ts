@@ -1,101 +1,115 @@
 import {createSlice} from "@reduxjs/toolkit"
 import {
-    createScheduleActions,
-    updateScheduleActions,
-    deleteScheduleActions,
-    selfScheduleActions,
-    getMyScheduleActions,
-    // createPlaceActions,
-    // updatePlaceActions,
-    // deletePlaceActions,
-    // selfPlaceActions,
+    createPlaceScheduleActions,
+    updatePlaceScheduleActions,
+    deletePlaceActions,
+    selfPlaceActions,
+    getScheduleOnDateActions
 
 } from "./actions"
 
-interface ISchedule {
+interface IPlaceSchedule {
     loading: boolean,
     res: [],
     message: string,
 }
 
-const initialState: ISchedule = {
+const initialState: IPlaceSchedule = {
     res: [],
     loading: false,
     message: '',
 }
 
-export const scheduleSlice = createSlice({
-    name: 'schedule',
+export const placeScheduleSlice = createSlice({
+    name: 'date',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(createScheduleActions.pending, (state) => {
+        builder.addCase(createPlaceScheduleActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(createScheduleActions.fulfilled, (state) => {
+        builder.addCase(createPlaceScheduleActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(createScheduleActions.rejected, (state) => {
+        builder.addCase(createPlaceScheduleActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(updateScheduleActions.pending, (state) => {
+        builder.addCase(updatePlaceScheduleActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(updateScheduleActions.fulfilled, (state) => {
+        builder.addCase(updatePlaceScheduleActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(updateScheduleActions.rejected, (state) => {
+        builder.addCase(updatePlaceScheduleActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(deleteScheduleActions.pending, (state) => {
+        builder.addCase(deletePlaceActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(deleteScheduleActions.fulfilled, (state) => {
+        builder.addCase(deletePlaceActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(deleteScheduleActions.rejected, (state) => {
+        builder.addCase(deletePlaceActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(selfScheduleActions.pending, (state) => {
+        builder.addCase(selfPlaceActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(selfScheduleActions.fulfilled, (state) => {
+        builder.addCase(selfPlaceActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(selfScheduleActions.rejected, (state) => {
+        builder.addCase(selfPlaceActions.rejected, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getScheduleOnDateActions.pending, (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        })
+        builder.addCase(getScheduleOnDateActions.fulfilled, (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        })
+        builder.addCase(getScheduleOnDateActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
@@ -174,24 +188,24 @@ export const scheduleSlice = createSlice({
         //         loading: true,
         //     };
         // })
-        builder.addCase(getMyScheduleActions.pending, (state) => {
-            return {
-                ...state,
-                loading: true,
-            };
-        })
-        builder.addCase(getMyScheduleActions.fulfilled, (state) => {
-            return {
-                ...state,
-                loading: false,
-            };
-        })
-        builder.addCase(getMyScheduleActions.rejected, (state) => {
-            return {
-                ...state,
-                loading: true,
-            };
-        })
+        // builder.addCase(getMyScheduleActions.pending, (state) => {
+        //     return {
+        //         ...state,
+        //         loading: true,
+        //     };
+        // })
+        // builder.addCase(getMyScheduleActions.fulfilled, (state) => {
+        //     return {
+        //         ...state,
+        //         loading: false,
+        //     };
+        // })
+        // builder.addCase(getMyScheduleActions.rejected, (state) => {
+        //     return {
+        //         ...state,
+        //         loading: true,
+        //     };
+        // })
 
     }
 })

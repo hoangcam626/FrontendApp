@@ -1,26 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {PLACE_SCHEDULE} from "../../constants/api";
+import {PLACE, PLACE_SCHEDULE} from "../../constants/api";
 import formData from "../../http_client/multipartData";
 import httpClient from "../../http_client";
 
-export const createPlaceActions = createAsyncThunk(
-    'placeOnSchedule/createPlaceActions',
+export const createPlaceScheduleActions = createAsyncThunk(
+    'date/createPlaceScheduleActions',
+    async (payload: {}) => {
+        const res = await formData.post(PLACE_SCHEDULE.CREATE, payload)
+        console.log("payload", res)
+        return res.data
+    }
+)
+
+export const updatePlaceScheduleActions = createAsyncThunk(
+    'date/updatePlaceScheduleActions',
     async (payload: {}) => {
         const res = await formData.post(PLACE_SCHEDULE.CREATE, payload)
         return res.data
     }
 )
-
-export const updatePlaceActions = createAsyncThunk(
-    'placeOnSchedule/updatePlaceActions',
-    async (payload: {}) => {
-        const res = await formData.put(PLACE_SCHEDULE.UPDATE, payload)
-        console.log("payload", res)
-        return res.data
-    }
-)
 export const deletePlaceActions = createAsyncThunk(
-    'placeOnSchedule/deletePlaceActions',
+    'date/deletePlaceActions',
     async (payload: {}) => {
         const res = await formData.post(PLACE_SCHEDULE.DELETE, payload)
         console.log("payload", res)
@@ -28,9 +28,17 @@ export const deletePlaceActions = createAsyncThunk(
     }
 )
 export const selfPlaceActions = createAsyncThunk(
-    'placeOnSchedule/selfPlaceActions',
+    'date/selfPlaceActions',
     async (payload: {}) => {
         const res = await formData.post(PLACE_SCHEDULE.SELF, payload)
+        console.log("payload", res)
+        return res.data
+    }
+)
+export const getScheduleOnDateActions = createAsyncThunk(
+    'date/getScheduleOnDateActions',
+    async (payload: {}) => {
+        const res = await formData.post(PLACE_SCHEDULE.GET_ON_DATE, payload)
         console.log("payload", res)
         return res.data
     }

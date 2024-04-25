@@ -39,7 +39,7 @@ const styles = () => {
         button: {
             margin: 10,
             padding: 10,
-            marginBottom: 100
+            // marginBottom: 50
         },
         buttonText: {
             // textAlign: 'center',
@@ -79,7 +79,7 @@ const styles = () => {
             borderRadius: 30,
             justifyContent: 'center',
             alignItems: 'center',
-            bottom: 10,
+            bottom: 3,
             left: 23,
             margin:10,
             padding: 10,

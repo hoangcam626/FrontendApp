@@ -9,7 +9,7 @@ const styles = () => {
 
         container: {
             flex: 1,
-            justifyContent: 'center',
+            // justifyContent: 'center',
             // paddingHorizontal: 40,
             backgroundColor: theme.backgroundColor,
         },
@@ -23,7 +23,8 @@ const styles = () => {
             backgroundColor: theme.tabActive,
             margin: 20,
             padding: 10,
-            borderRadius: 5
+            borderRadius: 5,
+
         },
         buttonText: {
             textAlign: 'center',
@@ -53,7 +54,7 @@ const styles = () => {
         },
         scheduleItem: {
             margin: 20,
-            borderBottomWidth:1,
+            // borderBottomWidth:1,
             paddingBottom:10,
             borderBottomColor:"#ccc",
         },

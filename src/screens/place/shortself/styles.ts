@@ -30,6 +30,7 @@ const styles = () => {
         username: {
             fontSize: 16,
             fontWeight: 'bold',
+            color: theme.colorBlue1
         },
         
     });

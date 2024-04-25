@@ -7,21 +7,19 @@ import { BASE_URL, IMAGE } from '../../../constants/api';
 
 
 
-const AvatarWithUsername = ({user, time }) => {
+const PlaceShortSelf = ({place }) => {
     const navigation = useNavigation<any>();
     const styles = st();
 
   return (
-    <TouchableOpacity onPress={() =>navigation.navigate(NAVIGATION_TITLE.INFO_USER, user?.id)}>
 
      <View style={styles.postInfo}>
-                <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${user?.avatarId}`}} style={styles.profileImage} />
+                <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${place?.imageId}`}} style={styles.profileImage} />
                 <View style={styles.authorDetails}>
-                    <Text style={styles.username}>{user?.username}</Text>
-                    <Text>{time}</Text>
+                    <Text style={styles.username}>{place?.name}</Text>
+                    <Text>{place?.ward?.name} - {place?.district?.name} - {place?.province?.name}</Text>
                 </View>
             </View>
-    </TouchableOpacity>
   );
 };
-export default AvatarWithUsername;
+export default PlaceShortSelf;

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Image, Text, StyleSheet, TouchableOpacity, Alert, ToastAndroid} from 'react-native';
+import {View, Image, Text, StyleSheet, TouchableOpacity, Alert, ToastAndroid, Dimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {useFocusEffect, useIsFocused, useNavigation} from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -18,6 +18,9 @@ import {BASE_URL, IMAGE} from "../../../constants/api";
 import {getPostCreateByActions, getPostFavouritesActions} from "../../../services/post/actions";
 import {getPlaceFavouritesActions} from "../../../services/place/actions";
 import moment from "moment";
+import {ScrollView} from "react-native-gesture-handler";
+import ImageTwoColum from "../../image/imageTwoColum";
+import PlaceShortSelf from "../../place/shortself";
 
 const User = () => {
     const isFocused = useIsFocused()
@@ -162,39 +165,26 @@ const User = () => {
     };
 
     const renderFavoritePlacesScene = () => (
-        <View style={styles.scene}>
+        <ScrollView style={{ padding: 10}}>
             {heartPlaces ? (
                 heartPlaces.map(place => (
-                    <Text key={place.id}></Text>
+                    <TouchableOpacity style={{margin: 10, padding: 10}}>
+
+                        <PlaceShortSelf place={place}></PlaceShortSelf>
+                    </TouchableOpacity>
                 ))
             ) : (
                 <Text>Bạn chưa yêu thích địa điểm nào</Text>
             )}
-
-        </View>
+        </ScrollView>
     );
 
     const renderPersonalPostsScene = () => (
-        <View style={styles.scene}>
-            {personalPosts ? (
-                personalPosts?.map(post => (
-                    <Text key={post.id}> {post?.creatdAt}</Text>
-                ))
-            ) : (
-                <Text>Bạn chưa đăng bài chia sẻ nào</Text>
-            )}
-        </View>
+        <ImageTwoColum posts={personalPosts}></ImageTwoColum>
     );
     const renderHeartPostsScene = () => (
-        <View style={styles.scene}>
-            {heartPosts ? (
-                heartPosts.map(post => (
-                    <Text key={post.id}></Text>
-                ))
-            ) : (
-                <Text>Bạn chưa yêu thích bài chia sẻ nào</Text>
-            )}
-        </View>
+        <ImageTwoColum posts={heartPosts}></ImageTwoColum>
+
     );
 
     const renderTabBar = props => (
@@ -231,18 +221,30 @@ const User = () => {
                 </TouchableOpacity>
                 <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
                     <View style={styles.modalContent}>
-                        <TouchableOpacity onPress={viewAvatar} style={styles.modalOption}>
+
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate(NAVIGATION_TITLE.IMAGE, userInfo?.avatarId)}
+                            style={styles.modalOption}>
                             <Icon name='eye' style={styles.modalOptionText}/>
                             <Text style={styles.modalOptionText}>Xem ảnh đại diện</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity onPress={pickImage} style={styles.modalOption}>
                             <Icon name='camera' style={styles.modalOptionText}/>
-
                             <Text style={styles.modalOptionText}>Thay đổi ảnh đại diện</Text>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate(NAVIGATION_TITLE.IMAGE, userInfo?.avatarId)}
+                            style={styles.modalOption}>
+                            <Icon name='edit' style={styles.modalOptionText}/>
+                            <Text style={styles.modalOptionText}>Chỉnh sửa hồ sơ</Text>
+                        </TouchableOpacity>
+
                         <TouchableOpacity onPress={toggleModal} style={[styles.modalCancel]}>
                             <Text style={[styles.modalCancel]}>Hủy</Text>
                         </TouchableOpacity>
+
                     </View>
                 </Modal>
 

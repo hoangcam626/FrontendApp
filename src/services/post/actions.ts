@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { POST } from "../../constants/api";
 import formData from "../../http_client/multipartData";
+import httpClient from "../../http_client";
 
 export const createPostActions = createAsyncThunk(
     'post/createPostActions',
@@ -63,7 +64,7 @@ export const getPostFavouritesActions = createAsyncThunk(
 export const getPostsActions = createAsyncThunk(
     'post/getPostActions',
     async () => {
-        const res = await formData.post(POST.GET_ALL)
+        const res = await httpClient.get(POST.GET_ALL)
         console.log("payload", res)
         return res.data
     }

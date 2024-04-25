@@ -19,29 +19,37 @@ import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
 import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
+import SearchPlaceModal from "../../place/search";
+import PlaceShortSelf from "../../place/shortself";
 
-const AddPost = () => {
+const AddPost = ({route}) => {
     const navigation = useNavigation<any>()
     const isFocused = useIsFocused()
     const dispatch = useDispatch<any>()
     const [loading, setLoading] = useState<boolean>()
     const [image, setImage] = useState(null);
     const [content, setContent] = useState('');
-    const [placeId, setPlaceId] = useState<number>()
-    const [modalVisible, setModalVisible] = useState(true);
+    const [place, setPlace] = useState<any>()
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [post, setPost] = useState<any>()
     useEffect(() => {
         if (isFocused) {
             setImage(null)
             setContent('')
+            setPlace(null)
         }
     }, [isFocused]);
+    useEffect(() => {
+        if(route){
+            setPlace(route.params)
+        }
+    }, [route]);
     const styles = st()
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [9, 16],
+            // aspect: [9, 16],
             quality: 1,
         });
 
@@ -49,6 +57,12 @@ const AddPost = () => {
             setImage(result.assets[0].uri);
         }
     };
+
+
+    const searchPlaces = (place) => {
+        setPlace(place);
+    };
+
 
     const handlePost = async () => {
         console.log('Hình ảnh:', image);
@@ -65,7 +79,9 @@ const AddPost = () => {
             name: imageName
         });
         req.append('content', content)
-
+        if (place){
+            req.append("placeId", place?.id)
+        }
         await dispatch(createPostActions(req))
             .then((res) => {
                 if (res?.payload) {
@@ -92,6 +108,7 @@ const AddPost = () => {
                 <Text style={styles.title}>Bắt đầu chia sẻ</Text>
             </View>
             <ScrollView style={styles.modalContainer}>
+                <Text style={styles.titleInput}>Chia sẻ hình ảnh</Text>
                 <TouchableOpacity onPress={pickImage}>
                     <View style={styles.imagePicker}>
                         {image ? (
@@ -101,7 +118,22 @@ const AddPost = () => {
                         )}
                     </View>
                 </TouchableOpacity>
-                
+                <TouchableOpacity style={styles.descriptionInput} onPress={() => setModalVisible(true)}>
+                    {place ? (
+                        <View style={{padding: 10}}>
+
+                            <PlaceShortSelf place={place}></PlaceShortSelf>
+                        </View>
+                    ):(
+                        <Text style={[styles.titleInput]}> Chọn địa điểm</Text>
+
+                    )}
+                </TouchableOpacity>
+                <SearchPlaceModal
+                    visible={modalVisible}
+                    onClose={() => setModalVisible(false)}
+                    onSelectPlace={searchPlaces}
+                />
                 <Text style={styles.titleInput}>Mô tả cho nội dung bạn chia sẻ</Text>
                 <TextInput
                     style={styles.descriptionInput}
@@ -112,9 +144,9 @@ const AddPost = () => {
                 />
                 {/* <Button title="Đăng" onPress={handlePost}/>
                  */}
-                 <TouchableOpacity onPress={handlePost}>
-                    <Text>Đăng</Text>
-                 </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handlePost}>
+                    <Text style={styles.buttonText}>Đăng</Text>
+                </TouchableOpacity>
 
             </ScrollView>
         </View>

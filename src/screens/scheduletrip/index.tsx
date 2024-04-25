@@ -17,6 +17,8 @@ import {BASE_URL, IMAGE} from "../../constants/api";
 import {ScrollView} from "react-native-gesture-handler";
 import Loading from "../../../utils/loading/Loading";
 import Icon from "react-native-vector-icons/FontAwesome";
+import PlaceShortSelf from "../place/shortself";
+import {getPlaceFavouritesActions} from "../../services/place/actions";
 
 
 const ScheduleTrip = () => {
@@ -48,11 +50,26 @@ const ScheduleTrip = () => {
     useFocusEffect(
         useCallback(() => {
             getMySchedule();
+            getHeartPlaces();
         }, [])
     );
+    const [heartPlaces, setHeartPlaces] = useState<any>([]);
+    const getHeartPlaces = async () => {
+        const login = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
+        console.log(login.id)
+        const req = new FormData()
+        req.append("userId", login.id)
+
+        await dispatch(getPlaceFavouritesActions(req))
+            .then(res => {
+                // setLoading(false)
+                setHeartPlaces(res?.payload)
+            })
+            .catch(err => setLoading(false))
+    }
 
     const renderSchedule = () => (
-        <ScrollView style={styles.schedule}>
+        <ScrollView style={styles.schedule} key={index}>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(NAVIGATION_TITLE.ADD_SCHEDULE)}>
                 <Text style={styles.buttonText}>Tạo hành trình</Text>
             </TouchableOpacity>
@@ -86,11 +103,23 @@ const ScheduleTrip = () => {
             <VisitCalendar></VisitCalendar>
         </View>
     );
-    const renderHeartPlace = () => (
-        <View>
-            <Text>3</Text>
 
-        </View>
+    const renderHeartPlace = () => (
+        <ScrollView style={{padding: 10}}>
+            {heartPlaces ? (
+                heartPlaces.map(place => (
+                    <View key={place?.id}>
+
+                        <TouchableOpacity style={{margin: 10, padding: 10}}>
+
+                            <PlaceShortSelf place={place}></PlaceShortSelf>
+                        </TouchableOpacity>
+                    </View>
+                ))
+            ) : (
+                <Text>Bạn chưa yêu thích địa điểm nào</Text>
+            )}
+        </ScrollView>
     );
 
     const renderTabBar = props => (

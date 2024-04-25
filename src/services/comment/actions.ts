@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { COMMENT } from "../../constants/api";
 import formData from "../../http_client/multipartData";
 
-export const createActions = createAsyncThunk(
+export const createCommentActions = createAsyncThunk(
     'comment/createActions',
     async (payload: {}) => {
         const res = await formData.post(COMMENT.CREATE, payload)
@@ -10,7 +10,7 @@ export const createActions = createAsyncThunk(
     }
 )
 
-export const updateActions = createAsyncThunk(
+export const updateCommentActions = createAsyncThunk(
     'comment/updateActions',
     async (payload: {}) => {
         const res = await formData.put(COMMENT.UPDATE, payload)
@@ -18,7 +18,7 @@ export const updateActions = createAsyncThunk(
         return res.data
     }
 )
-export const deleteActions = createAsyncThunk(
+export const deleteCommentActions = createAsyncThunk(
     'comment/deleteActions',
     async (payload: {}) => {
         const res = await formData.post(COMMENT.DELETE, payload)
@@ -26,7 +26,7 @@ export const deleteActions = createAsyncThunk(
         return res.data
     }
 )
-export const selfActions = createAsyncThunk(
+export const selfCommentActions = createAsyncThunk(
     'comment/selfActions',
     async (payload: {}) => {
         const res = await formData.post(COMMENT.SELF, payload)
@@ -63,7 +63,7 @@ export const getFavouritesActions = createAsyncThunk(
 export const getCommentsActions = createAsyncThunk(
     'comment/getCommentsActions',
     async (payload: {}) => {
-        const res = await formData.post(COMMENT.GET_SUB_COMMENTS, payload)
+        const res = await formData.post(COMMENT.GET_All_IN_POST, payload)
         console.log("payload", res)
         return res.data
     }
@@ -72,7 +72,7 @@ export const getCommentsActions = createAsyncThunk(
 export const getSubCommentsActions = createAsyncThunk(
     'comment/getSubCommentsActions',
     async (payload: {}) => {
-        const res = await formData.post(COMMENT.GET_All_IN_POST, payload)
+        const res = await formData.post(COMMENT.GET_SUB_COMMENTS, payload)
         console.log("payload", res)
         return res.data
     }

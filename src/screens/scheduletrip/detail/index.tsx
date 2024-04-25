@@ -13,6 +13,7 @@ import {NAVIGATION_TITLE} from "../../../constants/navigation";
 import {getMyScheduleActions, selfScheduleActions} from "../../../services/schedule/actions";
 import Loading from "../../../../utils/loading/Loading";
 import loading from "../../../../utils/loading/Loading";
+import ScheduleDate from "../../scheduledate";
 
 const DetailSchedule = ({route}) => {
     const styles = st();
@@ -46,7 +47,7 @@ const DetailSchedule = ({route}) => {
             })
             .catch(err => setLoading(false))
     }
-    const getDates =  () => {
+    const getDates = () => {
         let currentDate = moment(schedule?.startDate);
         const newRoutes = [];
         while (currentDate.isSameOrBefore(schedule?.endDate)) {
@@ -67,7 +68,7 @@ const DetailSchedule = ({route}) => {
                 fontWeight: 'bold',
                 color: 'white',
             }}
-            tabStyle={{ width: 100 }}
+            tabStyle={{width: 100}}
             scrollEnabled={true}
         />
     );
@@ -113,8 +114,8 @@ const DetailSchedule = ({route}) => {
             <TabView
                 navigationState={{index, routes: routes}}
                 renderScene={({route}) => (
-                    <View>
-                        <Text>{route?.key}</Text>
+                    <View style={styles.container} key={route.key}>
+                        <ScheduleDate date={route.key} schedule={schedule}></ScheduleDate>
                     </View>
                 )}
                 onIndexChange={setIndex}

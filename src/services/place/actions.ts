@@ -80,8 +80,16 @@ export const getRatingActions = createAsyncThunk(
 )
 export const getPlacesCodeActions = createAsyncThunk(
     'place/getPlacesCodeActions',
-    async () => {
-        const res = await formData.post(PLACE.PLACES_CODE)
+    async (payload:{}) => {
+        const res = await formData.post(PLACE.PLACES_CODE, payload)
+        console.log("payload", res)
+        return res.data
+    }
+)
+export const searchPlaceActions = createAsyncThunk(
+    'place/searchPlaceActions',
+    async (payload:{}) => {
+        const res = await formData.post(PLACE.SEARCH, payload)
         console.log("payload", res)
         return res.data
     }

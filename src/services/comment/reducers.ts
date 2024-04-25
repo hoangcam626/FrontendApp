@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createActions, updateActions, deleteActions, selfActions, likeCommentActions, unlikeCommentActions, getCommentsActions,getSubCommentsActions, getFavouritesActions} from "./actions"
+import { createCommentActions, updateCommentActions, deleteCommentActions, selfCommentActions, likeCommentActions, unlikeCommentActions, getCommentsActions,getSubCommentsActions, getFavouritesActions} from "./actions"
 
 interface IComment {
     loading: boolean,
@@ -18,73 +18,73 @@ export const commentSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(createActions.pending, (state) => {
+        builder.addCase(createCommentActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
               };
         })
-        builder.addCase(createActions.fulfilled, (state) => {
+        builder.addCase(createCommentActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
               };
         })
-        builder.addCase(createActions.rejected, (state) => {
+        builder.addCase(createCommentActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
               };
         })
-        builder.addCase(updateActions.pending, (state) => {
+        builder.addCase(updateCommentActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(updateActions.fulfilled, (state) => {
+        builder.addCase(updateCommentActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(updateActions.rejected, (state) => {
+        builder.addCase(updateCommentActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(deleteActions.pending, (state) => {
+        builder.addCase(deleteCommentActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(deleteActions.fulfilled, (state) => {
+        builder.addCase(deleteCommentActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(deleteActions.rejected, (state) => {
+        builder.addCase(deleteCommentActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(selfActions.pending, (state) => {
+        builder.addCase(selfCommentActions.pending, (state) => {
             return {
                 ...state,
                 loading: true,
             };
         })
-        builder.addCase(selfActions.fulfilled, (state) => {
+        builder.addCase(selfCommentActions.fulfilled, (state) => {
             return {
                 ...state,
                 loading: false,
             };
         })
-        builder.addCase(selfActions.rejected, (state) => {
+        builder.addCase(selfCommentActions.rejected, (state) => {
             return {
                 ...state,
                 loading: true,

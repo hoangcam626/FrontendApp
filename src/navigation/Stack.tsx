@@ -17,6 +17,8 @@ import DetailSchedule from "../screens/scheduletrip/detail";
 import UpdateSchedule from "../screens/scheduletrip/update";
 import DetailPlace from "../screens/place/detail";
 import {AddReview} from "../screens/review/add";
+import ImageScreen from "../screens/image";
+import AddPlaceSchedule from "../screens/scheduledate/add";
 
 
 const Stack = () => {
@@ -38,6 +40,9 @@ const Stack = () => {
             <Stack.Screen name={NAVIGATION_TITLE.UPDATE_SCHEDULE} component={UpdateSchedule} />
             <Stack.Screen name={NAVIGATION_TITLE.DETAIL_PLACE} component={DetailPlace} />
             <Stack.Screen name={NAVIGATION_TITLE.ADD_REVIEW} component={AddReview} />
+            <Stack.Screen name={NAVIGATION_TITLE.IMAGE} component={ImageScreen} />
+            <Stack.Screen name={NAVIGATION_TITLE.ADD_DATE_SCHEDULE} component={AddPlaceSchedule} />
+
         </Stack.Navigator>
     );
 }

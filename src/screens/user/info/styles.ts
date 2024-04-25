@@ -62,7 +62,6 @@ const styles = () => {
       borderBottomRightRadius: 10,
       borderBottomColor: 'lightgray',
 
-
     },
     userName: {
       padding: 10,
@@ -77,7 +76,23 @@ const styles = () => {
     tabIcon: {
       color: theme.tabActive,
       // inactiveColor: theme.tabColor
-    }
+    },
+    postContainer: {
+      // flex: 1,
+      // flexDirection: 'row',
+      // flexWrap: 'wrap',
+      margin: 5,
+      borderRadius: 3,
+      // overflow: 'hidden',
+    },
+    left:{
+      left: 5,
+      alignItems:'flex-start'
+    },
+    right:{
+      right:10,
+      alignItems:'flex-end'
+    },
   });
   return st
 }

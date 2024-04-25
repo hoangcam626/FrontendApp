@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import {likeCommentActions, unlikeCommentActions} from "../../services/comment/actions";
@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 
 const LikeComment = ({style, isLike, commentId}) => {
     const dispatch = useDispatch<any>()
+    const [like, setLike] = useState<boolean>(isLike)
     const handleLikeComment = async () => {
 
         const req = new FormData()
@@ -14,7 +15,7 @@ const LikeComment = ({style, isLike, commentId}) => {
         if (isLike) {
             await dispatch (unlikeCommentActions(req))
                 .then(res=>{
-                    isLike = !isLike
+                    setLike(false)
                 })
                 .catch(err => {
                     console.error('Unlike comment failed:', err);
@@ -22,7 +23,7 @@ const LikeComment = ({style, isLike, commentId}) => {
         } else {
             await dispatch (likeCommentActions(req))
                 .then(res=>{
-                    isLike = !isLike
+                    setLike(true)
                 })
                 .catch(err => {
                     console.error('Unlike comment failed:', err);
@@ -33,7 +34,7 @@ const LikeComment = ({style, isLike, commentId}) => {
 
     return (
         <TouchableOpacity onPress={handleLikeComment} style={style}>
-            <Icon name={isLike ? 'heart' : 'heart-o'} size={25} color={isLike ? 'red' : 'black'}/>
+            <Icon name={'heart'} size={20} color={like ? 'red' : 'black'}/>
         </TouchableOpacity>
     );
 };

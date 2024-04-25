@@ -15,7 +15,7 @@ export const TabsData = [
     },
     {
         id: 3,
-        name: 'add',
+        name: 'add-post',
         icon: IconTabs.post,
         color: 'gray',
     },

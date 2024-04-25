@@ -13,25 +13,26 @@ import {NAVIGATION_TITLE} from '../../../constants/navigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import Loading from "../../../../utils/loading/Loading";
+import {round} from "react-native-reanimated-carousel/lib/typescript/utils/log";
+import PlaceShortSelf from "../../place/shortself";
+import SearchPlaceModal from "../../place/search";
+import {createPlaceScheduleActions} from "../../../services/placeschedule/actions";
 
-const AddPlaceSchedule = ({schedule, scheduleDate, placeId}) => {
+const AddPlaceSchedule = ({route}) => {
     const navigation = useNavigation<any>();
     const dispatch = useDispatch<any>();
-
+    const schedule = route.params.schedule;
     const [loading, setLoading] = useState<boolean>(false)
     const [description, setDescription] = useState('');
     const [startTime, setStartTime] = useState<Date>(new Date());
     const [endTime, setEndTime] = useState<Date>(new Date());
-    const [showPicker1, setShowPicker1] = useState(false);
-    const [showPicker2, setShowPicker2] = useState(false);
+    const [showPicker1, setShowPicker1] = useState<boolean>(false);
+    const [showPicker2, setShowPicker2] = useState<boolean>(false);
+    const [showPicker3, setShowPicker3] = useState<boolean>(false);
+    const [scheduleDate, setScheduleDate] = useState<Date>(new Date())
     const [transport, setTransport] = useState('');
-    // const [placeId, setPlaceId] = useState<number>()
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         setImage(null)
-    //         setContent('')
-    //     }, [])
-    // );
+    const [place, setPlace] = useState<any>()
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const styles = st()
     const handleStartDateChange = (event, selectedTime) => {
         setShowPicker1(false);
@@ -45,21 +46,41 @@ const AddPlaceSchedule = ({schedule, scheduleDate, placeId}) => {
             setEndTime(selectedTime);
         }
     };
+    const handleDateChange = (event, selectedTime) => {
+        setShowPicker3(false);
+        if (selectedTime) {
+            setScheduleDate(selectedTime);
+        }
+    };
+    const searchPlaces = (place) => {
+        setPlace(place);
+    };
+    useEffect(() => {
+        if (route.params.place) {
+            setPlace(route.params.place)
+        }
+    }, [route.params.place]);
+    useEffect(() => {
+        if (route.params.scheduleDate) {
+            setScheduleDate(new Date(route.params.scheduleDate))
+        }
+    }, [route.params.scheduleDate]);
 
     const handleCreateSchedule = async () => {
 
         const req = new FormData()
 
-
         req.append("scheduleId", schedule?.id)
-        req.append("scheduleDate", scheduleDate)
-        req.append("placeId", placeId)
-        req.append("startTime", moment(startTime).format('YYYY-MM-DD'))
-        req.append("endTime", moment(endTime).format('YYYY-MM-DD'))
+        req.append("scheduleDate", moment(scheduleDate).format('YYYY-MM-DD'))
+        req.append("placeId", place?.id)
+        req.append("scheduleBeginTime", moment(startTime).format('HH:mm:ss'))
+        req.append("scheduleFinishTime", moment(endTime).format('HH:mm:ss'))
         req.append('description', description)
+        req.append('transport', transport)
+
         console.log(req)
-        setLoading(true)
-        await dispatch(createScheduleActions(req))
+        // setLoading(true)
+        await dispatch(createPlaceScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {
                     setLoading(false)
@@ -87,21 +108,43 @@ const AddPlaceSchedule = ({schedule, scheduleDate, placeId}) => {
 
             <ScrollView style={styles.modalContainer}>
 
-                <Text style={styles.titleInput}>Ngay {scheduleDate}</Text>
-                {/*<TextInput*/}
-                {/*    style={styles.descriptionInput}*/}
-                {/*    placeholder="Tên hành trình"*/}
-                {/*    onChangeText={text => setName(text)}*/}
-                {/*    value={name}*/}
-                {/*/>*/}
+
+
+                <Text style={[styles.titleInput]}> Chọn địa điểm</Text>
+                <TouchableOpacity style={styles.descriptionInput} onPress={() => setModalVisible(true)}>
+                    {place ? (
+                        <View style={{padding: 10}}>
+
+                            <PlaceShortSelf place={place}></PlaceShortSelf>
+                        </View>
+                    ) : (
+                        <Text> </Text>
+                    )}
+                </TouchableOpacity>
+                <Text style={styles.titleInput}>Ngày dự kiến</Text>
+                <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker3(true)}>
+                    <Text>{moment(scheduleDate).format('DD - MM - YYYY')}</Text>
+                </TouchableOpacity>
+                <SearchPlaceModal visible={modalVisible}
+                                  onClose={() => setModalVisible(false)}
+                                  onSelectPlace={searchPlaces}>
+                </SearchPlaceModal>
                 <Text style={styles.titleInput}>Bắt đầu:</Text>
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker1(true)}>
-                    <Text>{moment(startTime).format('DD/MM/YYYY')}</Text>
+                    <Text>{moment(startTime).format('HH:mm')}</Text>
                 </TouchableOpacity>
                 <Text style={styles.titleInput}>Đến</Text>
                 <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker2(true)}>
-                    <Text>{moment(endTime).format('DD/MM/YYYY')}</Text>
+                    <Text>{moment(endTime).format('HH:mm')}</Text>
                 </TouchableOpacity>
+                <Text style={styles.titleInput}>Phương tiện di chuyển</Text>
+                <TextInput
+                    style={styles.descriptionInput}
+                    placeholder="vd: đi bộ, máy bay,.."
+                    onChangeText={text => setTransport(text)}
+                    value={transport}
+                    multiline
+                />
                 <Text style={styles.titleInput}>Thuyết minh chi tiết cho khung giờ này</Text>
                 <TextInput
                     style={styles.descriptionInput}
@@ -119,6 +162,15 @@ const AddPlaceSchedule = ({schedule, scheduleDate, placeId}) => {
                         is24Hour={true}
                         display="default"
                         onChange={handleEndDateChange}
+                    />)}
+                {showPicker3 && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={scheduleDate}
+                        mode="date"
+                        is24Hour={true}
+                        display="default"
+                        onChange={handleDateChange}
                     />)}
                 {showPicker1 && (
                     <DateTimePicker

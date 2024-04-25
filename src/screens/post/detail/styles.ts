@@ -10,8 +10,8 @@ const styles = () => {
     const st = StyleSheet.create({
 
         container: {
-            // flexGrow: 1, 
-            justifyContent: 'center',
+            // flex: 1,
+            // justifyContent: 'center',
             // paddingHorizontal: 40,
             paddingTop: 40,
             // alignItems: 'center',
@@ -22,7 +22,7 @@ const styles = () => {
             // alignItems: 'center',
             // width: '90%',
             // backgroundColor: "#FFF6F6",
-
+            elevation: 5
         },
         image: {
             // position: 'absolute',
@@ -58,33 +58,35 @@ const styles = () => {
         //     fontWeight: 'bold',
         // },
         stats: {
-            textAlign: 'right',
-            borderTopColor: '#ccc',
-            borderTopWidth: 1,
+            // textAlign: 'right',
+            // borderTopColor: '#ccc',
+            // borderTopWidth: 1,
+            borderBottomWidth: 1,
+            borderBottomColor: "#ccc",
             padding: 10,
             fontSize: 14,
             color: 'gray',
-            marginVertical: 10,
-            marginHorizontal: 20,
+            // marginVertical: 10,
+            // marginHorizontal: 20,
         },
         detailsContainer: {
             flexDirection: 'row',
             backgroundColor: theme.backgroundColor,
             alignItems: 'center',
             width: windowWidth,
-            borderRadius:10,
+            borderRadius: 10,
         },
         details: {
             fontSize: 14,
             color: 'gray',
             marginVertical: 10,
             marginHorizontal: 20,
-            textAlign:'left',
+            textAlign: 'left',
             flex: 1
         },
         heart: {
             marginVertical: 10,
-            marginHorizontal: 20,
+            paddingRight: 20,
         },
 
         description: {

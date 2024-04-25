@@ -17,21 +17,32 @@ const styles = () => {
       backgroundColor: theme.backgroundColor,
     },
     flatListContainer: {
-      paddingVertical: 20,
-      paddingHorizontal: 10,
+      flexDirection: 'column',
+      justifyContent: 'space-between', // Align items in each row
+      // flexWrap: 'wrap',
+      paddingHorizontal: 5,
     },
     postContainer: {
       // flex: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      // flexDirection: 'row',
+      // flexWrap: 'wrap',
       margin: 5,
-      borderRadius: 10,
-      overflow: 'hidden',
+      borderRadius: 3,
+      // overflow: 'hidden',
+    },
+    left:{
+      left: 5,
+      alignItems:'flex-start'
+    },
+    right:{
+      right:10,
+      alignItems:'flex-end'
     },
     postImage: {
       width:imageWidth,
       height:imageHeight,
-      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 5,
     },
     locationText: {
       position: 'absolute',

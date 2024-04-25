@@ -35,16 +35,16 @@ const CommentView = ({comment}) => {
             <Text>Likes: {comment?.likeCount}</Text>
             <LikeComment style={[{}]} commentId={comment?.id} isLike={comment?.isLike}></LikeComment>
             <Text>Subcomments: {comment?.subCommentCount}</Text>
-            {comment?.subCommentCount > 0 && (
-                <TouchableOpacity onPress={handleToggleSubComments}>
-                    <Text>{showSubComments ? 'Ẩn trả lời' : 'Hiện câu trả lời'}</Text>
-                </TouchableOpacity>
-            )}
-            {showSubComments && (
-                <View style={[{margin:20}]}>
-                    <CommentList comments={subComments}/>
-                </View>
-            )}
+            {/*{comment?.subCommentCount > 0 && (*/}
+            {/*    <TouchableOpacity onPress={handleToggleSubComments}>*/}
+            {/*        <Text>{showSubComments ? 'Ẩn trả lời' : 'Hiện câu trả lời'}</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*)}*/}
+            {/*{showSubComments && (*/}
+            {/*    <View style={[{margin:20}]}>*/}
+            {/*        <CommentList comments={subComments}/>*/}
+            {/*    </View>*/}
+            {/*)}*/}
         </View>
     );
 }
