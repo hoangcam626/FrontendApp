@@ -18,7 +18,7 @@ const AvatarWithUsername = ({user, time }) => {
                 <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${user?.avatarId}`}} style={styles.profileImage} />
                 <View style={styles.authorDetails}>
                     <Text style={styles.username}>{user?.username}</Text>
-                    <Text>{time}</Text>
+                    <Text style={{color:'gray'}}>{time}</Text>
                 </View>
             </View>
     </TouchableOpacity>

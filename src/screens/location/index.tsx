@@ -1,5 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput, Dimensions,} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    FlatList,
+    Image,
+    TouchableOpacity,
+    TextInput,
+    Dimensions,
+    SafeAreaView, StatusBar,
+} from 'react-native';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NAVIGATION_TITLE} from '../../constants/navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -44,27 +54,28 @@ const Location = () => {
     );
 
     const handleSearch = (text) => {
-
         console.log('Từ khóa tìm kiếm:', text);
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <StatusBar></StatusBar>
             <View style={styles.searchBar}>
-                <TextInput
-                    style={styles.input}
-                    value={searchText}
-                    onChangeText={setSearchText}
-                    placeholder="Nhập địa điểm tìm kiếm..."
-                    onSubmitEditing={() => handleSearch(searchText)}
-                />
-                <TouchableOpacity onPress={() => handleSearch(searchText)}>
-                    <Icon size={24} style={styles.searchButton} name="search"/>
-                </TouchableOpacity>
+                <Text style={styles.locationText}> Khám phá</Text>
+                {/*<TextInput*/}
+                {/*    style={styles.input}*/}
+                {/*    value={searchText}*/}
+                {/*    onChangeText={setSearchText}*/}
+                {/*    placeholder="Nhập địa điểm tìm kiếm..."*/}
+                {/*    onSubmitEditing={() => handleSearch(searchText)}*/}
+                {/*/>*/}
+                {/*<TouchableOpacity onPress={() => handleSearch(searchText)}>*/}
+                {/*    <Icon size={24} style={styles.searchButton} name="search"/>*/}
+                {/*</TouchableOpacity>*/}
             </View>
             <ImageTwoColum posts={posts}></ImageTwoColum>
 
-        </View>
+        </SafeAreaView>
     );
 }
 export default Location

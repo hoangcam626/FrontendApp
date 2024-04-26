@@ -101,9 +101,11 @@ const DetailPlace = ({route}) => {
         }
     }
     const renderItem = ({item}) => (
+        <View key={item}>
         <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${item}`}}
                style={styles.image} key={item}>
         </Image>
+        </View>
     );
     const renderTabBar = props => (
         <TabBar
@@ -116,11 +118,9 @@ const DetailPlace = ({route}) => {
                 fontSize: 14,
                 fontWeight: 'bold',
                 color: 'white',
-
             }}
             tabStyle={{width: 120}}
             // scrollEnabled={}
-
         />
     );
     const renderInfoPlace = () => (

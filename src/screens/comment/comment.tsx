@@ -31,20 +31,9 @@ const CommentView = ({comment}) => {
     return (
         <View style={[{margin:20}]}>
             <Text>{comment?.content}</Text>
-            <AvatarWithUsername user={comment?.createBy} time={111}></AvatarWithUsername>
+            <AvatarWithUsername user={comment?.createBy} time={comment?.createdAt}></AvatarWithUsername>
             <Text>Likes: {comment?.likeCount}</Text>
-            <LikeComment style={[{}]} commentId={comment?.id} isLike={comment?.isLike}></LikeComment>
-            <Text>Subcomments: {comment?.subCommentCount}</Text>
-            {/*{comment?.subCommentCount > 0 && (*/}
-            {/*    <TouchableOpacity onPress={handleToggleSubComments}>*/}
-            {/*        <Text>{showSubComments ? 'Ẩn trả lời' : 'Hiện câu trả lời'}</Text>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*)}*/}
-            {/*{showSubComments && (*/}
-            {/*    <View style={[{margin:20}]}>*/}
-            {/*        <CommentList comments={subComments}/>*/}
-            {/*    </View>*/}
-            {/*)}*/}
+            <LikeComment style={{}} commentId={comment?.id} isLike={comment?.isLike}></LikeComment>
         </View>
     );
 }

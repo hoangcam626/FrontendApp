@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -9,34 +9,31 @@ const LikePost = ({style, isLike, postId}) => {
     const navigation = useNavigation();
     const dispatch = useDispatch<any>()
     const [like, setLike] = useState<boolean>(isLike)
-
+    useEffect(() => {
+        setLike(isLike);
+    }, [isLike]);
     const handleLikeComment = async () => {
 
         const req = new FormData()
         req.append('postId', postId)
-        if (isLike) {
-            await dispatch (unlikePostActions(req))
-                .then(res=>{
-                    setLike(false)
-                })
-                .catch(err => {
-                    console.error('Unlike post failed:', err);
-                });
-        } else {
-            await dispatch (likePostActions(req))
-                .then(res=>{
-                    setLike(true)
-                })
-                .catch(err => {
-                    console.error('Unlike post failed:', err);
-                });
+        try {
+            if (like) {
+                await dispatch(unlikePostActions(req));
+                setLike(false);
+            } else {
+                await dispatch(likePostActions(req));
+                setLike(true);
+            }
+        } catch (error) {
+            console.error('Error occurred while liking/unliking comment:', error);
         }
-    }
+    };
+
 
 
     return (
         <TouchableOpacity onPress={handleLikeComment} style={style}>
-            <Icon name='heart'  size={25} color={like ? 'red' : 'black'}/>
+            <Icon name='heart'  size={18} color={like ? 'red' : '#ccc'}/>
         </TouchableOpacity>
     );
 };

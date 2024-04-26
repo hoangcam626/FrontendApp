@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList, Modal} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    FlatList,
+    Modal,
+    SafeAreaView,
+    StatusBar
+} from 'react-native';
 import st from './styles'
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
@@ -18,6 +29,8 @@ import {getCommentsActions} from "../../../services/comment/actions";
 import CommentView from "../../comment/comment";
 import {NAVIGATION_TITLE} from "../../../constants/navigation";
 import LikePost from "../../like/likePost";
+import Icon from "react-native-vector-icons/FontAwesome";
+import moment from "moment";
 
 const PostDetail = ({route}) => {
     const navigation = useNavigation<any>();
@@ -40,6 +53,7 @@ const PostDetail = ({route}) => {
         }
         getComments()
     }, [showComment]);
+
     const getPost = async () => {
         const req = new FormData();
         req.append("id", id);
@@ -64,44 +78,110 @@ const PostDetail = ({route}) => {
             })
             .catch(err => setLoading(false))
     }
-
-    // @ts-ignore
-    return (
-        <ScrollView contentContainerStyle={styles.container}
-                    showsVerticalScrollIndicator={false}>
-            <View style={styles.imageContainer}>
-                <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${post?.imageId}`} w={imageWidth}></ImageWidth>
-                <View style={{margin: 10}}>
-                    <AvatarWithUsername user={post?.createBy} time={post?.createdAt}></AvatarWithUsername>
+    const renderComment = ({item, index}) => (
+        <View style={{margin: 5}} key={item?.id}>
+            <View style={styles.postInfo}>
+                <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.INFO_USER, item?.createdBy?.id)}>
+                    <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${item?.createdBy?.avatarId}`}}
+                           style={styles.profileImage}/>
+                </TouchableOpacity>
+                <View style={styles.authorDetails}>
+                    <Text style={styles.username}>{item?.createdBy?.username}</Text>
+                    <Text>{item?.content}</Text>
+                </View>
+            </View>
+            <View style={{flexDirection: 'row', paddingLeft: 40}}>
+                {(item.imageId) && (
+                        <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`} w={110}></ImageWidth>
+                )}
+                <View style={{alignItems: 'flex-end', flex: 1}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={{marginRight: 20, color: 'gray'}}>
+                            {moment(item?.createdAt).fromNow()}
+                        </Text>
+                        <Text>{item?.totalLike}</Text>
+                        <LikeComment style={{}} commentId={item?.id}
+                                     isLike={item?.isLike}></LikeComment>
+                    </View>
                 </View>
             </View>
 
-            {/*<Text style={[styles.stats, {fontWeight: 'bold'}]}>MÔ TẢ</Text>*/}
-            <View style={styles.stats}>
+        </View>
+    )
+    const toggleModal = () => {
+        setShowComment(!showComment);
+    };
 
-                <Text style={{}}>{post?.content}</Text>
-                {(post?.place) &&
-                    (<TouchableOpacity  onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, post?.place?.id)}>
-                        <Text>Địa điểm: {post?.place?.name}</Text>
-                    </TouchableOpacity>)
-                }
-            </View>
-            <View style={styles.detailsContainer}>
-                <TouchableOpacity onPress={() => setShowComment(true)}>
-                    <Text style={styles.details}>{post?.totalComment} Comments</Text>
-                </TouchableOpacity>
-                <Text>{post?.totalLike}</Text>
-                <LikePost style={styles.heart} postId={post?.id} isLike={post?.isLike}></LikePost>
-            </View>
-            <Modal visible={showComment}>
-                <FlatList
-                    data={comments}
-                    renderItem={({item}) => <CommentView comment={item}/>}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            </Modal>
-            <AddCommentBar postId={post?.id}></AddCommentBar>
-        </ScrollView>
+    // @ts-ignore
+    return (
+        <SafeAreaView>
+            <StatusBar backgroundColor={"#fff"}></StatusBar>
+
+            <ScrollView contentContainerStyle={styles.container}
+                        showsVerticalScrollIndicator={false}>
+                <View style={styles.iconBack}>
+
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{alignItems: 'flex-start'}}>
+                        <Icon name='angle-left' size={24} style={{padding: 10, flex: 1, color: "#000"}}></Icon>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.imageContainer}>
+                    <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${post?.imageId}`} w={imageWidth}></ImageWidth>
+                    <View style={{margin: 10}}>
+                        <AvatarWithUsername
+                            user={post?.createBy}
+                            time={moment(post?.createdAt).fromNow()}>
+                        </AvatarWithUsername>
+                    </View>
+                </View>
+
+                <View style={styles.stats}>
+
+                    <Text style={{}}>{post?.content}</Text>
+                    {(post?.place) &&
+                        (<TouchableOpacity
+                            onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, post?.place?.id)}>
+                            <Text>Địa điểm: {post?.place?.name}</Text>
+                        </TouchableOpacity>)
+                    }
+                </View>
+                <View style={styles.detailsContainer}>
+                    <TouchableOpacity onPress={() => setShowComment(true)}>
+                        <Text style={styles.details}>{post?.totalComment} Comments {post?.totalLike} Likes</Text>
+                    </TouchableOpacity>
+
+                    <View
+                        style={{alignItems: 'flex-end', flex: 1}}>
+                        <LikePost style={styles.heart} postId={post?.id} isLike={post?.isLike}></LikePost>
+                    </View>
+                </View>
+
+                <Modal visible={showComment} animationType="slide"
+                       transparent={true}
+                       onRequestClose={toggleModal}>
+
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <TouchableOpacity onPress={toggleModal} style={{alignItems: 'flex-end'}}>
+                                <Icon name='times' size={20} color="gray"></Icon>
+                            </TouchableOpacity>
+                            {(comments.length > 0) ? (
+                                <FlatList
+                                    data={comments}
+                                    renderItem={renderComment}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+                            ) : (
+
+                                <Text style={styles.details}>Không có bình luận nào</Text>
+                            )}
+                            <AddCommentBar postId={post?.id}></AddCommentBar>
+                        </View>
+                    </View>
+                </Modal>
+                <AddCommentBar postId={post?.id}></AddCommentBar>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

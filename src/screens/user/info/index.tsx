@@ -45,7 +45,7 @@ const User = () => {
 
     const [routes] = useState([
         {key: 'posts', icon: 'file-text-o'},
-        {key: 'places', icon: 'map-marker'},
+        // {key: 'places', icon: 'map-marker'},
         {key: 'heart', icon: 'heart'},
     ]);
     const [heartPlaces, setHeartPlaces] = useState<any>([]);
@@ -168,7 +168,7 @@ const User = () => {
         <ScrollView style={{ padding: 10}}>
             {heartPlaces ? (
                 heartPlaces.map(place => (
-                    <TouchableOpacity style={{margin: 10, padding: 10}}>
+                    <TouchableOpacity style={{margin: 10, padding: 10}} key={place?.id}>
 
                         <PlaceShortSelf place={place}></PlaceShortSelf>
                     </TouchableOpacity>
@@ -219,7 +219,8 @@ const User = () => {
                     }
 
                 </TouchableOpacity>
-                <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+                <Modal isVisible={isModalVisible}
+                       onBackdropPress={toggleModal}>
                     <View style={styles.modalContent}>
 
                         <TouchableOpacity
@@ -260,7 +261,7 @@ const User = () => {
             <TabView
                 navigationState={{index, routes}}
                 renderScene={SceneMap({
-                    places: renderFavoritePlacesScene,
+                    // places: renderFavoritePlacesScene,
                     posts: renderPersonalPostsScene,
                     heart: renderHeartPostsScene
                 })}

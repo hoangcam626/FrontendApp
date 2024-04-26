@@ -54,13 +54,13 @@ const styles = () => {
             position: 'absolute',
             zIndex: 1,
         },
-        modalContent: {
-            backgroundColor: 'white',
-            borderRadius: 10,
-            height:"50%",
-            alignSelf: 'center',
-            margin: 10
-        },
+        // modalContent: {
+        //     backgroundColor: 'white',
+        //     borderRadius: 10,
+        //     height:"50%",
+        //     alignSelf: 'center',
+        //     margin: 10
+        // },
         button: {
             backgroundColor: theme.tabActive,
             margin: 10,
@@ -73,6 +73,20 @@ const styles = () => {
             fontSize: 16,
             fontWeight: 'bold'
 
+        },
+        modalContainer: {
+            flex: 1,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
+        modalContent: {
+            backgroundColor: 'white',
+            width: '100%',
+            height: '50%',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            padding: 20,
         },
 
     });

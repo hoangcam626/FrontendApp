@@ -19,6 +19,8 @@ import Loading from "../../../utils/loading/Loading";
 import Icon from "react-native-vector-icons/FontAwesome";
 import PlaceShortSelf from "../place/shortself";
 import {getScheduleOnDateActions} from "../../services/placeschedule/actions";
+import AvatarWithUsername from "../user/shortinfo";
+import LikeComment from "../like/likeComment";
 
 
 const ScheduleDate = ({date, schedule}) => {
@@ -81,6 +83,7 @@ const ScheduleDate = ({date, schedule}) => {
     );
 
 
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={"#fff"}></StatusBar>
@@ -91,7 +94,8 @@ const ScheduleDate = ({date, schedule}) => {
                     scheduleTime?.map(time => (
                         <View style={styles.scheduleItem} key={scheduleTime?.id}>
                             <Text>{time?.scheduleBeginTime} </Text>
-                            <View style={{padding:10,margin:10,borderStyle:'dashed', borderLeftWidth:1, borderColor:'gray'}}>
+                            <View
+                                style={{padding: 10, margin: 10, borderStyle: 'dashed', borderLeftWidth: 1, borderColor: 'gray'}}>
 
                                 <TouchableOpacity
                                     onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, time?.id)}>
@@ -99,9 +103,9 @@ const ScheduleDate = ({date, schedule}) => {
                                 </TouchableOpacity>
                                 <Text>Di chuyen: {time?.transport}</Text>
                                 <Text>Note: {time?.description}</Text>
-                                <Text>{time?.scheduleFinishTime} </Text>
 
                             </View>
+                            <Text>{time?.scheduleFinishTime} </Text>
                         </View>
                     ))
                 ) : (

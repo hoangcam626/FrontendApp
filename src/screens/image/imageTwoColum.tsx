@@ -15,13 +15,13 @@ const ImageTwoColumn = ({posts}) => {
             <View style={{flexDirection: 'row'}}>
                 <View style={{flexDirection: 'column', paddingRight: 15}}>
                     {posts.filter((item, index) => index % 2 === 0).map((item, index) => (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
-                            <View key={item?.id} style={[styles.postContainer, styles.left]}>
+                        <View key={item?.id} style={[styles.postContainer, styles.left]}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
                                 <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`}
                                             w={imageWidth}></ImageWidth>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
                     ))
                     }
                 </View>
@@ -29,13 +29,13 @@ const ImageTwoColumn = ({posts}) => {
 
                     {posts.filter((item, index) => index % 2 !== 0).map((item, index) => (
 
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
-                            <View key={item?.id} style={[styles.postContainer, styles.right]}>
+                        <View key={item?.id} style={[styles.postContainer, styles.right]}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
                                 <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`}
                                             w={imageWidth}></ImageWidth>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
                     ))
                     }
                 </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     postContainer: {
 
         margin: 5,
-        borderRadius: 3,
+        borderRadius: 10,
     },
     left: {
         left: 5,

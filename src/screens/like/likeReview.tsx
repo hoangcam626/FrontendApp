@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -9,28 +9,26 @@ const LikeReview = ({style, isLike, reviewId}) => {
     const navigation = useNavigation();
     const dispatch = useDispatch<any>()
     const [like, setLike] = useState<boolean>(isLike)
+    useEffect(() => {
+        setLike(isLike);
+    }, [isLike]);
     const handleLikeComment = async () => {
 
         const req = new FormData()
         req.append('reviewId', reviewId)
-        if (isLike) {
-            await dispatch (unlikeReviewActions(req))
-                .then(res=>{
-                    setLike(false)
-                })
-                .catch(err => {
-                    console.error('Unlike review failed:', err);
-                });
-        } else {
-            await dispatch (likeReviewActions(req))
-                .then(res=>{
-                    setLike(true)
-                })
-                .catch(err => {
-                    console.error('Unlike review failed:', err);
-                });
+        try {
+            if (like) {
+                await dispatch(unlikeReviewActions(req));
+                setLike(false);
+            } else {
+                await dispatch(likeReviewActions(req));
+                setLike(true);
+            }
+        } catch (error) {
+            console.error('Error occurred while liking/unliking comment:', error);
         }
-    }
+    };
+
 
     return (
         <TouchableOpacity onPress={handleLikeComment} style={style}>

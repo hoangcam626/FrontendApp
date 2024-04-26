@@ -61,6 +61,7 @@ const styles = () => {
             height: 100,
             marginRight: 5,
         },
+
     });
     return st
 }

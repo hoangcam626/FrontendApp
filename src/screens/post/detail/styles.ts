@@ -97,6 +97,49 @@ const styles = () => {
             // textAlign: 'center',
             marginTop: 10,
         },
+        modalContainer: {
+            flex: 1,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
+        modalContent: {
+            backgroundColor: 'white',
+            width: '100%',
+            height: '50%',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            padding: 20,
+        },
+        postInfo: {
+            // paddingLeft:20,
+            flexDirection: 'row',
+            alignItems: 'center',
+            // marginVertical: 10,
+            // backgroundColor: theme.backgroundColor,
+        },
+        profileImage: {
+            width: 30,
+            height: 30,
+            borderRadius: 25,
+            marginRight: 10,
+        },
+        authorDetails: {
+            backgroundColor: "#EEEEEE",
+            padding: 10,
+            borderRadius: 15,
+            flex: 1,
+            flexDirection: 'column'
+        },
+        username: {
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        iconBack:{
+            width: Dimensions.get('window').width,
+            position: 'absolute',
+            zIndex: 1,
+        },
 
     });
     return st

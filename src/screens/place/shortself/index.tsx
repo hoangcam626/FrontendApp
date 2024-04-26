@@ -13,7 +13,7 @@ const PlaceShortSelf = ({place }) => {
 
   return (
 
-     <View style={styles.postInfo}>
+     <View style={styles.postInfo} key={place?.id}>
                 <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${place?.imageId}`}} style={styles.profileImage} />
                 <View style={styles.authorDetails}>
                     <Text style={styles.username}>{place?.name}</Text>
