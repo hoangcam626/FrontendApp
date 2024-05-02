@@ -16,7 +16,6 @@ import Navigation from "../../navigation";
 import moment from "moment";
 
 const Reviews = ({placeId}) => {
-    // const placeId = route.params
     const styles = st();
     const navigation = useNavigation<any>();
     const dispatch = useDispatch<any>()
@@ -25,7 +24,7 @@ const Reviews = ({placeId}) => {
 
     useEffect(() => {
         getReview()
-    }, []);
+    }, [placeId]);
     const getReview = async () => {
         try {
             setLoading(true);
@@ -57,7 +56,7 @@ const Reviews = ({placeId}) => {
     return (
         <View style={styles.container}>
             {reviews && reviews.map((review, index) => (
-                <View style={styles.itemContainer} key={index}>
+                <View style={styles.itemContainer} key={review?.id}>
                     {review?.place?.id != placeId && (
                         <TouchableOpacity
                             onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, review?.place?.id)}>

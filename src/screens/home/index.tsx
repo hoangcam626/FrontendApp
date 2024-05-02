@@ -1,20 +1,23 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image, FlatList, TextInput, Dimensions, TouchableOpacity} from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, Image, FlatList, TextInput, Dimensions, TouchableOpacity } from 'react-native';
 import st from './styles'
 import Carousel from 'react-native-snap-carousel';
-import {getReviewsActions} from "../../services/review/actions";
-import {useDispatch} from "react-redux";
-import {useFocusEffect, useIsFocused, useNavigation} from "@react-navigation/native";
-import {ScrollView} from "react-native-gesture-handler";
+import { getReviewsActions } from "../../services/review/actions";
+import { useDispatch } from "react-redux";
+import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
 import useTheme from "../../hooks/useTheme";
 import Loading from "../../../utils/loading/Loading";
-import {getPlacesActions, searchPlaceActions} from "../../services/place/actions";
-import {BASE_URL, IMAGE} from "../../constants/api";
-import {NAVIGATION_TITLE} from "../../constants/navigation";
+import { getPlacesActions, searchPlaceActions } from "../../services/place/actions";
+import { BASE_URL, IMAGE } from "../../constants/api";
+import { NAVIGATION_TITLE } from "../../constants/navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ReviewItem from "../review/detail";
 import Reviews from "../review";
 import LikePlace from "../like/likePlace";
+import AvatarWithUsername from '../user/shortinfo';
+import moment from 'moment';
+import LikeReview from '../like/likeReview';
 
 const Home = () => {
     const theme = useTheme();
@@ -27,10 +30,10 @@ const Home = () => {
     const carouselRef = useRef(null);
     const [keyword, setKeyword] = useState('')
     const images = [
-        {id: '1', image: require('../../../assets/TempleofliteratureVietnam.jpg')},
-        {id: '2', image: require('../../../assets/hue.jpg')},
-        {id: '3', image: require('../../../assets/Wandering.jpg')},
-        {id: '4', image: require('../../../assets/WondersofVietnam.jpg')},
+        { id: '1', image: require('../../../assets/TempleofliteratureVietnam.jpg') },
+        { id: '2', image: require('../../../assets/hue.jpg') },
+        { id: '3', image: require('../../../assets/Wandering.jpg') },
+        { id: '4', image: require('../../../assets/WondersofVietnam.jpg') },
     ];
 
     const [places, setPlaces] = useState<any>([])
@@ -42,11 +45,11 @@ const Home = () => {
         }, [])
     );
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         getReview();
-    //     }, [])
-    // );
+    useFocusEffect(
+        useCallback(() => {
+            getReview();
+        }, [])
+    );
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -76,18 +79,18 @@ const Home = () => {
             })
             .catch(err => setLoading(false))
     }
-    const PlaceItem = ({place}) => {
+    const PlaceItem = ({ place }) => {
         return (
             <TouchableOpacity style={styles.placeItem}
-                              onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, place?.id)}
-                              key={place?.id}>
+                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, place?.id)}
+                key={place?.id}>
                 <View>
-                    <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${place?.imageId}`}} style={styles.placeImage}/>
-                    <LikePlace isLike={place?.isLike} placeId={place?.id} style={{position: 'absolute', padding:5, right:0}}></LikePlace>
+                    <Image source={{ uri: `${BASE_URL}${IMAGE.RESOURCE}${place?.imageId}` }} style={styles.placeImage} />
+                    <LikePlace isLike={place?.isLike} placeId={place?.id} style={{ position: 'absolute', padding: 5, right: 0 }}></LikePlace>
                     <Text style={styles.placeName}>{place?.name}</Text>
                     <View style={styles.placeStart}>
-                        <Text style={{fontSize: 15}}>{place?.rating} </Text>
-                        <Icon name='star' size={15} color='#FCDC2A'/>
+                        <Text style={{ fontSize: 15 }}>{place?.rating} </Text>
+                        <Icon name='star' size={15} color='#FCDC2A' />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -95,14 +98,21 @@ const Home = () => {
     };
 
 
-    const renderItem = ({item}) => (
-        <Image source={item.image} style={styles.image}/>
+    const renderItem = ({ item }) => (
+        <Image source={item.image} style={styles.image} />
+    );
+    const renderImage = ({ item, index }) => (
+        <View style={styles.imageContainer} key={item?.id}>
+            <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.IMAGE, item)}>
+                <Image source={{ uri: `${BASE_URL}${IMAGE.RESOURCE}${item}` }} style={styles.image1} />
+            </TouchableOpacity>
+        </View>
     );
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={{alignItems: 'center', justifyContent: 'flex-end'}}>
+                <View style={{ alignItems: 'center', justifyContent: 'flex-end' }}>
                     <Carousel
                         ref={carouselRef}
                         data={images}
@@ -125,14 +135,46 @@ const Home = () => {
 
                 <FlatList
                     data={places}
-                    renderItem={({item}) => <PlaceItem place={item}/>}
+                    renderItem={({ item }) => <PlaceItem place={item} />}
                     keyExtractor={(item) => item.id.toString()}
                     horizontal
                     contentContainerStyle={styles.flatListContent}
                     style={styles.placesContainer}
                 />
-                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>Review mới nhất</Text>
-                <Reviews placeId={''}></Reviews>
+                <Text style={{ fontSize: 25, fontWeight: 'bold', padding: 10 }}>Review mới nhất</Text>
+                <View style={styles.container}>
+                    {reviews && reviews.map((review, index) => (
+                        <View style={styles.itemContainer} key={review?.id}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, review?.place?.id)}>
+                                <View style={{ flexDirection: 'row', margin: 5 }}>
+                                    <Icon name='map-marker' size={23}></Icon>
+                                    <Text style={{ fontSize: 20 }}> {review?.place?.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <AvatarWithUsername user={review?.createBy}
+                                time={moment(review?.createdAt, "YYYY-MM-DD HH:mm:ss").startOf('hour').fromNow()}></AvatarWithUsername>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+                                {[...Array(review?.rating)].map((_, index) => (
+                                    <Icon name='star' size={20} color='#FFC700' style={styles.star} />
+                                ))}
+                            </View>
+                            <Text style={styles.description}>{review?.description}</Text>
+                            <FlatList
+                                data={review?.imagesId}
+                                renderItem={renderImage}
+                                keyExtractor={(item, index) => index.toString()}
+                                horizontal
+                                contentContainerStyle={styles.gridContainer}
+                            />
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={styles.username}>{review?.totalLike} cảm ơn</Text>
+                                <LikeReview reviewId={review?.id} isLike={review?.isLike} style={{}}></LikeReview>
+                            </View>
+                        </View>
+                    ))}
+                    <Loading visiable={loading}></Loading>
+                </View>
                 <Loading visiable={loading}></Loading>
             </ScrollView>
         </View>
