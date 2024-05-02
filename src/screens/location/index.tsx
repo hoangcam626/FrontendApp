@@ -45,33 +45,26 @@ const Location = () => {
             })
             .catch(err => setLoading(false))
     }
-    const renderItem = ({item}) => (
-        <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
-            <View style={styles.postContainer}>
-                <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`} w={imageWidth}></ImageWidth>
-            </View>
-        </TouchableOpacity>
-    );
 
     const handleSearch = (text) => {
-        console.log('Từ khóa tìm kiếm:', text);
+        console.log('Tìm kiếm:', text);
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar></StatusBar>
             <View style={styles.searchBar}>
-                <Text style={styles.locationText}> Khám phá</Text>
-                {/*<TextInput*/}
-                {/*    style={styles.input}*/}
-                {/*    value={searchText}*/}
-                {/*    onChangeText={setSearchText}*/}
-                {/*    placeholder="Nhập địa điểm tìm kiếm..."*/}
-                {/*    onSubmitEditing={() => handleSearch(searchText)}*/}
-                {/*/>*/}
-                {/*<TouchableOpacity onPress={() => handleSearch(searchText)}>*/}
-                {/*    <Icon size={24} style={styles.searchButton} name="search"/>*/}
-                {/*</TouchableOpacity>*/}
+                {/*<Text style={styles.locationText}> Khám phá</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    value={searchText}
+                    onChangeText={setSearchText}
+                    placeholder="Nhập thông tin tìm kiếm..."
+                    onSubmitEditing={() => handleSearch(searchText)}
+                />
+                <TouchableOpacity onPress={() => handleSearch(searchText)}>
+                    <Icon size={24} style={styles.searchButton} name="search"/>
+                </TouchableOpacity>
             </View>
             <ImageTwoColum posts={posts}></ImageTwoColum>
 

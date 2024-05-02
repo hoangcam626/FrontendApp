@@ -9,18 +9,17 @@ import {NAVIGATION_TITLE} from '../../../constants/navigation';
 import {useDispatch} from 'react-redux';
 import st from './styles'
 import Loading from '../../../../utils/loading/Loading';
-import Toast from '../../../../utils/toast';
 import useTheme from '../../../hooks/useTheme'
 import {selfActions, updateAvatarActions} from "../../../services/user/actions";
 import {getItemObjectAsyncStorage} from "../../../../utils/asyncStorage";
 import {KEY_STORAGE} from "../../../constants/storage";
 import {BASE_URL, IMAGE} from "../../../constants/api";
 import {getPostCreateByActions, getPostFavouritesActions} from "../../../services/post/actions";
-import {getPlaceFavouritesActions} from "../../../services/place/actions";
 import moment from "moment";
 import {ScrollView} from "react-native-gesture-handler";
 import ImageTwoColum from "../../image/imageTwoColum";
-import PlaceShortSelf from "../../place/shortself";
+import {getReviewsCreateByActions} from "../../../services/review/actions";
+import Reviews from "../../review";
 
 const User = () => {
     const isFocused = useIsFocused()
@@ -45,10 +44,10 @@ const User = () => {
 
     const [routes] = useState([
         {key: 'posts', icon: 'file-text-o'},
-        // {key: 'places', icon: 'map-marker'},
+        {key: 'places', icon: 'pencil'},
         {key: 'heart', icon: 'heart'},
     ]);
-    const [heartPlaces, setHeartPlaces] = useState<any>([]);
+    const [reviews, setReviews] = useState<any>([]);
     const [personalPosts, setPersonalPosts] = useState<any>([]);
     const [heartPosts, setHeartPosts] = useState<any>([]);
 
@@ -103,10 +102,10 @@ const User = () => {
     }
     const getHeartPlaces = async (req) => {
 
-        await dispatch(getPlaceFavouritesActions(req))
+        await dispatch(getReviewsCreateByActions(req))
             .then(res => {
                 // setLoading(false)
-                setHeartPlaces(res?.payload)
+                setReviews(res?.payload)
                 console.log(userInfo)
             })
             .catch(err => setLoading(false))
@@ -165,16 +164,12 @@ const User = () => {
     };
 
     const renderFavoritePlacesScene = () => (
-        <ScrollView style={{ padding: 10}}>
-            {heartPlaces ? (
-                heartPlaces.map(place => (
-                    <TouchableOpacity style={{margin: 10, padding: 10}} key={place?.id}>
+        <ScrollView style={{padding: 10}}>
+            {reviews ? (
+            <Reviews reviews={reviews} placeId={''}></Reviews>
 
-                        <PlaceShortSelf place={place}></PlaceShortSelf>
-                    </TouchableOpacity>
-                ))
             ) : (
-                <Text>Bạn chưa yêu thích địa điểm nào</Text>
+                <Text>Bạn chưa đánh giá địa điểm nào</Text>
             )}
         </ScrollView>
     );
@@ -236,7 +231,7 @@ const User = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            onPress={() => navigation.navigate(NAVIGATION_TITLE.IMAGE, userInfo?.avatarId)}
+                            onPress={() => navigation.navigate(NAVIGATION_TITLE.UPDATE_INFO, userInfo)}
                             style={styles.modalOption}>
                             <Icon name='edit' style={styles.modalOptionText}/>
                             <Text style={styles.modalOptionText}>Chỉnh sửa hồ sơ</Text>
@@ -250,10 +245,14 @@ const User = () => {
                 </Modal>
 
                 <Text style={styles.userName}>{userInfo?.username}</Text>
-                <Text>Tham gia từ {moment(userInfo?.startDate).format("DD - MM - YYYY")}</Text>
+                {userInfo?.description && (
+                    <Text>{userInfo?.description}</Text>
+                )}
+                {/*<Text>Tham gia từ {moment(userInfo?.createdAt).format("DD - MM - YYYY")}</Text>*/}
                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>{userInfo?.totalPost} post
                     | {userInfo?.totalReview} reviews | {userInfo?.totalVisit} visit</Text>
-                {/*<Text>{userInfo?.decription}</Text>*/}
+
+
 
             </View>
 
@@ -261,7 +260,7 @@ const User = () => {
             <TabView
                 navigationState={{index, routes}}
                 renderScene={SceneMap({
-                    // places: renderFavoritePlacesScene,
+                    places: renderFavoritePlacesScene,
                     posts: renderPersonalPostsScene,
                     heart: renderHeartPostsScene
                 })}

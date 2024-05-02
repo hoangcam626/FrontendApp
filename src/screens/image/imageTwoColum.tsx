@@ -22,6 +22,8 @@ const ImageTwoColumn = ({ posts }) => {
                                     <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`}
                                         w={imageWidth}></ImageWidth>
                                 </TouchableOpacity>
+                                <Text numberOfLines={1} ellipsizeMode="tail">{item?.content}</Text>
+
                             </View>
                         ))
                         }
@@ -35,6 +37,7 @@ const ImageTwoColumn = ({ posts }) => {
                                     onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_POST, item?.id)}>
                                     <ImageWidth image={`${BASE_URL}${IMAGE.RESOURCE}${item?.imageId}`}
                                         w={imageWidth}></ImageWidth>
+                                    <Text style={{textAlign:'left'}} numberOfLines={1} ellipsizeMode="tail">{item?.content}</Text>
                                 </TouchableOpacity>
                             </View>
                         ))

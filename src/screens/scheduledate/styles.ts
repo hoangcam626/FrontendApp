@@ -72,6 +72,11 @@ const styles = () => {
             // flexDirection: 'row',
             // justifyContent: 'space-between'
         },
+        time:{
+            flex: 1,
+            color: theme.colorBlue1,
+            fontWeight:'bold'
+        }
     });
     return st
 }

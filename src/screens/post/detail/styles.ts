@@ -134,11 +134,20 @@ const styles = () => {
         username: {
             fontSize: 16,
             fontWeight: 'bold',
+            // margin:10,
+            // color:theme.colorBlue1
+        },
+        text: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            margin:10,
+            color:theme.colorBlue1
         },
         iconBack:{
             width: Dimensions.get('window').width,
             position: 'absolute',
             zIndex: 1,
+            flexDirection:"row",
         },
 
     });

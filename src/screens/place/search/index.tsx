@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Modal, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
-import {getPlacesActions, searchPlaceActions} from "../../../services/place/actions";
+import {getPlaceFavouritesActions, getPlacesActions, searchPlaceActions} from "../../../services/place/actions";
 import {useDispatch} from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import useTheme from "../../../hooks/useTheme";
 import st from "./styles"
 import PlaceShortSelf from "../shortself";
+import {getItemObjectAsyncStorage} from "../../../../utils/asyncStorage";
+import {KEY_STORAGE} from "../../../constants/storage";
 
 const SearchPlaceModal = ({visible, onClose, onSelectPlace}) => {
     const theme = useTheme();
@@ -14,6 +16,7 @@ const SearchPlaceModal = ({visible, onClose, onSelectPlace}) => {
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState<boolean>(false)
     const dispatch = useDispatch<any>()
+    const [heartPlaces, setHeartPlaces] = useState<any>([])
     const searchPlaces = async () => {
         setLoading(true)
         const req = new FormData()
@@ -26,6 +29,19 @@ const SearchPlaceModal = ({visible, onClose, onSelectPlace}) => {
             .catch(err => setLoading(false))
 
     };
+    const getHeartPlaces = async () => {
+        const login = await getItemObjectAsyncStorage(KEY_STORAGE.SAVED_INFO);
+        console.log(login.id)
+        const req = new FormData()
+        req.append("userId", login.id)
+
+        await dispatch(getPlaceFavouritesActions(req))
+            .then(res => {
+                // setLoading(false)
+                setHeartPlaces(res?.payload)
+            })
+            .catch(err => setLoading(false))
+    }
     useEffect(() => {
         if (keyword) {
             searchPlaces()
@@ -55,15 +71,37 @@ const SearchPlaceModal = ({visible, onClose, onSelectPlace}) => {
                     <Icon size={24} style={styles.searchButton} name="search"/>
                 </TouchableOpacity>
             </View>
-            <FlatList
-                data={searchResults}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={{padding: 10}} onPress={() => selectPlace(item)}>
-                        <PlaceShortSelf place={item}></PlaceShortSelf>
-                    </TouchableOpacity>
+            <View>
+
+            {searchResults && (
+                <FlatList
+                    data={searchResults}
+                    renderItem={({item}) => (
+                        <TouchableOpacity style={{padding: 10}} onPress={() => selectPlace(item)}>
+                            <PlaceShortSelf place={item}></PlaceShortSelf>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                />
+            )}
+            </View>
+            <View style={styles.likeContainer}>
+                <TouchableOpacity onPress={() => getHeartPlaces()}>
+                    <Text style={styles.like}>Yêu thích</Text>
+                </TouchableOpacity>
+                {heartPlaces && (
+
+                    <FlatList
+                        data={heartPlaces}
+                        renderItem={({item}) => (
+                            <TouchableOpacity style={{padding: 10}} onPress={() => selectPlace(item)}>
+                                <PlaceShortSelf place={item}></PlaceShortSelf>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item) => item.id.toString()}
+                    />
                 )}
-                keyExtractor={(item) => item.id.toString()}
-            />
+            </View>
             <TouchableOpacity onPress={onClose} style={styles.button}>
                 <Text style={styles.buttonText}>Đóng</Text>
             </TouchableOpacity>

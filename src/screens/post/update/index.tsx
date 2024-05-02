@@ -13,7 +13,7 @@ import st from './styles'
 import navigation from "../../../navigation";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
-import {createPostActions, updatePostActions} from "../../../services/post/actions";
+import {createPostActions, deletePostActions, updatePostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
 import SearchPlaceModal from "../../place/search";
 import PlaceShortSelf from "../../place/shortself";
@@ -28,53 +28,25 @@ const UpdatePost = ({route}) => {
     const [content, setContent] = useState('');
     const [place, setPlace] = useState<any>()
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [post, setPost] = useState<any>()
+    const post=route.params
     useEffect(() => {
         if (route) {
-            setImage(route.params?.imageId)
-            setContent(route.params?.content)
-            setPlace(route.params?.place)
+            setImage(post.imageId)
+            setContent(post.content)
+            setPlace(post.place)
         }
     }, [route]);
-    // useEffect(() => {
-    //     if(route){
-    //         setPlace(route.params)
-    //     }
-    // }, [route]);
-    const styles = st()
-    // const pickImage = async () => {
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //         allowsEditing: true,
-    //         // aspect: [9, 16],
-    //         quality: 1,
-    //     });
-    //
-    //     if (!result.canceled) {
-    //         setImage(result.assets[0].uri);
-    //     }
-    // };
 
+    const styles = st()
 
     const searchPlaces = (place) => {
         setPlace(place);
     };
 
-
     const handlePost = async () => {
-        // console.log('Hình ảnh:', image);
-        // console.log('Mô tả:', content);
+
         const req = new FormData()
-        // const imageToUpload = image
-        // const imageName = imageToUpload?.split('/').pop()
-        // const imageType = imageToUpload?.split('.').pop()
-        // console.log(`image/${imageType}`)
-        // @ts-ignore
-        // image && req.append('image', {
-        //     uri: imageToUpload,
-        //     type: `image/${imageType}`,
-        //     name: imageName
-        // });
+        req.append('id', post?.id)
         req.append('content', content)
         if (place) {
             req.append("placeId", place?.id)
@@ -94,6 +66,27 @@ const UpdatePost = ({route}) => {
             })
             .catch(err => setLoading(false));
     };
+    const handleDelete = async () => {
+
+        const req = new FormData()
+
+        req.append('id',post?.id)
+        await dispatch(deletePostActions(req))
+            .then((res) => {
+                if (res?.payload) {
+                    setLoading(false)
+                    ToastAndroid.show('Xóa thành công!', ToastAndroid.SHORT)
+                    navigation.goBack()
+                    console.log(res, 'delete post')
+                } else {
+                    ToastAndroid.show('Có lỗi!', ToastAndroid.SHORT)
+                    setLoading(false)
+                }
+                console.log(res, 'delete post')
+            })
+            .catch(err => setLoading(false));
+    };
+
 
     return (
         <View style={styles.container}>
@@ -137,15 +130,15 @@ const UpdatePost = ({route}) => {
                     value={content}
                     multiline
                 />
-                {/* <Button title="Đăng" onPress={handlePost}/>
-                 */}
-                <TouchableOpacity style={styles.button} onPress={handlePost}>
-                    <Text style={styles.buttonText}>Cập nhật</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handlePost}>
-                    <Text style={styles.buttonText}>Xoa</Text>
-                </TouchableOpacity>
             </ScrollView>
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity style={styles.buttonDelete} onPress={handleDelete}>
+                        <Icon style={styles.buttonText} name='trash'></Icon>
+                    </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handlePost}>
+                    <Text style={styles.buttonText}>Lưu</Text>
+                </TouchableOpacity>
+                </View>
         </View>
 
     );

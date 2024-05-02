@@ -1,21 +1,31 @@
-import React, { useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TextInput, Image, TouchableOpacity, Text, ToastAndroid,} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import Icon from "react-native-vector-icons/FontAwesome";
 import st from './styles'
-import { useNavigation} from "@react-navigation/native";
+import navigation from "../../../navigation";
+import {useFocusEffect, useIsFocused, useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
+import {createPostActions} from "../../../services/post/actions";
 import {ScrollView} from "react-native-gesture-handler";
+import {createScheduleActions} from '../../../services/schedule/actions';
+import {NAVIGATION_TITLE} from '../../../constants/navigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import Loading from "../../../../utils/loading/Loading";
+import {round} from "react-native-reanimated-carousel/lib/typescript/utils/log";
 import PlaceShortSelf from "../../place/shortself";
 import SearchPlaceModal from "../../place/search";
-import {createPlaceScheduleActions} from "../../../services/placeschedule/actions";
+import {
+    createPlaceScheduleActions,
+    deletePlaceActions,
+    updatePlaceScheduleActions
+} from "../../../services/placeschedule/actions";
 
-const AddPlaceSchedule = ({route}) => {
+const UpdatePlaceSchedule = ({route}) => {
     const navigation = useNavigation<any>();
     const dispatch = useDispatch<any>();
-    const schedule = route.params.schedule;
+    const placeSchedule = route.params;
     const [loading, setLoading] = useState<boolean>(false)
     const [description, setDescription] = useState('');
     const [startTime, setStartTime] = useState<Date>(new Date());
@@ -50,21 +60,20 @@ const AddPlaceSchedule = ({route}) => {
         setPlace(place);
     };
     useEffect(() => {
-        if (route.params.place) {
-            setPlace(route.params.place)
-        }
-    }, [route.params.place]);
-    useEffect(() => {
-        if (route.params.scheduleDate) {
-            setScheduleDate(new Date(route.params.scheduleDate))
-        }
-    }, [route.params.scheduleDate]);
+
+        setPlace(placeSchedule?.place)
+        setScheduleDate(new Date(placeSchedule?.scheduledDate))
+        setStartTime(new Date(`${placeSchedule?.scheduledDate}T${placeSchedule?.scheduleBeginTime}`))
+        setEndTime(new Date(`${placeSchedule?.scheduledDate}T${placeSchedule?.scheduleFinishTime}`))
+        setTransport(placeSchedule?.transport)
+        setDescription(placeSchedule?.description)
+    }, [route]);
+
 
     const handleCreateSchedule = async () => {
 
         const req = new FormData()
-
-        req.append("scheduleId", schedule?.id)
+        req.append("id", placeSchedule?.id)
         req.append("scheduleDate", moment(scheduleDate).format('YYYY-MM-DD'))
         req.append("placeId", place?.id)
         req.append("scheduleBeginTime", moment(startTime).format('HH:mm:ss'))
@@ -74,7 +83,7 @@ const AddPlaceSchedule = ({route}) => {
 
         console.log(req)
         // setLoading(true)
-        await dispatch(createPlaceScheduleActions(req))
+        await dispatch(updatePlaceScheduleActions(req))
             .then((res) => {
                 if (res?.payload) {
                     setLoading(false)
@@ -89,7 +98,27 @@ const AddPlaceSchedule = ({route}) => {
             })
             .catch(err => setLoading(false));
     };
+    const handleDeleteSchedule = async () => {
 
+        const req = new FormData()
+        req.append("id", placeSchedule?.id)
+
+        console.log(req)
+        // setLoading(true)
+        await dispatch(deletePlaceActions(req))
+            .then((res) => {
+                if (res?.payload) {
+                    setLoading(false)
+                    ToastAndroid.show('Xoa thành công!', ToastAndroid.SHORT)
+                    navigation.goBack()
+                } else {
+                    ToastAndroid.show('Có lỗi!', ToastAndroid.SHORT)
+                    setLoading(false)
+                }
+                console.log(res, 'delete post')
+            })
+            .catch(err => setLoading(false));
+    };
     return (
         <View style={styles.container}>
             <View style={styles.topModal}>
@@ -97,13 +126,13 @@ const AddPlaceSchedule = ({route}) => {
 
                     <Icon name='angle-left' size={24} style={styles.iconBack}></Icon>
                 </TouchableOpacity>
-                <Text style={styles.title}>{schedule?.nameSchedule}</Text>
+                <Text style={styles.title}>Chỉnh sửa</Text>
             </View>
 
             <ScrollView style={styles.modalContainer}>
 
                 <Text style={[styles.titleInput]}> Chọn địa điểm</Text>
-                <TouchableOpacity style={styles.descriptionInput} onPress={() => setModalVisible(true)}>
+                <TouchableOpacity style={styles.placeInput} onPress={() => setModalVisible(true)}>
                     {place ? (
                         <View style={{padding: 10}}>
 
@@ -113,22 +142,29 @@ const AddPlaceSchedule = ({route}) => {
                         <Text> </Text>
                     )}
                 </TouchableOpacity>
-                <Text style={styles.titleInput}>Ngày dự kiến</Text>
-                <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker3(true)}>
-                    <Text>{moment(scheduleDate).format('DD - MM - YYYY')}</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+
+                    <Text style={styles.titleInput}>Ngày dự kiến</Text>
+                    <TouchableOpacity style={styles.timeInput} onPress={() => setShowPicker3(true)}>
+                        <Text style={styles.time}>{moment(scheduleDate).format('DD - MM - YYYY')}</Text>
+                    </TouchableOpacity>
+                </View>
                 <SearchPlaceModal visible={modalVisible}
                                   onClose={() => setModalVisible(false)}
                                   onSelectPlace={searchPlaces}>
                 </SearchPlaceModal>
-                <Text style={styles.titleInput}>Bắt đầu:</Text>
-                <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker1(true)}>
-                    <Text>{moment(startTime).format('HH:mm')}</Text>
-                </TouchableOpacity>
-                <Text style={styles.titleInput}>Đến</Text>
-                <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker2(true)}>
-                    <Text>{moment(endTime).format('HH:mm')}</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.titleInput}>Bắt đầu:</Text>
+                    <TouchableOpacity style={styles.timeInput} onPress={() => setShowPicker1(true)}>
+                        <Text style={styles.time}>{moment(startTime).format('HH:mm')}</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.titleInput}>Đến:</Text>
+                    <TouchableOpacity style={styles.timeInput} onPress={() => setShowPicker2(true)}>
+                        <Text style={styles.time}>{moment(endTime).format('HH:mm')}</Text>
+                    </TouchableOpacity>
+                </View>
                 <Text style={styles.titleInput}>Phương tiện di chuyển</Text>
                 <TextInput
                     style={styles.descriptionInput}
@@ -174,14 +210,19 @@ const AddPlaceSchedule = ({route}) => {
                         onChange={handleStartDateChange}
                     />)}
 
-                <TouchableOpacity style={styles.button} onPress={handleCreateSchedule}>
-                    <Text style={styles.buttonText}>Tạo </Text>
-                </TouchableOpacity>
             </ScrollView>
+            <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity style={styles.buttonDelete} onPress={handleDeleteSchedule}>
+                    <Icon style={styles.buttonText} name='trash'></Icon>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleCreateSchedule}>
+                    <Text style={styles.buttonText}>Lưu</Text>
+                </TouchableOpacity>
+            </View>
             <Loading visiable={loading}></Loading>
         </View>
 
     );
 };
 
-export default AddPlaceSchedule;
+export default UpdatePlaceSchedule;

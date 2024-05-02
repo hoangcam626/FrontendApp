@@ -58,15 +58,15 @@ const styles = () => {
         titleInput: {
             fontSize: 16,
             fontWeight: 'bold',
-            paddingBottom: 5,
+            // paddingBottom: 3,
             color: "#064789"
         },
         descriptionInput: {
             width: '100%',
             borderBottomWidth: 1,
             borderColor: '#ccc',
-            padding: 10,
-            marginBottom: 20,
+            padding: 5,
+            marginBottom: 10,
         },
         button: {
             backgroundColor: theme.tabActive,
@@ -79,14 +79,25 @@ const styles = () => {
             color: "#fff",
             fontSize: 16,
             fontWeight: 'bold'
-        }, avatar: {
+        },
+        avatarContainer: {
+            // flexDirection: 'row',
+            alignItems: 'center',
+        },
+        avatar: {
             // padding: 100,
             marginTop: 30,
             width: 100,
             height: 100,
             borderRadius: 50,
             marginRight: 10,
+
         },
+        note:{
+            padding:20,
+            // textAlign:'center',
+            color:'red'
+        }
     });
     return st
 }

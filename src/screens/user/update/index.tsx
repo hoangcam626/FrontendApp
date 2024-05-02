@@ -9,7 +9,7 @@ import {ScrollView} from "react-native-gesture-handler";
 import {updateScheduleActions} from '../../../services/schedule/actions';
 import {NAVIGATION_TITLE} from '../../../constants/navigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from "moment";
+import moment, {now} from "moment";
 import Loading from "../../../../utils/loading/Loading";
 import {updateActions} from "../../../services/user/actions";
 import {BASE_URL, IMAGE} from "../../../constants/api";
@@ -20,21 +20,29 @@ const UpdateInfo = ({route}) => {
     const dispatch = useDispatch<any>();
     const [loading, setLoading] = useState<boolean>(false);
     const [content, setContent] = useState('');
-    const [fullname, setFullName] = useState('');
-    const [birthDay, setBirthDay] = useState<Date>(new Date());
+    const [fullName, setFullName] = useState('');
+    const [birthDay, setBirthDay] = useState('');
     const [showPicker1, setShowPicker1] = useState(false);
-    const [adddress, setAddress] = useState('');
+    const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [username, setUserName] = useState('');
-    const [decription, setDecription] = useState('');
+    const [description, setDescription] = useState('');
     useFocusEffect(
         useCallback(() => {
             setUserName(info?.username)
-            setDecription( info?.description)
-            setBirthDay(info?.birthOfDate)
-            setFullName(info?.fullName)
-            setAddress(info?.address)
-            setPhoneNumber(info?.phoneNumber)
+            setDescription(info?.description)
+            if (info?.birthOfDate) {
+                setBirthDay(info?.birthOfDate)
+            }
+            if (info?.fullName) {
+                setFullName(info?.fullName)
+            }
+            if (info?.address) {
+                setAddress(info?.address)
+            }
+            if (info?.phoneNumber) {
+                setPhoneNumber(info?.phoneNumber)
+            }
         }, [])
     );
     const styles = st()
@@ -50,11 +58,21 @@ const UpdateInfo = ({route}) => {
         const req = new FormData()
         req.append("userId", info?.userId)
         req.append("username", username)
-        req.append("fullName", fullname)
-        req.append("phoneNumber", phoneNumber)
-        req.append("address", adddress)
-        req.append("description", decription)
-        req.append("birthOfDate", moment(birthDay).format('YYYY-MM-DD'))
+        if (fullName) {
+            req.append("fullName", fullName)
+        }
+        if (phoneNumber) {
+            req.append("phoneNumber", phoneNumber)
+        }
+        if (address) {
+            req.append("address", address)
+        }
+        if (description) {
+            req.append("description", description)
+        }
+        if (birthDay) {
+            req.append("birthOfDate", moment(birthDay).format('YYYY-MM-DD'))
+        }
 
         console.log(req)
 
@@ -83,15 +101,32 @@ const UpdateInfo = ({route}) => {
                 </TouchableOpacity>
                 <Text style={styles.title}>Chỉnh sửa</Text>
             </View>
-            <Image
-                style={styles.avatar}
-                source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${info?.avatarId}`}}
-            />
-            :
-            <Image
-                style={styles.avatar}
-                source={require('../../../../assets/images/tabs/user1.png')}
-            />
+            <TouchableOpacity style={styles.avatarContainer}>
+                {(info) ?
+                    <Image
+                        style={styles.avatar}
+                        source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${info?.avatarId}`}}
+                    />
+                    :
+                    <Image
+                        style={styles.avatar}
+                        source={require('../../../../assets/images/tabs/user1.png')}
+                    />
+                }
+                <TextInput style={{fontWeight: 'bold'}}
+                    // placeholder="Họ tên"
+                           onChangeText={text => setUserName(text)}
+                           value={username}
+                />
+            </TouchableOpacity>
+
+            {/*:*/}
+            {/*<Image*/}
+            {/*    style={styles.avatar}*/}
+            {/*    source={require('../../../../assets/images/tabs/user1.png')}*/}
+            {/*/>*/}
+            <Text style={styles.note}>Các thông tin đều không bắt buộc. Hãy nhập thông tin mà bạn muốn chia sẻ ở trang
+                cá nhân.</Text>
 
             <ScrollView style={styles.modalContainer}>
 
@@ -100,38 +135,41 @@ const UpdateInfo = ({route}) => {
                     style={styles.descriptionInput}
                     placeholder="Họ tên"
                     onChangeText={text => setFullName(text)}
-                    value={fullname}
+                    value={fullName}
                 />
                 <Text style={styles.titleInput}>Địa chỉ</Text>
                 <TextInput
                     style={styles.descriptionInput}
                     placeholder="Địa chỉ"
-                    onChangeText={text => setFullName(text)}
-                    value={adddress}
+                    onChangeText={text => setAddress(text)}
+                    value={address}
                 />
-                <Text style={styles.titleInput}>Ngày sinh:</Text>
+                <Text style={styles.titleInput}>SĐT liên lạc</Text>
+                <TextInput
+                    style={styles.descriptionInput}
+                    placeholder="SĐT"
+                    onChangeText={text => setPhoneNumber(text)}
+                    value={phoneNumber}
+                />
 
-                <TouchableOpacity style={styles.descriptionInput} onPress={() => setShowPicker1(true)}>
-                    <Text>{moment(birthDay).format('DD/MM/YYYY')}</Text>
-                </TouchableOpacity>
+                <Text style={styles.titleInput}>Ngày sinh</Text>
+                <TextInput
+                    style={styles.descriptionInput}
+                    placeholder="mm/dd/yyyy"
+                    onChangeText={text => setBirthDay(text)}
+                    value={birthDay}
+                />
+                {/*</TouchableOpacity>*/}
 
-                <Text style={styles.titleInput}>Một chút chú thích ve ban</Text>
+
+                <Text style={styles.titleInput}>Một chút chú thích về bạn</Text>
                 <TextInput
                     style={styles.descriptionInput}
                     placeholder="Mô tả"
-                    onChangeText={text => setDecription(text)}
-                    value={decription}
+                    onChangeText={text => setDescription(text)}
+                    value={description}
                     multiline
                 />
-                {showPicker1 && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={birthDay}
-                        mode="date"
-                        is24Hour={true}
-                        display="default"
-                        onChange={handleStartDateChange}
-                    />)}
 
                 <TouchableOpacity style={styles.button} onPress={handleUpdateSchedule}>
                     <Text style={styles.buttonText}>Cập nhật</Text>

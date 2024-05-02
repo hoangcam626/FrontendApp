@@ -65,8 +65,8 @@ const AddCommentBar = ({postId}) => {
                 paddingHorizontal: 10,
                 borderWidth: 1,
                 borderColor: '#ccc',
-                borderRadius: 5,
-                margin: 10
+                borderRadius: 50,
+                margin: 10,
             }}>
                 <TextInput
                     style={{flex: 1, height: 40}}

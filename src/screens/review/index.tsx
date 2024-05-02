@@ -15,35 +15,17 @@ import Loading from "../../../utils/loading/Loading";
 import Navigation from "../../navigation";
 import moment from "moment";
 
-const Reviews = ({placeId}) => {
+const Reviews = ({reviews, placeId}) => {
     const styles = st();
     const navigation = useNavigation<any>();
     const dispatch = useDispatch<any>()
-    const [reviews, setReviews] = useState<any>([])
+    // const [reviews, setReviews] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
 
-    useEffect(() => {
-        getReview()
-    }, [placeId]);
-    const getReview = async () => {
-        try {
-            setLoading(true);
-            let req;
-            if (placeId) {
-                req = new FormData();
-                req.append("placeId", placeId);
-                const res = await dispatch(getReviewsForPlaceActions(req));
-                setReviews(res?.payload);
-            } else {
-                const res = await dispatch(getReviewsActions());
-                setReviews(res?.payload);
-            }
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching reviews:", error);
-            setLoading(false);
-        }
-    }
+    // useEffect(() => {
+    //     getReview()
+    // }, [placeId]);
+
     const renderImage = ({item, index}) => (
         <View style={styles.imageContainer} key={item?.id}>
             <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_TITLE.IMAGE, item)}>

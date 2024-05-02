@@ -5,11 +5,22 @@ const styles = () => {
     const theme = useTheme();
     const windowWidth = Dimensions.get('window').width;
     const st = StyleSheet.create({
-        container: {
-            backgroundColor: 'rgba(0,0,0,0.9)',
-            alignItems: 'center',
-            justifyContent: 'center'
+        likeContainer: {
+            borderTopWidth:1,
+            padding:10,
+            borderTopColor:"#ccc",
+            flex:1,
+            // top:10,
+            // backgroundColor: 'rgba(0,0,0,0.9)',
+            // alignItems: 'center',
+            // justifyContent: 'center'
         },
+        like:{
+            fontWeight:'bold',
+            color: 'red',
+            fontSize:20
+        },
+
         searchBar: {
             flexDirection: 'row',
             alignItems: 'center',
@@ -75,15 +86,13 @@ const styles = () => {
 
         },
         modalContainer: {
-            flex: 1,
-            justifyContent: 'flex-end',
+
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
         },
         modalContent: {
             backgroundColor: 'white',
-            width: '100%',
-            height: '50%',
+
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             padding: 20,

@@ -10,24 +10,24 @@ const styles = () => {
     modalContainer: {
       paddingHorizontal: 20,
       marginVertical:10,
+
     },
     container: {
       flex: 1,
-      // paddingHorizontal: 20,
-      // paddingTop:35,
-      // marginVertical:10,
       backgroundColor: theme.backgroundColor
     },
-    icon:{
+    iconBack:{
       paddingLeft:20,
-      // size =
+      // color: theme.tabActive
     },
+
     title: {
       fontWeight: 'bold',
       fontSize: 20,
       flex:1,
       textAlign:'center',
-      marginRight: 20
+      marginRight: 20,
+      // color:theme.tabActive
     },
     topModal:{
       flexDirection: "row",
@@ -36,10 +36,11 @@ const styles = () => {
       borderBottomWidth:1,
       alignItems: 'center',
       height: 40,
+      // backgroundColor:"#EBF2FA"
     },
     imagePicker: {
       width:'100%',
-      height: windowWidth/9*16*0.5,
+      height: windowWidth/16*9,
       justifyContent: 'center',
       alignItems: 'center',
       paddingBottom:10,
@@ -52,30 +53,34 @@ const styles = () => {
     },
     image: {
       width: '100%',
-      height: undefined,
-      resizeMode: 'contain',
-      flex:1
+      height: '100%',
+      resizeMode: 'cover',
     },
     titleInput:{
       fontSize: 16,
       fontWeight:'bold',
-      paddingBottom:10,
+      color:"#064789",
+      flex:1
     },
     descriptionInput: {
       width: '100%',
-      // height: 100,
-      borderWidth: 1,
+      borderBottomWidth: 1,
       borderColor: '#ccc',
-      borderRadius: 5,
       padding: 10,
       marginBottom: 20,
     },
-    button: {
+    button:{
       backgroundColor: theme.tabActive,
-      margin: 10,
-      padding: 10,
-      borderRadius: 5,
+      margin:10,
+      padding:10,
+      borderRadius:10,
       flex:1
+    },
+    buttonText:{
+      textAlign:'center',
+      color: "#fff",
+      fontSize:16,
+      fontWeight:'bold'
     },
     buttonDelete:{
       backgroundColor: 'red',
@@ -85,12 +90,28 @@ const styles = () => {
       width:'20%',
     },
 
-    buttonText: {
-      textAlign: 'center',
-      color: "#fff",
-      fontSize: 16,
-      fontWeight: 'bold'
+
+    timeInput:{
+      textAlign:'right',
+      width: '60%',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 10,
+      marginBottom: 20,
+      borderRadius:5,
     },
+    time:{
+      fontWeight:'bold',
+      textAlign:'right',
+    },
+    placeInput:{
+      width: '100%',
+      borderStyle:'dashed',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 10,
+      marginBottom: 20,
+    }
   });
   return st
 }

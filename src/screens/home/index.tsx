@@ -18,6 +18,7 @@ import LikePlace from "../like/likePlace";
 import AvatarWithUsername from '../user/shortinfo';
 import moment from 'moment';
 import LikeReview from '../like/likeReview';
+import review from "../review";
 
 const Home = () => {
     const theme = useTheme();
@@ -142,39 +143,7 @@ const Home = () => {
                     style={styles.placesContainer}
                 />
                 <Text style={{ fontSize: 25, fontWeight: 'bold', padding: 10 }}>Review mới nhất</Text>
-                <View style={styles.container}>
-                    {reviews && reviews.map((review, index) => (
-                        <View style={styles.itemContainer} key={review?.id}>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, review?.place?.id)}>
-                                <View style={{ flexDirection: 'row', margin: 5 }}>
-                                    <Icon name='map-marker' size={23}></Icon>
-                                    <Text style={{ fontSize: 20 }}> {review?.place?.name}</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <AvatarWithUsername user={review?.createBy}
-                                time={moment(review?.createdAt, "YYYY-MM-DD HH:mm:ss").startOf('hour').fromNow()}></AvatarWithUsername>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
-                                {[...Array(review?.rating)].map((_, index) => (
-                                    <Icon name='star' size={20} color='#FFC700' style={styles.star} />
-                                ))}
-                            </View>
-                            <Text style={styles.description}>{review?.description}</Text>
-                            <FlatList
-                                data={review?.imagesId}
-                                renderItem={renderImage}
-                                keyExtractor={(item, index) => index.toString()}
-                                horizontal
-                                contentContainerStyle={styles.gridContainer}
-                            />
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={styles.username}>{review?.totalLike} cảm ơn</Text>
-                                <LikeReview reviewId={review?.id} isLike={review?.isLike} style={{}}></LikeReview>
-                            </View>
-                        </View>
-                    ))}
-                    <Loading visiable={loading}></Loading>
-                </View>
+                <Reviews reviews={reviews} placeId={''}></Reviews>
                 <Loading visiable={loading}></Loading>
             </ScrollView>
         </View>

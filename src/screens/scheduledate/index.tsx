@@ -64,7 +64,6 @@ const ScheduleDate = ({date, schedule}) => {
                     <View style={styles.scheduleItem} key={scheduleTime?.id}>
                         <Text>{time?.scheduleBeginTime}</Text>
                         <View>
-
                             <TouchableOpacity
                                 onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, time?.id)}>
                                 <PlaceShortSelf place={time?.place}></PlaceShortSelf>
@@ -73,6 +72,9 @@ const ScheduleDate = ({date, schedule}) => {
                             <Text>{time?.description}</Text>
                             <Text>{moment(time?.scheduleFinishTime).format("HH:mm")} </Text>
 
+                            <TouchableOpacity>
+                                <Icon name='recyle'></Icon>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 ))
@@ -81,7 +83,6 @@ const ScheduleDate = ({date, schedule}) => {
             )}
         </ScrollView>
     );
-
 
 
     return (
@@ -93,26 +94,46 @@ const ScheduleDate = ({date, schedule}) => {
                 {scheduleTime ? (
                     scheduleTime?.map(time => (
                         <View style={styles.scheduleItem} key={scheduleTime?.id}>
-                            <Text>{time?.scheduleBeginTime} </Text>
+                            <View style={{flexDirection:'row'}}>
+
+                            <Text style={styles.time}>{time?.scheduleBeginTime} </Text>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate(NAVIGATION_TITLE.UPDATE_DATE_SCHEDULE, time)}>
+                                    <Icon name='edit' size={20} color={'#ccc'}></Icon>
+                                </TouchableOpacity>
+                            </View>
                             <View
-                                style={{padding: 10, margin: 10, borderStyle: 'dashed', borderLeftWidth: 1, borderColor: 'gray'}}>
+                                style={{
+                                    padding: 10,
+                                    margin: 10,
+                                    borderStyle: 'dashed',
+                                    borderLeftWidth: 1,
+                                    borderColor: 'gray'
+                                }}>
 
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_SCHEDULE, time?.id)}>
+                                    onPress={() => navigation.navigate(NAVIGATION_TITLE.DETAIL_PLACE, time?.place?.id)}>
                                     <PlaceShortSelf place={time?.place}></PlaceShortSelf>
                                 </TouchableOpacity>
-                                <Text>Di chuyen: {time?.transport}</Text>
-                                <Text>Note: {time?.description}</Text>
+                                <Text style={{paddingTop:10}}>Di chuyển: {time?.transport}</Text>
+                                <Text style={{paddingTop:10}}>Note: {time?.description}</Text>
 
                             </View>
-                            <Text>{time?.scheduleFinishTime} </Text>
+                            <View style={{flexDirection:'row'}}>
+
+                                <Text style={styles.time}>{time?.scheduleFinishTime} </Text>
+
+                            </View>
                         </View>
                     ))
                 ) : (
                     <Text style={{color: "#ccc", textAlign: 'center'}}>Bạn chưa có hành trình nao</Text>
                 )}
                 <TouchableOpacity style={styles.button}
-                                  onPress={() => navigation.navigate(NAVIGATION_TITLE.ADD_DATE_SCHEDULE, {schedule: schedule, scheduleDate: date})}>
+                                  onPress={() => navigation.navigate(NAVIGATION_TITLE.ADD_DATE_SCHEDULE, {
+                                      schedule: schedule,
+                                      scheduleDate: date
+                                  })}>
 
                     <Text style={styles.buttonText}>LET'S GO</Text>
                 </TouchableOpacity>

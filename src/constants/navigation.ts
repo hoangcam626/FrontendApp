@@ -21,5 +21,7 @@ export const NAVIGATION_TITLE = {
     UPDATE_REVIEW: 'update-review',
     DETAIL_PLACE: 'detail-place',
     IMAGE: 'image',
-    ADD_DATE_SCHEDULE: 'add-date-schedule'
+    ADD_DATE_SCHEDULE: 'add-date-schedule',
+    UPDATE_DATE_SCHEDULE: 'update-date-schedule',
+    UPDATE_INFO: 'update-info',
 };

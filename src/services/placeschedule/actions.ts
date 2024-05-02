@@ -15,7 +15,7 @@ export const createPlaceScheduleActions = createAsyncThunk(
 export const updatePlaceScheduleActions = createAsyncThunk(
     'date/updatePlaceScheduleActions',
     async (payload: {}) => {
-        const res = await formData.post(PLACE_SCHEDULE.CREATE, payload)
+        const res = await formData.put(PLACE_SCHEDULE.UPDATE, payload)
         return res.data
     }
 )

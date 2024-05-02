@@ -16,6 +16,7 @@ import Carousel from "react-native-snap-carousel";
 import LikePlace from "../../like/likePlace";
 import {ScrollView} from "react-native-gesture-handler";
 import Reviews from "../../review";
+import {getReviewsActions, getReviewsForPlaceActions} from "../../../services/review/actions";
 
 const DetailPlace = ({route}) => {
     const styles = st();
@@ -27,7 +28,7 @@ const DetailPlace = ({route}) => {
     const carouselRef = useRef(null);
     const [index, setIndex] = useState(0);
     const [place, setPlace] = useState<any>()
-
+    const [reviews, setReviews] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [images, setImages] = useState<any>()
     const [like, setLike] = useState<boolean>(place?.isLike)
@@ -40,6 +41,13 @@ const DetailPlace = ({route}) => {
             getPlace();
         }, [])
     );
+    useEffect(() => {
+        if (place) {
+
+            getReview();
+        }
+
+    }, [place]);
 
     useEffect(() => {
         if (place) {
@@ -64,6 +72,20 @@ const DetailPlace = ({route}) => {
             })
             .catch(err => setLoading(false))
         //
+    }
+    const getReview = async () => {
+        try {
+            setLoading(true);
+            let req = new FormData();
+            req.append("placeId", place?.id);
+            const res = await dispatch(getReviewsForPlaceActions(req));
+            setReviews(res?.payload);
+
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching reviews:", error);
+            setLoading(false);
+        }
     }
     const getImages = async () => {
         const req = new FormData();
@@ -102,9 +124,9 @@ const DetailPlace = ({route}) => {
     }
     const renderItem = ({item}) => (
         <View key={item}>
-        <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${item}`}}
-               style={styles.image} key={item}>
-        </Image>
+            <Image source={{uri: `${BASE_URL}${IMAGE.RESOURCE}${item}`}}
+                   style={styles.image} key={item}>
+            </Image>
         </View>
     );
     const renderTabBar = props => (
@@ -136,7 +158,7 @@ const DetailPlace = ({route}) => {
     );
     const renderReview = () => (
         <ScrollView>
-            <Reviews placeId={place?.id}></Reviews>
+            <Reviews reviews={reviews} placeId={place?.id}></Reviews>
         </ScrollView>
     );
 
